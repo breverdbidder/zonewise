@@ -1,0 +1,85 @@
+# GitHub Actions Workflow: Deploy to Cloudflare Pages
+# Builds and deploys frontend to Cloudflare Pages
+
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/deploy-cloudflare.yml'
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./frontend
+      run: npm ci
+    
+    - name: Build frontend
+      working-directory: ./frontend
+      run: npm run build
+      env:
+        VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        VITE_API_BASE_URL: ${{ secrets.API_BASE_URL }}
+    
+    - name: Deploy to Cloudflare Pages
+      uses: cloudflare/pages-action@v1
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        projectName: zonewise
+        directory: frontend/dist
+        gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
+    
+    - name: Deployment summary
+      run: |
+        echo "## Deployment Summary 🚀" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Environment:** Production" >> $GITHUB_STEP_SUMMARY
+        echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+        echo "**Deployed to:** https://zonewise.pages.dev" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "✅ Deployment successful!" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Send Slack notification
+      if: success()
+      uses: slackapi/slack-github-action@v1
+      with:
+        webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+        payload: |
+          {
+            "text": "✅ ZoneWise deployed to production",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*ZoneWise Deployment Successful*\n\nBranch: ${{ github.ref_name }}\nCommit: ${{ github.sha }}\n\n<https://zonewise.pages.dev|View Site>"
+                }
+              }
+            ]
+          }
