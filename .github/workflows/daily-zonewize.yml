@@ -1,0 +1,163 @@
+# GitHub Actions Workflow: Daily zonewize Analysis
+# Runs zonewize skill on schedule and on-demand
+
+name: Daily zonewize Analysis
+
+on:
+  schedule:
+    # Run daily at 11 PM EST (4 AM UTC)
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+    inputs:
+      jurisdiction:
+        description: 'Jurisdiction to analyze (or "all")'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - indian_harbour_beach
+          - melbourne
+          - palm_bay
+      property_count:
+        description: 'Max properties to analyze'
+        required: false
+        default: '100'
+        type: string
+
+env:
+  PYTHON_VERSION: '3.12'
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run zonewize analysis
+      id: analysis
+      run: |
+        python -m src.pipelines.daily_zonewize_pipeline \
+          --jurisdiction ${{ github.event.inputs.jurisdiction || 'all' }} \
+          --max-properties ${{ github.event.inputs.property_count || '100' }} \
+          --output-dir ./analysis_results
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    
+    - name: Generate summary
+      if: always()
+      run: |
+        echo "## zonewize Daily Analysis 📊" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Date:** $(date +'%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
+        echo "**Jurisdiction:** ${{ github.event.inputs.jurisdiction || 'all' }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ -f ./analysis_results/summary.json ]; then
+          echo "### Results" >> $GITHUB_STEP_SUMMARY
+          python -c "
+import json
+with open('./analysis_results/summary.json') as f:
+    data = json.load(f)
+    print(f\"- Properties Analyzed: {data.get('total_analyzed', 0)}\")
+    print(f\"- Compliant: {data.get('compliant_count', 0)}\")
+    print(f\"- Non-Compliant: {data.get('non_compliant_count', 0)}\")
+    print(f\"- Manual Review: {data.get('manual_review_count', 0)}\")
+    print(f\"- Avg Confidence: {data.get('avg_confidence', 0):.1f}%\")
+    print(f\"- Avg Execution Time: {data.get('avg_execution_ms', 0):.0f}ms\")
+    print(f\"- Total Cost: \${data.get('total_cost_usd', 0):.4f}\")
+          " >> $GITHUB_STEP_SUMMARY
+        fi
+    
+    - name: Upload results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: analysis-results-${{ github.run_number }}
+        path: ./analysis_results/
+        retention-days: 30
+    
+    - name: Log metrics to Supabase
+      if: always()
+      run: |
+        python -m src.observability.log_pipeline_metrics \
+          --results-dir ./analysis_results \
+          --pipeline zonewize_daily
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    
+    - name: Send Slack notification (on failure)
+      if: failure()
+      uses: slackapi/slack-github-action@v1
+      with:
+        webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+        payload: |
+          {
+            "text": "❌ Daily zonewize analysis failed",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Daily zonewize Analysis Failed*\n\nWorkflow: ${{ github.workflow }}\nRun: ${{ github.run_number }}\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Details>"
+                }
+              }
+            ]
+          }
+
+  report:
+    needs: analyze
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Download results
+      uses: actions/download-artifact@v4
+      with:
+        name: analysis-results-${{ github.run_number }}
+        path: ./analysis_results/
+    
+    - name: Generate daily report
+      run: |
+        python -m src.reporting.generate_daily_report \
+          --results-dir ./analysis_results \
+          --output ./daily_report.pdf
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    
+    - name: Upload report to Supabase Storage
+      run: |
+        python -m src.storage.upload_report \
+          --file ./daily_report.pdf \
+          --bucket zonewise-reports \
+          --path "daily/$(date +'%Y-%m-%d')-daily-analysis.pdf"
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
