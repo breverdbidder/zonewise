@@ -4,7 +4,7 @@ services:
     name: zonewise-api
     env: python
     region: oregon
-    plan: free  # Start with free tier
+    plan: starter  # Changed from free to starter
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn zonewise_api:app --host 0.0.0.0 --port $PORT
     envVars:
