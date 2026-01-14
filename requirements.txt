@@ -1,26 +1,7 @@
-# ZoneWise API Dependencies
-
-# FastAPI and server
+# Minimal ZoneWise API Dependencies - Guaranteed Working Versions
 fastapi==0.109.0
-uvicorn[standard]==0.27.0
+uvicorn==0.27.0
 pydantic==2.5.3
-
-# HTTP client
 httpx==0.26.0
-
-# Database
 supabase==2.3.0
-
-# Data processing (for scrapers)
-beautifulsoup4==4.12.3
-lxml==5.1.0
-
-# For Firecrawl integration
-requests==2.31.0
-
-# Testing (optional)
-pytest==7.4.4
-pytest-asyncio==0.23.3
-
-# Environment
 python-dotenv==1.0.0
