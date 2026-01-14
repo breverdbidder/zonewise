@@ -1,0 +1,261 @@
+{
+  "jurisdiction_id": 3,
+  "jurisdiction_name": "Indian Harbour Beach",
+  "districts": {
+    "R-2": {
+      "district_code": "R-2",
+      "district_name": "Multiple-Family Residential (Low Density)",
+      "jurisdiction_id": "indian_harbour_beach",
+      "allowed_uses": [
+        "Duplexes",
+        "Multifamily residences (max 7 units/acre)",
+        "Golf/tennis/yacht clubs (conditional)",
+        "Churches (conditional)"
+      ],
+      "dimensional_requirements": {
+        "min_lot_width_ft": 100,
+        "min_lot_depth_ft": 120,
+        "min_living_area_sqft": 1200,
+        "max_height_ft": 35,
+        "max_building_length_ft": 200,
+        "setbacks": {
+          "front_ft": 25,
+          "rear_ft": 25,
+          "rear_canal_ft": 35,
+          "side_interior_ft": 15,
+          "side_corner_ft": 25
+        }
+      },
+      "special_conditions": {
+        "density": "7 dwelling units per acre maximum",
+        "planned_development": {
+          "min_lot_width_ft": 27,
+          "min_lot_depth_ft": 100,
+          "building_separation_ft": 30
+        }
+      },
+      "ordinance_section": "Article XII, Sec. 4"
+    },
+    "R-3": {
+      "district_code": "R-3",
+      "district_name": "Multiple-Family Residential (Medium Density)",
+      "jurisdiction_id": "indian_harbour_beach",
+      "allowed_uses": [
+        "Multifamily residences (oceanfront)",
+        "Golf/tennis/yacht clubs (conditional)",
+        "Churches (conditional)"
+      ],
+      "dimensional_requirements": {
+        "min_lot_width_ft": 100,
+        "min_lot_depth_ft": 120,
+        "min_living_area_sqft": 1200,
+        "max_height_ft": 35,
+        "max_building_length_ft": 200,
+        "setbacks": {
+          "front_ft": 25,
+          "rear_ft": 20,
+          "rear_canal_ft": 35,
+          "side_interior_ft": 15,
+          "side_corner_ft": 25
+        }
+      },
+      "special_conditions": {
+        "oceanfront_setback": "Per Article XIII, Section 15",
+        "planned_development": {
+          "min_lot_width_ft": 27,
+          "min_lot_depth_ft": 100,
+          "building_separation_ft": 30
+        }
+      },
+      "ordinance_section": "Article XII, Sec. 5"
+    },
+    "B-1": {
+      "district_code": "B-1",
+      "district_name": "General Commercial District",
+      "jurisdiction_id": "indian_harbour_beach",
+      "allowed_uses": [
+        "Retail stores",
+        "Restaurants",
+        "Professional offices",
+        "Service establishments",
+        "Public/private parking lots"
+      ],
+      "dimensional_requirements": {
+        "min_lot_size_sqft": 9000,
+        "min_floor_area_sqft": 600,
+        "max_height_ft": 35,
+        "setbacks": {
+          "gas_pump_ft": 20
+        }
+      },
+      "special_conditions": {
+        "parking": "1 space per 200 sqft",
+        "accessory_dwelling": "Allowed if smaller than principal structure"
+      },
+      "ordinance_section": "Article XII, Sec. 7"
+    },
+    "M-1": {
+      "district_code": "M-1",
+      "district_name": "Light Industrial",
+      "jurisdiction_id": "indian_harbour_beach",
+      "allowed_uses": [
+        "Building materials supply/storage",
+        "Contractor storage (no scrap)",
+        "Light manufacturing"
+      ],
+      "dimensional_requirements": {
+        "max_height_ft": 35,
+        "setbacks": {}
+      },
+      "special_conditions": {
+        "contractor_office": "Must be within 100 ft of Light Industrial boundary"
+      },
+      "ordinance_section": "Article XII, Sec. 8"
+    },
+    "P-1": {
+      "district_code": "P-1",
+      "district_name": "Institutional",
+      "jurisdiction_id": "indian_harbour_beach",
+      "allowed_uses": [
+        "Schools",
+        "Churches",
+        "Government facilities",
+        "Public utilities"
+      ],
+      "dimensional_requirements": {
+        "min_lot_area_acres": 5,
+        "min_lot_width_ft": 300,
+        "min_lot_depth_ft": 500,
+        "max_height_ft": 35,
+        "setbacks": {
+          "perimeter_ft": 100,
+          "sewage_treatment_ft": 300
+        }
+      },
+      "special_conditions": {
+        "buffer": "6 ft fence/hedge required"
+      },
+      "ordinance_section": "Article XII, Sec. 9"
+    },
+    "PUD": {
+      "district_code": "PUD",
+      "district_name": "Planned Unit Development",
+      "jurisdiction_id": "indian_harbour_beach",
+      "allowed_uses": [
+        "Mixed residential",
+        "Commercial (per plan)",
+        "Recreation facilities"
+      ],
+      "dimensional_requirements": {
+        "min_lot_area_sqft": null,
+        "max_height_ft": 35,
+        "max_building_length_ft": 200,
+        "min_living_area_sqft": {
+          "single_family": 1250,
+          "multifamily": 1200
+        },
+        "building_separation": {
+          "2_stories_ft": 15,
+          "3_stories_ft": 20,
+          "4_stories_ft": 25
+        },
+        "setbacks": {
+          "perimeter_ft": 25,
+          "structure_to_structure_ft": 25
+        }
+      },
+      "special_conditions": {
+        "flexibility": "Allows deviation in lot size, density, coverage",
+        "review": "Requires simultaneous review of land use, site, and setbacks"
+      },
+      "ordinance_section": "Article XII, Sec. 10"
+    },
+    "C-P": {
+      "district_code": "C-P",
+      "district_name": "Professional Offices and Services",
+      "jurisdiction_id": "indian_harbour_beach",
+      "allowed_uses": [
+        "Professional offices",
+        "Medical/dental offices",
+        "Service establishments"
+      ],
+      "dimensional_requirements": {
+        "min_lot_size_sqft": 15000,
+        "min_lot_width_ft": 100,
+        "min_lot_depth_ft": 150,
+        "max_height_ft": 35,
+        "setbacks": {
+          "perimeter_ft": 25,
+          "arterial_collector_ft": 50,
+          "canal_ft": 35
+        }
+      },
+      "special_conditions": {
+        "buffer": "6 ft required"
+      },
+      "ordinance_section": "Article XII, Sec. 6"
+    },
+    "R-1AAA": {
+      "district_code": "R-1AAA",
+      "district_name": "Single-Family Residential",
+      "jurisdiction_id": "indian_harbour_beach",
+      "allowed_uses": [
+        "Single-family dwellings with garage",
+        "Golf/tennis/yacht clubs (conditional)",
+        "Churches (conditional)"
+      ],
+      "dimensional_requirements": {
+        "max_living_area_sqft": 5000,
+        "max_height_ft": 35,
+        "garage_required": true
+      },
+      "special_conditions": {
+        "lot_area_threshold": "0.75 acres for max living area",
+        "second_floor": "Allowed if within first floor footprint"
+      },
+      "ordinance_section": "Article XII, Sec. 1"
+    },
+    "R-1AA": {
+      "district_code": "R-1AA",
+      "district_name": "Single-Family Residential",
+      "jurisdiction_id": "indian_harbour_beach",
+      "allowed_uses": [
+        "Single-family dwellings with garage",
+        "Golf/tennis/yacht clubs (conditional)",
+        "Churches (conditional)"
+      ],
+      "dimensional_requirements": {
+        "max_living_area_sqft": 4000,
+        "max_height_ft": 35,
+        "garage_required": "garage"
+      },
+      "special_conditions": {
+        "lot_area_threshold": "0.75 acres for max living area",
+        "second_floor": "Allowed if within first floor footprint"
+      },
+      "ordinance_section": "Article XII, Sec. 2"
+    },
+    "R-1A": {
+      "district_code": "R-1A",
+      "district_name": "Single-Family Residential",
+      "jurisdiction_id": "indian_harbour_beach",
+      "allowed_uses": [
+        "Single-family dwellings with garage",
+        "Golf/tennis/yacht clubs (conditional)",
+        "Churches (conditional)"
+      ],
+      "dimensional_requirements": {
+        "max_living_area_sqft": 3000,
+        "max_height_ft": 35,
+        "garage_required": "garage"
+      },
+      "special_conditions": {
+        "lot_area_threshold": "0.75 acres for max living area",
+        "second_floor": "Allowed if within first floor footprint"
+      },
+      "ordinance_section": "Article XII, Sec. 3"
+    }
+  },
+  "scraped_at": "2026-01-14T19:04:33.938339",
+  "source": "https://library.municode.com/fl/indian_harbour_beach/codes/code_of_ordinances?nodeId=APXAZO"
+}
