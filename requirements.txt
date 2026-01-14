@@ -1,7 +1,8 @@
-# Minimal ZoneWise API Dependencies - Guaranteed Working Versions
-fastapi==0.109.0
-uvicorn==0.27.0
-pydantic==2.5.3
-httpx==0.26.0
-supabase==2.3.0
-python-dotenv==1.0.0
+# ZoneWise API Dependencies - Updated for compatibility
+# Fixed: supabase/httpx version conflict (was causing build failures)
+fastapi>=0.109.0
+uvicorn>=0.27.0
+pydantic>=2.5.3
+httpx>=0.28.0
+supabase>=2.10.0
+python-dotenv>=1.0.0
