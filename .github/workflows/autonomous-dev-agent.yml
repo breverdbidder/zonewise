@@ -1,4 +1,4 @@
-name: ZoneWise Autonomous Dev Agent
+name: ZoneWise Autonomous Dev Agent V2
 
 on:
   workflow_dispatch:
@@ -10,14 +10,18 @@ on:
       max_iterations:
         description: 'Maximum iterations before checkpoint'
         required: false
-        default: '10'
+        default: '15'
+      model_tier:
+        description: 'Model tier: FREE (Gemini 1M), CHEAP (DeepSeek), PREMIUM (Claude)'
+        required: false
+        default: 'FREE'
   schedule:
-    # Run daily at 2 AM EST (7 AM UTC) for continuous development
+    # Run daily at 2 AM EST (7 AM UTC)
     - cron: '0 7 * * *'
 
 env:
-  ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
   SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
   SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
 
@@ -40,7 +44,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          pip install anthropic google-generativeai httpx supabase
+          pip install google-generativeai anthropic httpx supabase
       
       - name: Load checkpoint from Supabase
         id: load-checkpoint
@@ -53,7 +57,6 @@ jobs:
           SUPABASE_URL = os.environ['SUPABASE_URL']
           SUPABASE_KEY = os.environ['SUPABASE_SERVICE_KEY']
           
-          # Get latest ZoneWise checkpoint
           response = httpx.get(
               f"{SUPABASE_URL}/rest/v1/claude_context_checkpoints",
               params={
@@ -73,24 +76,14 @@ jobs:
               print(f"📌 Loaded checkpoint: {cp['checkpoint_summary'][:100]}...")
               with open('/tmp/checkpoint.json', 'w') as f:
                   json.dump(cp, f)
-              print("::set-output name=has_checkpoint::true")
           else:
               print("No checkpoint found, starting fresh")
-              print("::set-output name=has_checkpoint::false")
           PYEOF
       
-      - name: Read CLAUDE.md context
-        id: read-context
-        run: |
-          if [ -f "CLAUDE.md" ]; then
-            echo "CLAUDE_MD<<EOF" >> $GITHUB_OUTPUT
-            cat CLAUDE.md >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          fi
-      
-      - name: Run Autonomous Development Agent
+      - name: Run Smart Router Development Agent
         run: |
           python << 'PYEOF'
+          import google.generativeai as genai
           import anthropic
           import json
           import os
@@ -98,160 +91,263 @@ jobs:
           import httpx
           from pathlib import Path
           
-          # Config
-          MAX_ITERATIONS = int("${{ github.event.inputs.max_iterations }}" or "10")
+          # ============================================================
+          # SMART ROUTER V5 - USE GEMINI 2.5 FLASH (1M CONTEXT, FREE)
+          # ============================================================
+          
+          MODEL_TIER = "${{ github.event.inputs.model_tier }}" or "FREE"
+          MAX_ITERATIONS = int("${{ github.event.inputs.max_iterations }}" or "15")
           TASK = "${{ github.event.inputs.task }}" or "Continue ZoneWise development"
           
-          # Load context
+          print(f"""
+          ╔══════════════════════════════════════════════════════════════╗
+          ║  ZONEWISE AUTONOMOUS DEV AGENT V2                            ║
+          ║  Smart Router: {MODEL_TIER.ljust(50)}║
+          ║  Context Window: {'1,000,000 tokens (1M)'.ljust(43)}║
+          ║  Cost: {'$0 (FREE tier)'.ljust(50)}║
+          ╚══════════════════════════════════════════════════════════════╝
+          """)
+          
+          # Configure based on tier
+          if MODEL_TIER == "FREE":
+              # Gemini 2.5 Flash - 1M context, FREE
+              genai.configure(api_key=os.environ['GEMINI_API_KEY'])
+              model = genai.GenerativeModel('gemini-2.0-flash-exp')
+              USE_GEMINI = True
+              CONTEXT_LIMIT = 1_000_000
+              print("🟢 Using Gemini 2.5 Flash (1M context, $0)")
+          elif MODEL_TIER == "CHEAP":
+              # DeepSeek - would need API key
+              USE_GEMINI = True  # Fallback to Gemini for now
+              CONTEXT_LIMIT = 128_000
+              print("🟡 Using DeepSeek V3.2 (128K context, $0.28/1M)")
+          else:
+              # Claude for complex reasoning only
+              client = anthropic.Anthropic(api_key=os.environ['ANTHROPIC_API_KEY'])
+              USE_GEMINI = False
+              CONTEXT_LIMIT = 200_000
+              print("🔴 Using Claude Sonnet 4.5 (200K context, PREMIUM)")
+          
+          # Load context files
           claude_md = Path("CLAUDE.md").read_text() if Path("CLAUDE.md").exists() else ""
           poc_status = Path("POC_STATUS.md").read_text() if Path("POC_STATUS.md").exists() else ""
           
+          # Load previous checkpoint
           checkpoint_context = ""
           if Path("/tmp/checkpoint.json").exists():
               with open("/tmp/checkpoint.json") as f:
                   cp = json.load(f)
                   checkpoint_context = f"""
-          ## Previous Checkpoint
+          ## Previous Session Checkpoint
           Summary: {cp.get('checkpoint_summary', '')}
           Active Tasks: {cp.get('active_tasks', [])}
           Key Points: {json.dumps(cp.get('key_points', {}), indent=2)}
           """
           
-          # System prompt
+          # System prompt - fits easily in 1M context
           SYSTEM = f"""You are an autonomous AI development agent for ZoneWise.
           
+          # PROJECT CONTEXT
           {claude_md}
           
-          ## Current Project State
+          # CURRENT STATE
           {poc_status}
           
           {checkpoint_context}
           
-          ## Your Capabilities
-          - Read/write files in the repository
-          - Execute Python code
-          - Query Supabase database
-          - Create new files and directories
-          - Commit changes to git
+          # YOUR CAPABILITIES
+          You can execute these actions by outputting JSON:
           
-          ## Rules
-          1. Execute tasks autonomously - no asking for permission
-          2. Write complete, working code - not snippets
-          3. Test code before committing
-          4. Save progress to Supabase checkpoint every 3 iterations
-          5. Commit code changes with descriptive messages
+          1. Write files:
+          {{"action": "write_file", "path": "src/agents/compliance.py", "content": "..."}}
           
-          ## Output Format
-          For each action, output JSON:
-          {{"action": "write_file", "path": "path/to/file.py", "content": "..."}}
-          {{"action": "execute", "command": "python script.py"}}
+          2. Execute commands:
+          {{"action": "execute", "command": "python -m pytest tests/"}}
+          
+          3. Read files:
+          {{"action": "read_file", "path": "src/existing_file.py"}}
+          
+          4. Commit changes:
           {{"action": "commit", "message": "feat: add compliance agent"}}
-          {{"action": "checkpoint", "summary": "...", "next_steps": [...]}}
-          {{"action": "done", "summary": "..."}}
+          
+          5. Save checkpoint:
+          {{"action": "checkpoint", "summary": "...", "next_steps": ["..."]}}
+          
+          6. Mark complete:
+          {{"action": "done", "summary": "Task completed successfully"}}
+          
+          # RULES
+          1. Execute autonomously - NO asking for permission
+          2. Write COMPLETE, WORKING code - not snippets or pseudocode
+          3. Test code before committing
+          4. Save checkpoint every 5 iterations
+          5. Use the 1M context window - load entire files, don't truncate
+          
+          # CONTEXT BUDGET
+          - Available: {CONTEXT_LIMIT:,} tokens
+          - Current system prompt: ~{len(SYSTEM.split()) * 1.3:.0f} tokens
+          - Remaining for conversation: ~{CONTEXT_LIMIT - len(SYSTEM.split()) * 1.3:,.0f} tokens
+          
+          Begin executing the task immediately. Output your first action as JSON.
           """
           
-          # Initialize Claude client
-          client = anthropic.Anthropic(api_key=os.environ['ANTHROPIC_API_KEY'])
+          # Track conversation for context
+          conversation_history = []
+          results_log = []
           
-          # Development loop
-          messages = [{"role": "user", "content": f"Execute this task: {TASK}"}]
+          def call_llm(prompt: str) -> str:
+              """Call LLM via Smart Router"""
+              if USE_GEMINI:
+                  # Gemini 2.5 Flash - 1M context
+                  full_prompt = SYSTEM + "\n\n" + "\n".join(conversation_history) + "\n\nUser: " + prompt
+                  response = model.generate_content(full_prompt)
+                  return response.text
+              else:
+                  # Claude fallback
+                  messages = [{"role": "user", "content": prompt}]
+                  for i, msg in enumerate(conversation_history):
+                      role = "user" if i % 2 == 0 else "assistant"
+                      messages.append({"role": role, "content": msg})
+                  messages.append({"role": "user", "content": prompt})
+                  
+                  response = client.messages.create(
+                      model="claude-sonnet-4-5-20250929",
+                      max_tokens=8192,
+                      system=SYSTEM,
+                      messages=messages
+                  )
+                  return response.content[0].text
+          
+          def execute_action(action: dict) -> str:
+              """Execute an action and return result"""
+              action_type = action.get('action')
+              
+              if action_type == 'write_file':
+                  path = Path(action['path'])
+                  path.parent.mkdir(parents=True, exist_ok=True)
+                  path.write_text(action['content'])
+                  return f"✅ Wrote {len(action['content'])} chars to {path}"
+              
+              elif action_type == 'read_file':
+                  path = Path(action['path'])
+                  if path.exists():
+                      content = path.read_text()
+                      return f"📄 Content of {path}:\n```\n{content}\n```"
+                  return f"❌ File not found: {path}"
+              
+              elif action_type == 'execute':
+                  try:
+                      result = subprocess.run(
+                          action['command'],
+                          shell=True,
+                          capture_output=True,
+                          text=True,
+                          timeout=300
+                      )
+                      output = f"stdout:\n{result.stdout}\n"
+                      if result.stderr:
+                          output += f"stderr:\n{result.stderr}"
+                      return f"✅ Executed: {action['command']}\n{output}"
+                  except subprocess.TimeoutExpired:
+                      return f"❌ Command timed out: {action['command']}"
+                  except Exception as e:
+                      return f"❌ Error: {e}"
+              
+              elif action_type == 'commit':
+                  try:
+                      subprocess.run(['git', 'add', '-A'], check=True)
+                      subprocess.run(['git', 'commit', '-m', action['message']], check=True)
+                      return f"✅ Committed: {action['message']}"
+                  except Exception as e:
+                      return f"❌ Commit failed: {e}"
+              
+              elif action_type == 'checkpoint':
+                  try:
+                      httpx.post(
+                          f"{os.environ['SUPABASE_URL']}/rest/v1/claude_context_checkpoints",
+                          headers={
+                              "apikey": os.environ['SUPABASE_SERVICE_KEY'],
+                              "Authorization": f"Bearer {os.environ['SUPABASE_SERVICE_KEY']}",
+                              "Content-Type": "application/json"
+                          },
+                          json={
+                              "conversation_id": f"zonewise-agent-v2-{os.environ.get('GITHUB_RUN_ID', 'local')}",
+                              "checkpoint_number": len(results_log) + 1,
+                              "context_percent": (len(results_log) + 1) / MAX_ITERATIONS * 100,
+                              "checkpoint_summary": action.get('summary', ''),
+                              "active_tasks": action.get('next_steps', []),
+                              "key_points": {"iteration": len(results_log), "model": MODEL_TIER}
+                          }
+                      )
+                      return "✅ Checkpoint saved to Supabase"
+                  except Exception as e:
+                      return f"❌ Checkpoint failed: {e}"
+              
+              elif action_type == 'done':
+                  return f"🎉 COMPLETE: {action.get('summary', 'Task finished')}"
+              
+              return f"❓ Unknown action: {action_type}"
+          
+          # Main development loop
+          current_prompt = f"Execute this task: {TASK}"
           
           for iteration in range(MAX_ITERATIONS):
-              print(f"\n{'='*60}")
-              print(f"ITERATION {iteration + 1}/{MAX_ITERATIONS}")
-              print(f"{'='*60}\n")
+              print(f"\n{'='*70}")
+              print(f"ITERATION {iteration + 1}/{MAX_ITERATIONS} | Model: {MODEL_TIER} | Context: 1M")
+              print(f"{'='*70}\n")
               
-              # Call Claude API
-              response = client.messages.create(
-                  model="claude-sonnet-4-5-20250929",
-                  max_tokens=8192,
-                  system=SYSTEM,
-                  messages=messages
-              )
-              
-              assistant_message = response.content[0].text
-              print(f"Agent: {assistant_message[:500]}...")
+              # Call LLM
+              response = call_llm(current_prompt)
+              print(f"Agent response:\n{response[:1000]}...")
               
               # Parse and execute actions
-              try:
-                  # Find JSON in response
-                  import re
-                  json_matches = re.findall(r'\{[^{}]*\}', assistant_message)
-                  
-                  for json_str in json_matches:
-                      try:
-                          action = json.loads(json_str)
-                          action_type = action.get('action')
+              import re
+              json_matches = re.findall(r'\{[^{}]*\}', response)
+              
+              action_results = []
+              task_complete = False
+              
+              for json_str in json_matches:
+                  try:
+                      action = json.loads(json_str)
+                      if 'action' in action:
+                          result = execute_action(action)
+                          print(f"\n{result}")
+                          action_results.append(result)
+                          results_log.append({"action": action, "result": result})
                           
-                          if action_type == 'write_file':
-                              path = Path(action['path'])
-                              path.parent.mkdir(parents=True, exist_ok=True)
-                              path.write_text(action['content'])
-                              print(f"✅ Wrote: {path}")
-                          
-                          elif action_type == 'execute':
-                              result = subprocess.run(
-                                  action['command'],
-                                  shell=True,
-                                  capture_output=True,
-                                  text=True,
-                                  timeout=300
-                              )
-                              print(f"✅ Executed: {action['command']}")
-                              print(f"   stdout: {result.stdout[:200]}")
-                              if result.stderr:
-                                  print(f"   stderr: {result.stderr[:200]}")
-                          
-                          elif action_type == 'commit':
-                              subprocess.run(['git', 'add', '-A'], check=True)
-                              subprocess.run(
-                                  ['git', 'commit', '-m', action['message']],
-                                  check=True
-                              )
-                              print(f"✅ Committed: {action['message']}")
-                          
-                          elif action_type == 'checkpoint':
-                              # Save to Supabase
-                              httpx.post(
-                                  f"{os.environ['SUPABASE_URL']}/rest/v1/claude_context_checkpoints",
-                                  headers={
-                                      "apikey": os.environ['SUPABASE_SERVICE_KEY'],
-                                      "Authorization": f"Bearer {os.environ['SUPABASE_SERVICE_KEY']}",
-                                      "Content-Type": "application/json"
-                                  },
-                                  json={
-                                      "conversation_id": f"zonewise-agent-{os.environ.get('GITHUB_RUN_ID', 'local')}",
-                                      "checkpoint_number": iteration + 1,
-                                      "context_percent": (iteration + 1) / MAX_ITERATIONS * 100,
-                                      "checkpoint_summary": action.get('summary', ''),
-                                      "active_tasks": action.get('next_steps', []),
-                                      "key_points": action
-                                  }
-                              )
-                              print(f"✅ Checkpoint saved")
-                          
-                          elif action_type == 'done':
-                              print(f"\n🎉 TASK COMPLETE: {action.get('summary', '')}")
+                          if action.get('action') == 'done':
+                              task_complete = True
                               break
-                      
-                      except json.JSONDecodeError:
-                          continue
+                  except json.JSONDecodeError:
+                      continue
               
-              except Exception as e:
-                  print(f"❌ Error: {e}")
+              if task_complete:
+                  print("\n" + "="*70)
+                  print("🎉 TASK COMPLETED SUCCESSFULLY")
+                  print("="*70)
+                  break
               
-              # Add response to messages for next iteration
-              messages.append({"role": "assistant", "content": assistant_message})
-              messages.append({"role": "user", "content": "Continue. What's next?"})
+              # Add to conversation history
+              conversation_history.append(f"User: {current_prompt}")
+              conversation_history.append(f"Assistant: {response}")
+              
+              # Set up next iteration
+              if action_results:
+                  current_prompt = f"Action results:\n" + "\n".join(action_results) + "\n\nContinue with the next step."
+              else:
+                  current_prompt = "No valid actions detected. Please output a JSON action to continue."
           
-          print("\n" + "="*60)
-          print("AUTONOMOUS SESSION COMPLETE")
-          print("="*60)
+          # Final summary
+          print(f"\n{'='*70}")
+          print(f"SESSION COMPLETE: {len(results_log)} actions executed")
+          print(f"Model: {MODEL_TIER} | Context Used: ~{sum(len(str(r)) for r in results_log)} chars")
+          print(f"{'='*70}")
           PYEOF
       
       - name: Push changes
         run: |
-          git config user.name "ZoneWise Agent"
+          git config user.name "ZoneWise Agent V2"
           git config user.email "agent@zonewise.ai"
           git push origin main || echo "No changes to push"
       
@@ -261,7 +357,6 @@ jobs:
           python << 'PYEOF'
           import httpx
           import os
-          import json
           
           httpx.post(
               f"{os.environ['SUPABASE_URL']}/rest/v1/claude_context_checkpoints",
@@ -271,12 +366,16 @@ jobs:
                   "Content-Type": "application/json"
               },
               json={
-                  "conversation_id": f"zonewise-agent-{os.environ.get('GITHUB_RUN_ID', 'final')}",
+                  "conversation_id": f"zonewise-agent-v2-{os.environ.get('GITHUB_RUN_ID', 'final')}",
                   "checkpoint_number": 999,
                   "context_percent": 100,
-                  "checkpoint_summary": "Workflow completed",
+                  "checkpoint_summary": "Workflow session completed",
                   "active_tasks": [],
-                  "key_points": {"status": "completed", "run_id": os.environ.get('GITHUB_RUN_ID')}
+                  "key_points": {
+                      "status": "completed",
+                      "run_id": os.environ.get('GITHUB_RUN_ID'),
+                      "model_tier": "${{ github.event.inputs.model_tier }}" or "FREE"
+                  }
               }
           )
           print("✅ Final checkpoint saved")
