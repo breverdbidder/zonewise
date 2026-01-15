@@ -1,0 +1,187 @@
+{
+  "name": "zonewise-municode-pipeline",
+  "version": "1.0.0",
+  "description": "Automated Firecrawl pipeline to scrape and ingest zoning data from all Brevard County jurisdictions",
+  "jurisdictions": [
+    {
+      "id": 1,
+      "name": "Melbourne",
+      "municode_url": "https://library.municode.com/fl/melbourne/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/melbourne/codes/code_of_ordinances?nodeId=SPBLADECO_CH24ZO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 3
+    },
+    {
+      "id": 2,
+      "name": "Palm Bay",
+      "municode_url": "https://library.municode.com/fl/palm_bay/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/palm_bay/codes/code_of_ordinances?nodeId=PTIICOOR_CH166ZO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 2
+    },
+    {
+      "id": 3,
+      "name": "Indian Harbour Beach",
+      "municode_url": "https://library.municode.com/fl/indian_harbour_beach/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/indian_harbour_beach/codes/code_of_ordinances?nodeId=PTIICOOR_CH98ZO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 4
+    },
+    {
+      "id": 4,
+      "name": "Titusville",
+      "municode_url": "https://library.municode.com/fl/titusville/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/titusville/codes/code_of_ordinances?nodeId=PTIICOOR_CH28ZO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 5
+    },
+    {
+      "id": 5,
+      "name": "Cocoa",
+      "municode_url": "https://library.municode.com/fl/cocoa/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/cocoa/codes/code_of_ordinances?nodeId=PTIICOOR_CH13LADECO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 6
+    },
+    {
+      "id": 6,
+      "name": "Satellite Beach",
+      "municode_url": "https://library.municode.com/fl/satellite_beach/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/satellite_beach/codes/code_of_ordinances?nodeId=PTIICICO_CH30LADERE_ARTIVZO",
+      "elaws_url": "http://satellitebeach.elaws.us/code/ordinances_ch30_artiv",
+      "status": "complete",
+      "priority": 1
+    },
+    {
+      "id": 7,
+      "name": "Cocoa Beach",
+      "municode_url": "https://library.municode.com/fl/cocoa_beach/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/cocoa_beach/codes/code_of_ordinances?nodeId=PTIICOOR_CH14LADERE_ARTIIIZO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 7
+    },
+    {
+      "id": 8,
+      "name": "Rockledge",
+      "municode_url": "https://library.municode.com/fl/rockledge/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/rockledge/codes/code_of_ordinances?nodeId=PTIICOOR_CH22LADECO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 8
+    },
+    {
+      "id": 9,
+      "name": "West Melbourne",
+      "municode_url": "https://library.municode.com/fl/west_melbourne/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/west_melbourne/codes/code_of_ordinances?nodeId=COOR_CH98ZO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 9
+    },
+    {
+      "id": 10,
+      "name": "Cape Canaveral",
+      "municode_url": "https://library.municode.com/fl/cape_canaveral/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/cape_canaveral/codes/code_of_ordinances?nodeId=PTIICOOR_CH110ZO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 10
+    },
+    {
+      "id": 11,
+      "name": "Indialantic",
+      "municode_url": "https://library.municode.com/fl/indialantic/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/indialantic/codes/code_of_ordinances?nodeId=COOR_CH90ZO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 11
+    },
+    {
+      "id": 12,
+      "name": "Melbourne Beach",
+      "municode_url": "https://library.municode.com/fl/melbourne_beach/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/melbourne_beach/codes/code_of_ordinances?nodeId=COOR_CH94ZO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 12
+    },
+    {
+      "id": 13,
+      "name": "Unincorporated Brevard County",
+      "municode_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COOR_CH62ZO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 13
+    },
+    {
+      "id": 14,
+      "name": "Malabar",
+      "municode_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=PTIICOOR_CH50ZO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 14
+    },
+    {
+      "id": 15,
+      "name": "Grant-Valkaria",
+      "municode_url": "https://library.municode.com/fl/grant-valkaria/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/grant-valkaria/codes/code_of_ordinances?nodeId=PTIICOOR_CH22LADERE",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 15
+    },
+    {
+      "id": 16,
+      "name": "Palm Shores",
+      "municode_url": "https://library.municode.com/fl/palm_shores/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/palm_shores/codes/code_of_ordinances?nodeId=COOR_CH50ZO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 16
+    },
+    {
+      "id": 17,
+      "name": "Melbourne Village",
+      "municode_url": "https://library.municode.com/fl/melbourne_village/codes/code_of_ordinances",
+      "zoning_article_url": "https://library.municode.com/fl/melbourne_village/codes/code_of_ordinances?nodeId=PTIICOOR_CH26LADECO",
+      "elaws_url": null,
+      "status": "placeholder",
+      "priority": 17
+    }
+  ],
+  "firecrawl": {
+    "api_key_env": "FIRECRAWL_API_KEY",
+    "base_url": "https://api.firecrawl.dev/v1",
+    "rate_limit_per_minute": 10,
+    "max_retries": 3,
+    "timeout_seconds": 120
+  },
+  "supabase": {
+    "url_env": "SUPABASE_URL",
+    "key_env": "SUPABASE_SERVICE_KEY",
+    "table": "zoning_districts"
+  },
+  "parsing": {
+    "district_patterns": [
+      "§\s*(\d+-\d+)\.",
+      "Sec\.?\s*(\d+-\d+)",
+      "Section\s*(\d+-\d+)"
+    ],
+    "category_keywords": {
+      "Residential": ["residential", "single-family", "multi-family", "duplex", "dwelling"],
+      "Commercial": ["commercial", "business", "retail", "office"],
+      "Industrial": ["industrial", "manufacturing", "warehouse"],
+      "Mixed-Use": ["mixed-use", "mixed use", "planned unit"],
+      "Agricultural": ["agricultural", "rural", "farming"],
+      "Institutional": ["institutional", "public", "government"]
+    }
+  }
+}
