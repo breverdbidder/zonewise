@@ -45,7 +45,6 @@ def get_property_data(address: str) -> Optional[Dict[str, Any]]:
     """
     try:
         # Extract just the street address (first part before city)
-        # BCPAO works best with just street address
         street_address = address.split(',')[0].strip() if ',' in address else address
         
         params = {"address": street_address}
@@ -114,13 +113,58 @@ def map_land_use_to_zoning(land_use_code: str) -> Optional[str]:
     return None
 
 
-def get_zoning_rules(zoning_district: str, jurisdiction: str) -> Optional[Dict[str, Any]]:
+def get_jurisdiction_id(city_name: str) -> Optional[int]:
     """
-    Get zoning rules from Supabase
+    Get jurisdiction ID from city name
     
     Args:
-        zoning_district: Zoning district code
-        jurisdiction: City/county name
+        city_name: City name from BCPAO (e.g., "PALM BAY", "MELBOURNE")
+        
+    Returns:
+        Jurisdiction ID or None
+    """
+    supabase = get_supabase()
+    if not supabase:
+        return None
+    
+    try:
+        # Normalize city name for matching
+        city_normalized = city_name.upper().strip()
+        
+        # Try exact match first
+        response = supabase.table("jurisdictions") \
+            .select("id, name") \
+            .ilike("name", city_normalized) \
+            .limit(1) \
+            .execute()
+        
+        if response.data and len(response.data) > 0:
+            return response.data[0]["id"]
+        
+        # Try partial match (e.g., "WEST MELBOURNE" -> "Melbourne")
+        for word in city_normalized.split():
+            response = supabase.table("jurisdictions") \
+                .select("id, name") \
+                .ilike("name", f"%{word}%") \
+                .limit(1) \
+                .execute()
+            
+            if response.data and len(response.data) > 0:
+                return response.data[0]["id"]
+        
+        return None
+    except Exception as e:
+        print(f"Error fetching jurisdiction: {e}")
+        return None
+
+
+def get_zoning_rules(zoning_district: str, city_name: str) -> Optional[Dict[str, Any]]:
+    """
+    Get zoning rules from Supabase using jurisdiction lookup
+    
+    Args:
+        zoning_district: Zoning district code (e.g., "R-1")
+        city_name: City name from BCPAO
         
     Returns:
         Zoning rules dict or None
@@ -128,20 +172,26 @@ def get_zoning_rules(zoning_district: str, jurisdiction: str) -> Optional[Dict[s
     supabase = get_supabase()
     if not supabase:
         return None
-        
+    
     try:
-        # Normalize jurisdiction name
-        jurisdiction_normalized = jurisdiction.upper().strip()
+        # First, get jurisdiction_id from city name
+        jurisdiction_id = get_jurisdiction_id(city_name)
+        if not jurisdiction_id:
+            print(f"Jurisdiction not found for city: {city_name}")
+            return None
         
+        # Now query zoning_districts with jurisdiction_id
         response = supabase.table("zoning_districts") \
             .select("*") \
-            .eq("district_code", zoning_district) \
-            .ilike("jurisdiction", f"%{jurisdiction_normalized}%") \
+            .eq("code", zoning_district) \
+            .eq("jurisdiction_id", jurisdiction_id) \
             .limit(1) \
             .execute()
         
         if response.data and len(response.data) > 0:
             return response.data[0]
+        
+        print(f"Zoning district {zoning_district} not found for jurisdiction_id {jurisdiction_id}")
         return None
     except Exception as e:
         print(f"Error fetching zoning rules: {e}")
@@ -257,7 +307,7 @@ def analyze_compliance(address: str) -> Dict[str, Any]:
     
     result["property_data"]["inferred_zoning"] = zoning_district
     
-    # Step 3: Get zoning rules
+    # Step 3: Get zoning rules (now with proper jurisdiction lookup)
     zoning_rules = get_zoning_rules(zoning_district, city)
     result["zoning_data"] = zoning_rules
     
