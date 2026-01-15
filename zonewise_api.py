@@ -28,6 +28,21 @@ except ImportError:
             "zoning_data": None
         }
 
+# Import ZoningCrew for /api/v1/compliance endpoint
+try:
+    from src.agents.zoning_crew import run_compliance_check, ZoningCrew, ComplianceStatus
+    CREW_AVAILABLE = True
+except ImportError:
+    CREW_AVAILABLE = False
+    def run_compliance_check(address: str, proposed_use: str) -> Dict[str, Any]:
+        return {
+            "address": address,
+            "proposed_use": proposed_use,
+            "status": "error",
+            "compliant": False,
+            "error": "ZoningCrew not available"
+        }
+
 # Supabase client initialization
 try:
     from supabase import create_client
@@ -41,7 +56,7 @@ except Exception:
 app = FastAPI(
     title="ZoneWise API",
     description="Property zoning compliance analysis for Brevard County jurisdictions",
-    version="1.1.0",
+    version="1.2.0",
     docs_url="/docs",
     redoc_url="/redoc"
 )
@@ -64,6 +79,50 @@ class AnalyzeRequest(BaseModel):
         json_schema_extra = {
             "example": {
                 "address": "798 Ocean Dr, Satellite Beach, FL"
+            }
+        }
+
+
+class ComplianceRequest(BaseModel):
+    """Request model for CrewAI compliance check"""
+    address: str = Field(..., description="Full property address")
+    proposed_use: str = Field(..., description="Proposed use for the property")
+    jurisdiction: Optional[str] = Field(None, description="Override jurisdiction (auto-detected if not provided)")
+    zoning_district: Optional[str] = Field(None, description="Override zoning district (auto-detected if not provided)")
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "address": "123 Main St, Indian Harbour Beach, FL",
+                "proposed_use": "single family home",
+                "jurisdiction": None,
+                "zoning_district": None
+            }
+        }
+
+
+class ComplianceResponse(BaseModel):
+    """Response model for CrewAI compliance check"""
+    address: str
+    jurisdiction: str
+    zoning: str
+    proposed_use: str
+    status: str = Field(..., description="compliant, non_compliant, needs_variance, unknown, error")
+    compliant: bool
+    recommendations: List[str]
+    error: Optional[str] = None
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "address": "123 Main St, Indian Harbour Beach, FL",
+                "jurisdiction": "Indian Harbour Beach",
+                "zoning": "R-1",
+                "proposed_use": "single family home",
+                "status": "compliant",
+                "compliant": True,
+                "recommendations": [],
+                "error": None
             }
         }
 
@@ -124,6 +183,7 @@ class HealthResponse(BaseModel):
     version: str
     supabase_connected: bool
     bcpao_api_available: bool
+    crew_available: bool
 
 
 class JurisdictionInfo(BaseModel):
@@ -146,10 +206,16 @@ async def root():
     """Root endpoint - API information"""
     return {
         "name": "ZoneWise API",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "description": "Property zoning compliance analysis for all 17 Brevard County jurisdictions",
         "docs": "/docs",
-        "health": "/health"
+        "health": "/health",
+        "endpoints": {
+            "analyze": "POST /api/v1/analyze - Basic compliance analysis",
+            "compliance": "POST /api/v1/compliance - CrewAI multi-agent compliance check",
+            "jurisdictions": "GET /api/v1/jurisdictions - List supported jurisdictions",
+            "districts": "GET /api/v1/districts/{jurisdiction_id} - Get zoning districts"
+        }
     }
 
 
@@ -168,9 +234,10 @@ async def health_check():
     
     return HealthResponse(
         status="healthy",
-        version="1.1.0",
+        version="1.2.0",
         supabase_connected=supabase_connected,
-        bcpao_api_available=True  # Assume available unless checked
+        bcpao_api_available=True,  # Assume available unless checked
+        crew_available=CREW_AVAILABLE
     )
 
 
@@ -200,6 +267,48 @@ async def analyze_property(request: AnalyzeRequest):
         raise HTTPException(
             status_code=500,
             detail=f"Analysis failed: {str(e)}"
+        )
+
+
+@app.post("/api/v1/compliance", response_model=ComplianceResponse, tags=["Analysis"])
+async def check_compliance(request: ComplianceRequest):
+    """
+    CrewAI Multi-Agent Compliance Check
+    
+    Uses the ZoningCrew to orchestrate multiple agents:
+    1. Property Analysis Agent - Fetches property data from BCPAO
+    2. Zoning Research Agent - Gets applicable zoning rules from Supabase
+    3. Compliance Check Agent - Analyzes if proposed use is compliant
+    
+    Returns comprehensive compliance analysis with recommendations.
+    """
+    try:
+        if not CREW_AVAILABLE:
+            raise HTTPException(
+                status_code=503,
+                detail="ZoningCrew not available - check server configuration"
+            )
+        
+        # Run CrewAI compliance check
+        result = run_compliance_check(request.address, request.proposed_use)
+        
+        return ComplianceResponse(
+            address=result.get("address", request.address),
+            jurisdiction=result.get("jurisdiction", "Unknown"),
+            zoning=result.get("zoning", "Unknown"),
+            proposed_use=result.get("proposed_use", request.proposed_use),
+            status=result.get("status", "error"),
+            compliant=result.get("compliant", False),
+            recommendations=result.get("recommendations", []),
+            error=result.get("error")
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Compliance check failed: {str(e)}"
         )
 
 
