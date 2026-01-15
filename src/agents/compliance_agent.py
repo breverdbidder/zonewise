@@ -37,8 +37,7 @@ def get_property_data(address: str) -> Optional[Dict[str, Any]]:
     """
     try:
         params = {
-            "siteAddress": address,
-            "limit": 1
+            "address": address
         }
         response = httpx.get(BCPAO_API_BASE, params=params, timeout=30)
         response.raise_for_status()
