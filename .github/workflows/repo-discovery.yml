@@ -1,0 +1,59 @@
+name: Weekly Repository Discovery
+
+on:
+  schedule:
+    # Sunday 11 PM EST = Monday 4 AM UTC
+    - cron: '0 4 * * 1'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests
+      
+      - name: Run discovery script
+        run: |
+          python scripts/weekly_repo_discovery.py
+      
+      - name: Check for changes
+        id: changes
+        run: |
+          if [ -f discovered_repos.json ]; then
+            echo "found=true" >> $GITHUB_OUTPUT
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Commit and push changes
+        if: steps.changes.outputs.found == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add discovered_repos.json
+          git diff --quiet && git diff --staged --quiet || (
+            git commit -m "🔄 Weekly repo discovery: $(date +'%Y-%m-%d')" &&
+            git push
+          )
+      
+      - name: Create summary
+        if: steps.changes.outputs.found == 'true'
+        run: |
+          echo "## Weekly Repository Discovery Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** $(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+          echo "**Total Repos:** $(jq '. | length' discovered_repos.json)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Top 10 by Quality Score" >> $GITHUB_STEP_SUMMARY
+          jq -r '.[:10] | .[] | "- [\(.name)](\(.url)) - Score: \(.score) - ⭐ \(.stars)"' discovered_repos.json >> $GITHUB_STEP_SUMMARY
