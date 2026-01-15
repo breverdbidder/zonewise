@@ -5,6 +5,8 @@ Analyzes property compliance with local zoning ordinances
 
 import os
 import httpx
+import warnings
+warnings.filterwarnings("ignore", message="Unverified HTTPS request")
 from typing import Dict, Any, List, Optional
 
 # Environment variables
@@ -30,24 +32,39 @@ def get_property_data(address: str) -> Optional[Dict[str, Any]]:
     Fetch property data from BCPAO API
     
     Args:
-        address: Full property address
+        address: Full property address (will extract street portion)
         
     Returns:
         Property data dict or None
     """
     try:
-        params = {
-            "address": address
-        }
-        response = httpx.get(BCPAO_API_BASE, params=params, timeout=30)
+        # Extract just the street address (first part before city)
+        # BCPAO works best with just street address
+        street_address = address.split(',')[0].strip() if ',' in address else address
+        
+        params = {"address": street_address}
+        
+        # Use verify=False as workaround for Render's TLS issues
+        response = httpx.get(
+            BCPAO_API_BASE, 
+            params=params, 
+            timeout=30,
+            verify=False  # Workaround for certificate issues
+        )
         response.raise_for_status()
         data = response.json()
         
         if data and len(data) > 0:
             return data[0]
         return None
+    except httpx.TimeoutException:
+        print(f"Timeout fetching property data for: {address}")
+        return None
+    except httpx.RequestError as e:
+        print(f"Request error fetching property data: {e}")
+        return None
     except Exception as e:
-        print(f"Error fetching property data: {e}")
+        print(f"Error fetching property data: {type(e).__name__}: {e}")
         return None
 
 
