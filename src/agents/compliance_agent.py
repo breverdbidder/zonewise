@@ -341,6 +341,15 @@ def analyze_compliance(address: str) -> Dict[str, Any]:
     acreage = bcpao_data.get("acreage", 0) or 0
     lot_size_sqft = int(float(acreage) * 43560) if acreage else None
     
+    # Clean year_built (may be whitespace for vacant land)
+    year_built_raw = bcpao_data.get("yearBuilt", "")
+    year_built = None
+    if year_built_raw and str(year_built_raw).strip():
+        try:
+            year_built = int(str(year_built_raw).strip())
+        except (ValueError, TypeError):
+            year_built = None
+    
     # Extract property info
     result["property_data"] = {
         "parcel_id": bcpao_data.get("parcelID"),
@@ -351,7 +360,7 @@ def analyze_compliance(address: str) -> Dict[str, Any]:
         "lot_size": lot_size_sqft,
         "building_area": bcpao_data.get("totalBaseArea"),
         "use_code": bcpao_data.get("landUseCode", "").strip() if bcpao_data.get("landUseCode") else None,
-        "year_built": bcpao_data.get("yearBuilt"),
+        "year_built": year_built,
         "market_value": bcpao_data.get("marketValue"),
         "photo_url": bcpao_data.get("masterPhotoUrl"),
         "subdivision": bcpao_data.get("subdivisionName"),
