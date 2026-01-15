@@ -14,7 +14,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src", "agents"))
 
 try:
-    from compliance_agent import analyze_compliance
+    from src.agents.compliance_agent import analyze_compliance
 except ImportError:
     # Fallback for development
     def analyze_compliance(address: str) -> Dict[str, Any]:
