@@ -1,0 +1,283 @@
+name: ZoneWise Autonomous Dev Agent
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Development task to execute'
+        required: true
+        default: 'Build CrewAI Compliance Agent using zoning_districts data'
+      max_iterations:
+        description: 'Maximum iterations before checkpoint'
+        required: false
+        default: '10'
+  schedule:
+    # Run daily at 2 AM EST (7 AM UTC) for continuous development
+    - cron: '0 7 * * *'
+
+env:
+  ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+
+jobs:
+  autonomous-dev:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360  # 6 hours max
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install anthropic google-generativeai httpx supabase
+      
+      - name: Load checkpoint from Supabase
+        id: load-checkpoint
+        run: |
+          python << 'PYEOF'
+          import httpx
+          import json
+          import os
+          
+          SUPABASE_URL = os.environ['SUPABASE_URL']
+          SUPABASE_KEY = os.environ['SUPABASE_SERVICE_KEY']
+          
+          # Get latest ZoneWise checkpoint
+          response = httpx.get(
+              f"{SUPABASE_URL}/rest/v1/claude_context_checkpoints",
+              params={
+                  "conversation_id": "like.zonewise*",
+                  "order": "created_at.desc",
+                  "limit": 1
+              },
+              headers={
+                  "apikey": SUPABASE_KEY,
+                  "Authorization": f"Bearer {SUPABASE_KEY}"
+              }
+          )
+          
+          checkpoints = response.json()
+          if checkpoints and len(checkpoints) > 0:
+              cp = checkpoints[0]
+              print(f"📌 Loaded checkpoint: {cp['checkpoint_summary'][:100]}...")
+              with open('/tmp/checkpoint.json', 'w') as f:
+                  json.dump(cp, f)
+              print("::set-output name=has_checkpoint::true")
+          else:
+              print("No checkpoint found, starting fresh")
+              print("::set-output name=has_checkpoint::false")
+          PYEOF
+      
+      - name: Read CLAUDE.md context
+        id: read-context
+        run: |
+          if [ -f "CLAUDE.md" ]; then
+            echo "CLAUDE_MD<<EOF" >> $GITHUB_OUTPUT
+            cat CLAUDE.md >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Run Autonomous Development Agent
+        run: |
+          python << 'PYEOF'
+          import anthropic
+          import json
+          import os
+          import subprocess
+          import httpx
+          from pathlib import Path
+          
+          # Config
+          MAX_ITERATIONS = int("${{ github.event.inputs.max_iterations }}" or "10")
+          TASK = "${{ github.event.inputs.task }}" or "Continue ZoneWise development"
+          
+          # Load context
+          claude_md = Path("CLAUDE.md").read_text() if Path("CLAUDE.md").exists() else ""
+          poc_status = Path("POC_STATUS.md").read_text() if Path("POC_STATUS.md").exists() else ""
+          
+          checkpoint_context = ""
+          if Path("/tmp/checkpoint.json").exists():
+              with open("/tmp/checkpoint.json") as f:
+                  cp = json.load(f)
+                  checkpoint_context = f"""
+          ## Previous Checkpoint
+          Summary: {cp.get('checkpoint_summary', '')}
+          Active Tasks: {cp.get('active_tasks', [])}
+          Key Points: {json.dumps(cp.get('key_points', {}), indent=2)}
+          """
+          
+          # System prompt
+          SYSTEM = f"""You are an autonomous AI development agent for ZoneWise.
+          
+          {claude_md}
+          
+          ## Current Project State
+          {poc_status}
+          
+          {checkpoint_context}
+          
+          ## Your Capabilities
+          - Read/write files in the repository
+          - Execute Python code
+          - Query Supabase database
+          - Create new files and directories
+          - Commit changes to git
+          
+          ## Rules
+          1. Execute tasks autonomously - no asking for permission
+          2. Write complete, working code - not snippets
+          3. Test code before committing
+          4. Save progress to Supabase checkpoint every 3 iterations
+          5. Commit code changes with descriptive messages
+          
+          ## Output Format
+          For each action, output JSON:
+          {{"action": "write_file", "path": "path/to/file.py", "content": "..."}}
+          {{"action": "execute", "command": "python script.py"}}
+          {{"action": "commit", "message": "feat: add compliance agent"}}
+          {{"action": "checkpoint", "summary": "...", "next_steps": [...]}}
+          {{"action": "done", "summary": "..."}}
+          """
+          
+          # Initialize Claude client
+          client = anthropic.Anthropic(api_key=os.environ['ANTHROPIC_API_KEY'])
+          
+          # Development loop
+          messages = [{"role": "user", "content": f"Execute this task: {TASK}"}]
+          
+          for iteration in range(MAX_ITERATIONS):
+              print(f"\n{'='*60}")
+              print(f"ITERATION {iteration + 1}/{MAX_ITERATIONS}")
+              print(f"{'='*60}\n")
+              
+              # Call Claude API
+              response = client.messages.create(
+                  model="claude-sonnet-4-5-20250929",
+                  max_tokens=8192,
+                  system=SYSTEM,
+                  messages=messages
+              )
+              
+              assistant_message = response.content[0].text
+              print(f"Agent: {assistant_message[:500]}...")
+              
+              # Parse and execute actions
+              try:
+                  # Find JSON in response
+                  import re
+                  json_matches = re.findall(r'\{[^{}]*\}', assistant_message)
+                  
+                  for json_str in json_matches:
+                      try:
+                          action = json.loads(json_str)
+                          action_type = action.get('action')
+                          
+                          if action_type == 'write_file':
+                              path = Path(action['path'])
+                              path.parent.mkdir(parents=True, exist_ok=True)
+                              path.write_text(action['content'])
+                              print(f"✅ Wrote: {path}")
+                          
+                          elif action_type == 'execute':
+                              result = subprocess.run(
+                                  action['command'],
+                                  shell=True,
+                                  capture_output=True,
+                                  text=True,
+                                  timeout=300
+                              )
+                              print(f"✅ Executed: {action['command']}")
+                              print(f"   stdout: {result.stdout[:200]}")
+                              if result.stderr:
+                                  print(f"   stderr: {result.stderr[:200]}")
+                          
+                          elif action_type == 'commit':
+                              subprocess.run(['git', 'add', '-A'], check=True)
+                              subprocess.run(
+                                  ['git', 'commit', '-m', action['message']],
+                                  check=True
+                              )
+                              print(f"✅ Committed: {action['message']}")
+                          
+                          elif action_type == 'checkpoint':
+                              # Save to Supabase
+                              httpx.post(
+                                  f"{os.environ['SUPABASE_URL']}/rest/v1/claude_context_checkpoints",
+                                  headers={
+                                      "apikey": os.environ['SUPABASE_SERVICE_KEY'],
+                                      "Authorization": f"Bearer {os.environ['SUPABASE_SERVICE_KEY']}",
+                                      "Content-Type": "application/json"
+                                  },
+                                  json={
+                                      "conversation_id": f"zonewise-agent-{os.environ.get('GITHUB_RUN_ID', 'local')}",
+                                      "checkpoint_number": iteration + 1,
+                                      "context_percent": (iteration + 1) / MAX_ITERATIONS * 100,
+                                      "checkpoint_summary": action.get('summary', ''),
+                                      "active_tasks": action.get('next_steps', []),
+                                      "key_points": action
+                                  }
+                              )
+                              print(f"✅ Checkpoint saved")
+                          
+                          elif action_type == 'done':
+                              print(f"\n🎉 TASK COMPLETE: {action.get('summary', '')}")
+                              break
+                      
+                      except json.JSONDecodeError:
+                          continue
+              
+              except Exception as e:
+                  print(f"❌ Error: {e}")
+              
+              # Add response to messages for next iteration
+              messages.append({"role": "assistant", "content": assistant_message})
+              messages.append({"role": "user", "content": "Continue. What's next?"})
+          
+          print("\n" + "="*60)
+          print("AUTONOMOUS SESSION COMPLETE")
+          print("="*60)
+          PYEOF
+      
+      - name: Push changes
+        run: |
+          git config user.name "ZoneWise Agent"
+          git config user.email "agent@zonewise.ai"
+          git push origin main || echo "No changes to push"
+      
+      - name: Final checkpoint
+        if: always()
+        run: |
+          python << 'PYEOF'
+          import httpx
+          import os
+          import json
+          
+          httpx.post(
+              f"{os.environ['SUPABASE_URL']}/rest/v1/claude_context_checkpoints",
+              headers={
+                  "apikey": os.environ['SUPABASE_SERVICE_KEY'],
+                  "Authorization": f"Bearer {os.environ['SUPABASE_SERVICE_KEY']}",
+                  "Content-Type": "application/json"
+              },
+              json={
+                  "conversation_id": f"zonewise-agent-{os.environ.get('GITHUB_RUN_ID', 'final')}",
+                  "checkpoint_number": 999,
+                  "context_percent": 100,
+                  "checkpoint_summary": "Workflow completed",
+                  "active_tasks": [],
+                  "key_points": {"status": "completed", "run_id": os.environ.get('GITHUB_RUN_ID')}
+              }
+          )
+          print("✅ Final checkpoint saved")
+          PYEOF
