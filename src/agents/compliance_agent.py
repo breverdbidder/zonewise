@@ -14,6 +14,12 @@ SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY")
 BCPAO_API_BASE = "https://www.bcpao.us/api/v1/search"
 
+# BCPAO requires User-Agent header (403 without it)
+BCPAO_HEADERS = {
+    "User-Agent": "ZoneWise/1.0 (Property Analysis; contact@zonewise.io)",
+    "Accept": "application/json"
+}
+
 # Lazy Supabase initialization
 _supabase_client = None
 
@@ -45,11 +51,13 @@ def get_property_data(address: str) -> Optional[Dict[str, Any]]:
         params = {"address": street_address}
         
         # Use verify=False as workaround for Render's TLS issues
+        # MUST include headers - BCPAO returns 403 without User-Agent
         response = httpx.get(
             BCPAO_API_BASE, 
-            params=params, 
+            params=params,
+            headers=BCPAO_HEADERS,
             timeout=30,
-            verify=False  # Workaround for certificate issues
+            verify=False
         )
         response.raise_for_status()
         data = response.json()
@@ -194,12 +202,14 @@ def analyze_compliance(address: str) -> Dict[str, Any]:
     # Extract relevant property info
     result["property_data"] = {
         "parcel_id": property_data.get("parcel"),
+        "account": property_data.get("account"),
         "owner": property_data.get("owner"),
         "city": property_data.get("city"),
         "lot_size": property_data.get("lotSize"),
         "building_area": property_data.get("buildingArea"),
         "use_code": property_data.get("useCode"),
-        "year_built": property_data.get("yearBuilt")
+        "year_built": property_data.get("yearBuilt"),
+        "site_address": property_data.get("siteAddress")
     }
     
     city = property_data.get("city", "")
