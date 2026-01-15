@@ -4,6 +4,7 @@ Analyzes property compliance with local zoning ordinances
 """
 
 import os
+import re
 import httpx
 import warnings
 warnings.filterwarnings("ignore", message="Unverified HTTPS request")
@@ -20,6 +21,29 @@ BCPAO_HEADERS = {
     "Accept": "application/json"
 }
 
+# Address normalization patterns for BCPAO compatibility
+ADDRESS_ABBREVIATIONS = {
+    r'\bstreet\b': 'ST',
+    r'\bavenue\b': 'AVE',
+    r'\bdrive\b': 'DR',
+    r'\bboulevard\b': 'BLVD',
+    r'\bcircle\b': 'CIR',
+    r'\bcourt\b': 'CT',
+    r'\blane\b': 'LN',
+    r'\broad\b': 'RD',
+    r'\bplace\b': 'PL',
+    r'\bterrace\b': 'TER',
+    r'\bway\b': 'WAY',
+    r'\bnorth\b': 'N',
+    r'\bsouth\b': 'S',
+    r'\beast\b': 'E',
+    r'\bwest\b': 'W',
+    r'\bnortheast\b': 'NE',
+    r'\bnorthwest\b': 'NW',
+    r'\bsoutheast\b': 'SE',
+    r'\bsouthwest\b': 'SW',
+}
+
 # Lazy Supabase initialization
 _supabase_client = None
 
@@ -33,23 +57,46 @@ def get_supabase():
     return _supabase_client
 
 
+def normalize_address(address: str) -> str:
+    """
+    Normalize address to BCPAO-compatible format
+    
+    Args:
+        address: Raw address input
+        
+    Returns:
+        Normalized address with standard abbreviations
+    """
+    normalized = address.upper()
+    
+    for pattern, replacement in ADDRESS_ABBREVIATIONS.items():
+        normalized = re.sub(pattern, replacement, normalized, flags=re.IGNORECASE)
+    
+    # Remove extra spaces
+    normalized = ' '.join(normalized.split())
+    
+    return normalized
+
+
 def get_property_data(address: str) -> Optional[Dict[str, Any]]:
     """
     Fetch property data from BCPAO API
     
     Args:
-        address: Full property address (will extract street portion)
+        address: Full property address (will extract and normalize street portion)
         
     Returns:
         Property data dict or None
     """
     try:
-        # Extract just the street address (first part before city)
+        # Extract street address (before city)
         street_address = address.split(',')[0].strip() if ',' in address else address
         
-        params = {"address": street_address}
+        # Normalize for BCPAO compatibility (Street -> ST, Avenue -> AVE, etc.)
+        normalized = normalize_address(street_address)
         
-        # MUST include headers - BCPAO returns 403 without User-Agent
+        params = {"address": normalized}
+        
         response = httpx.get(
             BCPAO_API_BASE, 
             params=params,
@@ -74,12 +121,13 @@ def get_property_data(address: str) -> Optional[Dict[str, Any]]:
         return None
 
 
-def map_land_use_to_zoning(land_use_code: str) -> Optional[str]:
+def map_land_use_to_zoning(land_use_code: str, city: str = "") -> Optional[str]:
     """
     Map BCPAO land use description to zoning district
     
     Args:
-        land_use_code: Land use description from BCPAO (e.g., "SINGLE FAMILY RESIDENCE")
+        land_use_code: Land use description from BCPAO
+        city: City name for city-specific mappings
         
     Returns:
         Zoning district code or None
@@ -88,24 +136,51 @@ def map_land_use_to_zoning(land_use_code: str) -> Optional[str]:
         return None
     
     land_use_lower = land_use_code.lower().strip()
+    city_upper = city.upper() if city else ""
     
-    # Residential mappings
+    # Single-family residential
     if "single family" in land_use_lower:
         return "R-1"
-    elif "multi" in land_use_lower or "duplex" in land_use_lower or "triplex" in land_use_lower:
+    
+    # Multi-family / Mixed-use (important for Satellite Beach RM-3)
+    if "multi-family" in land_use_lower or "multifamily" in land_use_lower:
+        # Satellite Beach uses RM-3 for multi-family
+        if "SATELLITE" in city_upper:
+            return "RM-3"
+        return "R-3"
+    
+    # Vacant multi-family platted land
+    if "vacant" in land_use_lower and "multi-family" in land_use_lower:
+        if "SATELLITE" in city_upper:
+            return "RM-3"
+        return "R-3"
+    
+    # General vacant residential
+    if "vacant" in land_use_lower and "residential" in land_use_lower:
+        if "multi" in land_use_lower or "platted" in land_use_lower:
+            if "SATELLITE" in city_upper:
+                return "RM-3"
+            return "R-2"
+        return "R-1"
+    
+    # Other residential
+    if "duplex" in land_use_lower or "triplex" in land_use_lower:
         return "R-2"
     elif "mobile" in land_use_lower or "manufactured" in land_use_lower:
         return "R-3"
     elif "condo" in land_use_lower or "apartment" in land_use_lower:
         return "R-3"
+    
     # Commercial mappings
     elif "commercial" in land_use_lower or "retail" in land_use_lower or "store" in land_use_lower:
         return "C-1"
     elif "office" in land_use_lower or "professional" in land_use_lower:
         return "C-2"
+    
     # Industrial mappings
     elif "industrial" in land_use_lower or "warehouse" in land_use_lower:
         return "I-1"
+    
     # Vacant/agricultural
     elif "vacant" in land_use_lower or "agricultural" in land_use_lower:
         return "AG"
@@ -118,7 +193,7 @@ def get_jurisdiction_id(city_name: str) -> Optional[int]:
     Get jurisdiction ID from city name
     
     Args:
-        city_name: City name from BCPAO (e.g., "PALM BAY", "MELBOURNE")
+        city_name: City name from BCPAO (e.g., "SATELLITE BEACH", "MELBOURNE")
         
     Returns:
         Jurisdiction ID or None
@@ -128,7 +203,6 @@ def get_jurisdiction_id(city_name: str) -> Optional[int]:
         return None
     
     try:
-        # Normalize city name for matching
         city_normalized = city_name.upper().strip()
         
         # Try exact match first
@@ -141,8 +215,10 @@ def get_jurisdiction_id(city_name: str) -> Optional[int]:
         if response.data and len(response.data) > 0:
             return response.data[0]["id"]
         
-        # Try partial match (e.g., "WEST MELBOURNE" -> "Melbourne")
+        # Try partial match (e.g., "SATELLITE BEACH" -> "Satellite Beach")
         for word in city_normalized.split():
+            if word in ["BEACH", "BAY", "WEST", "EAST", "NORTH", "SOUTH"]:
+                continue  # Skip common suffixes/prefixes
             response = supabase.table("jurisdictions") \
                 .select("id, name") \
                 .ilike("name", f"%{word}%") \
@@ -163,7 +239,7 @@ def get_zoning_rules(zoning_district: str, city_name: str) -> Optional[Dict[str,
     Get zoning rules from Supabase using jurisdiction lookup
     
     Args:
-        zoning_district: Zoning district code (e.g., "R-1")
+        zoning_district: Zoning district code (e.g., "R-1", "RM-3")
         city_name: City name from BCPAO
         
     Returns:
@@ -174,13 +250,11 @@ def get_zoning_rules(zoning_district: str, city_name: str) -> Optional[Dict[str,
         return None
     
     try:
-        # First, get jurisdiction_id from city name
         jurisdiction_id = get_jurisdiction_id(city_name)
         if not jurisdiction_id:
             print(f"Jurisdiction not found for city: {city_name}")
             return None
         
-        # Now query zoning_districts with jurisdiction_id
         response = supabase.table("zoning_districts") \
             .select("*") \
             .eq("code", zoning_district) \
@@ -201,24 +275,15 @@ def get_zoning_rules(zoning_district: str, city_name: str) -> Optional[Dict[str,
 def check_violations(property_data: Dict[str, Any], zoning_rules: Dict[str, Any]) -> List[Dict[str, str]]:
     """
     Check property against zoning rules for violations
-    
-    Args:
-        property_data: Property info from BCPAO
-        zoning_rules: Zoning rules from database
-        
-    Returns:
-        List of violation dicts
     """
     violations = []
     
     if not zoning_rules:
         return violations
     
-    # Convert acreage to sqft (1 acre = 43,560 sqft)
     acreage = property_data.get("acreage", 0) or 0
     lot_size_sqft = int(float(acreage) * 43560)
     
-    # Lot size check
     min_lot = zoning_rules.get("min_lot_size", 0) or 0
     if lot_size_sqft > 0 and min_lot > 0 and lot_size_sqft < min_lot:
         violations.append({
@@ -227,7 +292,6 @@ def check_violations(property_data: Dict[str, Any], zoning_rules: Dict[str, Any]
             "severity": "major"
         })
     
-    # Building coverage check
     building_area = property_data.get("totalBaseArea", 0) or 0
     max_coverage = zoning_rules.get("max_coverage", 100) or 100
     if lot_size_sqft > 0 and building_area > 0:
@@ -262,7 +326,7 @@ def analyze_compliance(address: str) -> Dict[str, Any]:
         "zoning_data": None
     }
     
-    # Step 1: Get property data from BCPAO
+    # Step 1: Get property data from BCPAO (with address normalization)
     bcpao_data = get_property_data(address)
     if not bcpao_data:
         result["violations"].append({
@@ -277,7 +341,7 @@ def analyze_compliance(address: str) -> Dict[str, Any]:
     acreage = bcpao_data.get("acreage", 0) or 0
     lot_size_sqft = int(float(acreage) * 43560) if acreage else None
     
-    # Extract and map BCPAO fields to our schema
+    # Extract property info
     result["property_data"] = {
         "parcel_id": bcpao_data.get("parcelID"),
         "account": bcpao_data.get("account"),
@@ -297,8 +361,8 @@ def analyze_compliance(address: str) -> Dict[str, Any]:
     city = bcpao_data.get("taxingDistrict", "")
     land_use = bcpao_data.get("landUseCode", "")
     
-    # Step 2: Map to zoning district
-    zoning_district = map_land_use_to_zoning(land_use)
+    # Step 2: Map to zoning district (city-aware for Satellite Beach RM-3)
+    zoning_district = map_land_use_to_zoning(land_use, city)
     if not zoning_district:
         result["status"] = "MANUAL_REVIEW"
         result["confidence"] = 30
@@ -307,7 +371,7 @@ def analyze_compliance(address: str) -> Dict[str, Any]:
     
     result["property_data"]["inferred_zoning"] = zoning_district
     
-    # Step 3: Get zoning rules (now with proper jurisdiction lookup)
+    # Step 3: Get zoning rules
     zoning_rules = get_zoning_rules(zoning_district, city)
     result["zoning_data"] = zoning_rules
     
