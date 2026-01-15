@@ -50,7 +50,6 @@ def get_property_data(address: str) -> Optional[Dict[str, Any]]:
         
         params = {"address": street_address}
         
-        # Use verify=False as workaround for Render's TLS issues
         # MUST include headers - BCPAO returns 403 without User-Agent
         response = httpx.get(
             BCPAO_API_BASE, 
@@ -76,25 +75,42 @@ def get_property_data(address: str) -> Optional[Dict[str, Any]]:
         return None
 
 
-def map_use_code_to_zoning(use_code: str, city: str) -> Optional[str]:
+def map_land_use_to_zoning(land_use_code: str) -> Optional[str]:
     """
-    Map BCPAO USE_CODE to zoning district
+    Map BCPAO land use description to zoning district
     
     Args:
-        use_code: Property use code from BCPAO
-        city: City name
+        land_use_code: Land use description from BCPAO (e.g., "SINGLE FAMILY RESIDENCE")
         
     Returns:
         Zoning district code or None
     """
-    # Common mappings (expand as needed)
-    residential_codes = ["0000", "0001", "0100", "0200"]
-    commercial_codes = ["1700", "1800", "1900"]
+    if not land_use_code:
+        return None
     
-    if use_code in residential_codes:
-        return "R-1"  # Residential
-    elif use_code in commercial_codes:
-        return "C-1"  # Commercial
+    land_use_lower = land_use_code.lower().strip()
+    
+    # Residential mappings
+    if "single family" in land_use_lower:
+        return "R-1"
+    elif "multi" in land_use_lower or "duplex" in land_use_lower or "triplex" in land_use_lower:
+        return "R-2"
+    elif "mobile" in land_use_lower or "manufactured" in land_use_lower:
+        return "R-3"
+    elif "condo" in land_use_lower or "apartment" in land_use_lower:
+        return "R-3"
+    # Commercial mappings
+    elif "commercial" in land_use_lower or "retail" in land_use_lower or "store" in land_use_lower:
+        return "C-1"
+    elif "office" in land_use_lower or "professional" in land_use_lower:
+        return "C-2"
+    # Industrial mappings
+    elif "industrial" in land_use_lower or "warehouse" in land_use_lower:
+        return "I-1"
+    # Vacant/agricultural
+    elif "vacant" in land_use_lower or "agricultural" in land_use_lower:
+        return "AG"
+    
     return None
 
 
@@ -114,14 +130,19 @@ def get_zoning_rules(zoning_district: str, jurisdiction: str) -> Optional[Dict[s
         return None
         
     try:
+        # Normalize jurisdiction name
+        jurisdiction_normalized = jurisdiction.upper().strip()
+        
         response = supabase.table("zoning_districts") \
             .select("*") \
             .eq("district_code", zoning_district) \
-            .eq("jurisdiction", jurisdiction) \
-            .single() \
+            .ilike("jurisdiction", f"%{jurisdiction_normalized}%") \
+            .limit(1) \
             .execute()
         
-        return response.data
+        if response.data and len(response.data) > 0:
+            return response.data[0]
+        return None
     except Exception as e:
         print(f"Error fetching zoning rules: {e}")
         return None
@@ -143,21 +164,24 @@ def check_violations(property_data: Dict[str, Any], zoning_rules: Dict[str, Any]
     if not zoning_rules:
         return violations
     
+    # Convert acreage to sqft (1 acre = 43,560 sqft)
+    acreage = property_data.get("acreage", 0) or 0
+    lot_size_sqft = int(float(acreage) * 43560)
+    
     # Lot size check
-    lot_size = property_data.get("lotSize", 0)
-    min_lot = zoning_rules.get("min_lot_size", 0)
-    if lot_size < min_lot:
+    min_lot = zoning_rules.get("min_lot_size", 0) or 0
+    if lot_size_sqft > 0 and min_lot > 0 and lot_size_sqft < min_lot:
         violations.append({
             "type": "LOT_SIZE",
-            "message": f"Lot size ({lot_size} sq ft) below minimum ({min_lot} sq ft)",
+            "message": f"Lot size ({lot_size_sqft:,} sq ft) below minimum ({min_lot:,} sq ft)",
             "severity": "major"
         })
     
     # Building coverage check
-    building_area = property_data.get("buildingArea", 0)
-    max_coverage = zoning_rules.get("max_coverage", 100)
-    if lot_size > 0:
-        coverage = (building_area / lot_size) * 100
+    building_area = property_data.get("totalBaseArea", 0) or 0
+    max_coverage = zoning_rules.get("max_coverage", 100) or 100
+    if lot_size_sqft > 0 and building_area > 0:
+        coverage = (building_area / lot_size_sqft) * 100
         if coverage > max_coverage:
             violations.append({
                 "type": "COVERAGE",
@@ -189,8 +213,8 @@ def analyze_compliance(address: str) -> Dict[str, Any]:
     }
     
     # Step 1: Get property data from BCPAO
-    property_data = get_property_data(address)
-    if not property_data:
+    bcpao_data = get_property_data(address)
+    if not bcpao_data:
         result["violations"].append({
             "type": "DATA_ERROR",
             "message": "Could not fetch property data from BCPAO",
@@ -199,36 +223,52 @@ def analyze_compliance(address: str) -> Dict[str, Any]:
         result["recommendations"].append("Verify address and try again")
         return result
     
-    # Extract relevant property info
+    # Convert acreage to sqft
+    acreage = bcpao_data.get("acreage", 0) or 0
+    lot_size_sqft = int(float(acreage) * 43560) if acreage else None
+    
+    # Extract and map BCPAO fields to our schema
     result["property_data"] = {
-        "parcel_id": property_data.get("parcel"),
-        "account": property_data.get("account"),
-        "owner": property_data.get("owner"),
-        "city": property_data.get("city"),
-        "lot_size": property_data.get("lotSize"),
-        "building_area": property_data.get("buildingArea"),
-        "use_code": property_data.get("useCode"),
-        "year_built": property_data.get("yearBuilt"),
-        "site_address": property_data.get("siteAddress")
+        "parcel_id": bcpao_data.get("parcelID"),
+        "account": bcpao_data.get("account"),
+        "owner": bcpao_data.get("owners"),
+        "city": bcpao_data.get("taxingDistrict"),
+        "site_address": bcpao_data.get("siteAddress"),
+        "lot_size": lot_size_sqft,
+        "building_area": bcpao_data.get("totalBaseArea"),
+        "use_code": bcpao_data.get("landUseCode", "").strip() if bcpao_data.get("landUseCode") else None,
+        "year_built": bcpao_data.get("yearBuilt"),
+        "market_value": bcpao_data.get("marketValue"),
+        "photo_url": bcpao_data.get("masterPhotoUrl"),
+        "subdivision": bcpao_data.get("subdivisionName"),
+        "acreage": acreage
     }
     
-    city = property_data.get("city", "")
-    use_code = property_data.get("useCode", "")
+    city = bcpao_data.get("taxingDistrict", "")
+    land_use = bcpao_data.get("landUseCode", "")
     
     # Step 2: Map to zoning district
-    zoning_district = map_use_code_to_zoning(use_code, city)
+    zoning_district = map_land_use_to_zoning(land_use)
     if not zoning_district:
         result["status"] = "MANUAL_REVIEW"
         result["confidence"] = 30
-        result["recommendations"].append("Unable to determine zoning district - manual review required")
+        result["recommendations"].append(f"Unable to determine zoning district from land use: {land_use.strip() if land_use else 'unknown'}")
         return result
+    
+    result["property_data"]["inferred_zoning"] = zoning_district
     
     # Step 3: Get zoning rules
     zoning_rules = get_zoning_rules(zoning_district, city)
     result["zoning_data"] = zoning_rules
     
+    if not zoning_rules:
+        result["status"] = "MANUAL_REVIEW"
+        result["confidence"] = 50
+        result["recommendations"].append(f"Zoning rules not found for {zoning_district} in {city}")
+        return result
+    
     # Step 4: Check for violations
-    violations = check_violations(property_data, zoning_rules)
+    violations = check_violations(bcpao_data, zoning_rules)
     result["violations"] = violations
     
     # Step 5: Determine status
