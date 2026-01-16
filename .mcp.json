@@ -1,0 +1,41 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/schemas/mcp.schema.json",
+  "mcpServers": {
+    "supabase": {
+      "command": "npx",
+      "args": ["-y", "@supabase/mcp-server-supabase"],
+      "env": {
+        "SUPABASE_URL": "https://mocerqjnksmhcjzxrewo.supabase.co",
+        "SUPABASE_SERVICE_ROLE_KEY": "${SUPABASE_SERVICE_ROLE_KEY}"
+      }
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "brave-search": {
+      "command": "npx",
+      "args": ["-y", "@anthropics/brave-search-mcp"],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      }
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@anthropics/memory-mcp"],
+      "env": {
+        "MEMORY_STORAGE_PATH": "~/.claude-code/memory"
+      }
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": ["-y", "@anthropics/puppeteer-mcp"],
+      "env": {
+        "PUPPETEER_HEADLESS": "true"
+      }
+    }
+  }
+}
