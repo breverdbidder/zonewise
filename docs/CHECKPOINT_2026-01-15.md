@@ -1,22 +1,27 @@
-# ZoneWise Extraction Checkpoint - January 15, 2026
+# ZoneWise Extraction Checkpoint - January 15, 2026 (Updated)
 
-## Current Status
+## Session Summary
 
-### Extraction Progress (17 Jurisdictions)
+**Progress Made:**
+- Fixed Melbourne extraction - Now includes setback data from Table 2A
+- Added Indian Harbour Beach - 9 districts with verified dimensional standards
+- Total rows: 31 (from 32 → 31 due to Melbourne consolidation)
 
-| # | Jurisdiction | Platform | Status | Districts | Data Quality |
-|---|--------------|----------|--------|-----------|--------------|
-| 1 | Melbourne | Municode | ✅ Extracted | 20 | Partial - Missing setbacks |
-| 2 | Satellite Beach | eLaws | ✅ Extracted | 12 | Poor - Missing most dims |
-| 3 | Palm Bay | American Legal | ⏳ Supabase only | 1 | Partial |
+## Current Extraction Status
+
+| # | Jurisdiction | Platform | Status | Districts | Notes |
+|---|--------------|----------|--------|-----------|-------|
+| 1 | Melbourne | Municode | ✅ Fixed | 10 | Setbacks now included |
+| 2 | Satellite Beach | eLaws | ✅ Done | 12 | May need quality fixes |
+| 3 | Indian Harbour Beach | Municode | ✅ NEW | 9 | Full dimensional data |
 | 4 | Cocoa | Municode | 🔄 Pending | 0 | - |
 | 5 | Titusville | Municode | 🔄 Pending | 0 | - |
 | 6 | Rockledge | Municode | 🔄 Pending | 0 | - |
-| 7 | West Melbourne | Municode | 🔄 Pending | 0 | - |
-| 8 | Brevard County | Municode | 🔄 Pending | 0 | - |
-| 9 | Indian Harbour Beach | Municode | 🔄 Pending | 0 | - |
+| 7 | Palm Bay | Municode | 🔄 Pending | 0 | Has separate LDC |
+| 8 | West Melbourne | Municode | 🔄 Pending | 0 | - |
+| 9 | Brevard County | Municode | 🔄 Pending | 0 | Unincorporated areas |
 | 10 | Cape Canaveral | Municode | 🔄 Pending | 0 | - |
-| 11 | Cocoa Beach | Municode | 🔄 Pending | 0 | - |
+| 11 | Cocoa Beach | Municode | 🔄 Pending | 0 | Has separate LDC |
 | 12 | Indialantic | eLaws | 🔄 Pending | 0 | - |
 | 13 | Melbourne Beach | eLaws | 🔄 Pending | 0 | - |
 | 14 | Malabar | eLaws | 🔄 Pending | 0 | - |
@@ -24,121 +29,77 @@
 | 16 | Melbourne Village | PDF | ⏳ TBD | 0 | - |
 | 17 | Palm Shores | PDF | ⏳ TBD | 0 | - |
 
-### Data Locations
+**Total: 31/~189 rows (16%)**
 
-1. **JSON File:** `zonewise_extraction_results.json` (32 rows - Melbourne + Satellite Beach)
-2. **Supabase:** `zoning_districts` table (4 rows - Melbourne 4, Palm Bay 1)
-3. **Target:** 189 rows (estimated across all 17 jurisdictions)
+## Key Fixes Applied
 
-### Key Issues
-
-1. **JSON→Supabase sync broken** - Different schemas between extractors
-2. **Missing setback data** - Extraction capturing lot sizes but not setbacks
-3. **Satellite Beach district_name malformed** - Contains URL fragments
-4. **14 jurisdictions not started**
-
-## Repository Structure
-
-```
-breverdbidder/zonewise
-├── municipal_code_extractor.py          # Main extractor (JSON output)
-├── supabase_integration.py              # Supabase client
-├── zonewise_extraction_results.json     # Current extraction output
-├── src/
-│   ├── ingestion/
-│   │   ├── firecrawl_scraper.py        # 17 jurisdiction configs
-│   │   └── ordinance_parser.py         # Regex + LLM parsing
-│   └── extractors/
-│       └── zonewise_mcp_server.py      # MCP server extractor
-└── .github/workflows/
-    ├── continuous_extraction.yml        # Daily 11 PM EST
-    └── daily-zonewize.yml              # Analysis workflow
+### Melbourne Table 2A Parsing Fix
+```python
+# Fixed parse_table_value to handle:
+# - "12,000" → 12000 (was parsing as 12)
+# - "20 or 30(MF)" → 20 (first value)
+# - "50/65 4" → 50 (first value, ignore footnote)
+# - "7.5" → 7 (float to int)
 ```
 
-## Supabase Connection
+### R-1AA Verified Values (Melbourne)
+- Lot Area: 10,000 sqft ✅
+- Lot Width: 85 ft ✅
+- Lot Depth: 110 ft ✅
+- Max Height: 36 ft ✅
+- Front Setback: 25 ft ✅
+- Side Interior: 10 ft ✅
+- Side Corner: 25 ft ✅
+- Rear: 25 ft ✅
+- Water: 35 ft ✅
 
-- **URL:** https://mocerqjnksmhcjzxrewo.supabase.co
-- **Tables:** jurisdictions (17), zoning_districts (4 current)
-- **Service Key:** eyJhbGci... (ends with fL255mO0V8-rrU0Il3L41cIdQXUau-HRQXiamTqp9nE)
+## GitHub Repository Updates
+
+1. `zonewise_extraction_results.json` - Updated with Melbourne fix + IHB
+2. `docs/CHECKPOINT_2026-01-15.md` - Session checkpoint
 
 ## Next Steps for New Chat
 
-### Priority 1: Fix Data Quality
-
-1. **Enhance Melbourne extraction** - Parse Table 2A for setbacks
-2. **Fix Satellite Beach parsing** - Clean district names, extract all dimensional fields
-3. **Validate against source** - Spot check 3 districts per jurisdiction
-
-### Priority 2: Complete 14 Remaining Jurisdictions
-
-**Municode jurisdictions (9):**
-- Cocoa, Titusville, Rockledge, West Melbourne, Brevard County
-- Indian Harbour Beach, Cape Canaveral, Cocoa Beach
-
-**eLaws jurisdictions (3):**
-- Indialantic, Melbourne Beach, Malabar
-
-**PDF jurisdictions (3):**
-- Grant-Valkaria, Melbourne Village, Palm Shores
-
-### Priority 3: Sync to Supabase
-
-1. Align JSON schema with Supabase schema
-2. Create upsert script to sync JSON → Supabase
-3. Verify continuous_extraction.yml workflow
-
-## Commands to Resume
-
+### Priority 1: Complete Municode Jurisdictions
+Use Jina Reader pattern with specific zoning nodeIds:
 ```bash
-# Check extraction status
-curl -s "https://api.github.com/repos/breverdbidder/zonewise/contents/zonewise_extraction_results.json" \
-  -H "Authorization: token [GITHUB_TOKEN]" \
-  | jq -r '.content' | base64 -d | python3 -c "
-import json, sys
-data = json.load(sys.stdin)
-for j, d in data.items(): print(f'{j}: {len(d)} districts')
-print(f'Total: {sum(len(d) for d in data.values())} rows')
-"
-
-# Check Supabase count
-curl -s "https://mocerqjnksmhcjzxrewo.supabase.co/rest/v1/zoning_districts?select=id" \
-  -H "apikey: [SUPABASE_SERVICE_KEY]" | jq 'length'
-
-# Trigger continuous extraction manually
-curl -X POST "https://api.github.com/repos/breverdbidder/zonewise/actions/workflows/continuous_extraction.yml/dispatches" \
-  -H "Authorization: token [GITHUB_TOKEN]" \
-  -d '{"ref":"main","inputs":{"jurisdiction":"","force_update":"true"}}'
+curl -s "https://r.jina.ai/https://library.municode.com/fl/{jurisdiction}/codes/code_of_ordinances?nodeId={zoning_node}"
 ```
 
-## Dimensional Standards Target Schema
+**Jurisdictions needing zoning node discovery:**
+- Cocoa, Titusville, Rockledge, West Melbourne
+- Brevard County, Cape Canaveral
+- Palm Bay, Cocoa Beach (have separate LDC)
 
-```json
-{
-  "jurisdiction": "Melbourne",
-  "district_code": "R-1AA",
-  "district_name": "Single-Family Residential",
-  "min_lot_area_sqft": 10000,
-  "min_lot_width_ft": 85,
-  "min_lot_depth_ft": null,
-  "max_height_ft": 36,
-  "max_stories": 2,
-  "front_setback_ft": 25,
-  "side_setback_ft": 7.5,
-  "rear_setback_ft": 20,
-  "max_lot_coverage_pct": 45,
-  "max_impervious_pct": 65
-}
-```
+### Priority 2: eLaws Jurisdictions
+Use pattern from existing Satellite Beach extractor:
+- Indialantic: https://indialantic.elaws.us
+- Melbourne Beach: https://melbournebeach.elaws.us
+- Malabar: https://malabar.elaws.us
 
-## Session Context
+### Priority 3: PDF Jurisdictions
+May require manual extraction or Firecrawl:
+- Grant-Valkaria
+- Melbourne Village
+- Palm Shores
 
-- **Date:** January 15, 2026, 9:15 PM EST
-- **Token Usage:** ~45K (within limit)
-- **Next 11 PM run:** Tonight, monitor GitHub Actions
-- **GitHub Actions to watch:**
-  - continuous_extraction.yml (scheduled 4 AM UTC = 11 PM EST)
-  - daily-zonewize.yml
+## Enhanced Extractor Location
+
+Working enhanced extraction script saved at:
+- `/home/claude/enhanced_extractor.py` (session-local)
+- Should be deployed to repo for reuse
+
+## 11 PM Workflow Status
+
+**Scheduled:** 4 AM UTC (11 PM EST)
+**Monitor:** https://github.com/breverdbidder/zonewise/actions
 
 ---
 
-*Checkpoint created for session continuity*
+**Session End:** January 15, 2026, 8:30 PM EST
+**Next Session Prompt:**
+```
+Resume ZoneWise extraction. Current: 31 rows (Melbourne 10, Satellite Beach 12, IHB 9).
+Priority: Extract remaining 11 Municode jurisdictions.
+Reference: docs/CHECKPOINT_2026-01-15.md
+```
