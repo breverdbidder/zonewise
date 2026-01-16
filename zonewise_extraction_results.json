@@ -1098,5 +1098,263 @@
       "max_height_ft": null,
       "max_coverage_pct": 100
     }
+  ],
+  "west_melbourne": [
+    {
+      "district_code": "AA",
+      "district_name": "Single-Family Residential AA",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 12000,
+      "min_lot_width_ft": 100,
+      "front_setback_ft": 25,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 25,
+      "max_height_ft": 35,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "A",
+      "district_name": "Single-Family Residential A",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 10000,
+      "min_lot_width_ft": 85,
+      "front_setback_ft": 25,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 25,
+      "max_height_ft": 35,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "R-1",
+      "district_name": "Single-Family Residential R-1",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 7500,
+      "min_lot_width_ft": 75,
+      "front_setback_ft": 25,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 25,
+      "max_height_ft": 35,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "R-2",
+      "district_name": "Single-Family Residential R-2",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 5500,
+      "min_lot_width_ft": 50,
+      "front_setback_ft": 25,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 25,
+      "max_height_ft": 35,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "R-3",
+      "district_name": "Outlying Multi-Family",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 5500,
+      "min_lot_width_ft": 24,
+      "front_setback_ft": 25,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 25,
+      "max_height_ft": 40,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "C-1",
+      "district_name": "Local Commercial",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 4000,
+      "min_lot_width_ft": 30,
+      "front_setback_ft": 20,
+      "side_setback_ft": 20,
+      "rear_setback_ft": 15,
+      "max_height_ft": 40,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "C-2",
+      "district_name": "General Commercial",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 1200,
+      "min_lot_width_ft": 30,
+      "front_setback_ft": 20,
+      "side_setback_ft": null,
+      "rear_setback_ft": 20,
+      "max_height_ft": 25,
+      "max_coverage_pct": 100
+    }
+  ],
+  "cape_canaveral": [
+    {
+      "district_code": "R-1",
+      "district_name": "Low Density Residential",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 7500,
+      "min_lot_width_ft": 75,
+      "front_setback_ft": 25,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 25,
+      "max_height_ft": 25,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "R-2",
+      "district_name": "Medium Density Residential",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 7500,
+      "min_lot_width_ft": 75,
+      "front_setback_ft": 25,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 15,
+      "max_height_ft": 25,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "R-3",
+      "district_name": "Medium Density Residential High",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 7500,
+      "min_lot_width_ft": 75,
+      "front_setback_ft": 25,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 15,
+      "max_height_ft": 45,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "C-1",
+      "district_name": "Low Density Commercial",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 12000,
+      "min_lot_width_ft": null,
+      "front_setback_ft": 25,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 25,
+      "max_height_ft": null,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "C-2",
+      "district_name": "Commercial Marina",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 12000,
+      "min_lot_width_ft": null,
+      "front_setback_ft": 25,
+      "side_setback_ft": 15,
+      "rear_setback_ft": 15,
+      "max_height_ft": 45,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "M-1",
+      "district_name": "Light Industrial Research",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 2000,
+      "min_lot_width_ft": 75,
+      "front_setback_ft": 25,
+      "side_setback_ft": 15,
+      "rear_setback_ft": 15,
+      "max_height_ft": null,
+      "max_coverage_pct": 100
+    }
+  ],
+  "cocoa_beach": [
+    {
+      "district_code": "RS-1",
+      "district_name": "Single-Family Residential",
+      "source_platform": "municode",
+      "min_lot_area_sqft": null,
+      "min_lot_width_ft": null,
+      "front_setback_ft": null,
+      "side_setback_ft": null,
+      "rear_setback_ft": null,
+      "max_height_ft": null,
+      "max_coverage_pct": null
+    },
+    {
+      "district_code": "RS-2",
+      "district_name": "Single-Family Residential",
+      "source_platform": "municode",
+      "min_lot_area_sqft": null,
+      "min_lot_width_ft": null,
+      "front_setback_ft": null,
+      "side_setback_ft": null,
+      "rear_setback_ft": null,
+      "max_height_ft": null,
+      "max_coverage_pct": null
+    },
+    {
+      "district_code": "RM-1",
+      "district_name": "Multi-Family Residential",
+      "source_platform": "municode",
+      "min_lot_area_sqft": null,
+      "min_lot_width_ft": null,
+      "front_setback_ft": null,
+      "side_setback_ft": null,
+      "rear_setback_ft": null,
+      "max_height_ft": null,
+      "max_coverage_pct": null
+    },
+    {
+      "district_code": "RM-2",
+      "district_name": "Multi-Family Residential High",
+      "source_platform": "municode",
+      "min_lot_area_sqft": null,
+      "min_lot_width_ft": null,
+      "front_setback_ft": null,
+      "side_setback_ft": null,
+      "rear_setback_ft": null,
+      "max_height_ft": null,
+      "max_coverage_pct": null
+    },
+    {
+      "district_code": "CT-1",
+      "district_name": "Oceanfront Residential Transient",
+      "source_platform": "municode",
+      "min_lot_area_sqft": null,
+      "min_lot_width_ft": null,
+      "front_setback_ft": null,
+      "side_setback_ft": null,
+      "rear_setback_ft": null,
+      "max_height_ft": null,
+      "max_coverage_pct": null
+    },
+    {
+      "district_code": "CT-2",
+      "district_name": "Transient Commercial",
+      "source_platform": "municode",
+      "min_lot_area_sqft": null,
+      "min_lot_width_ft": null,
+      "front_setback_ft": null,
+      "side_setback_ft": null,
+      "rear_setback_ft": null,
+      "max_height_ft": null,
+      "max_coverage_pct": null
+    },
+    {
+      "district_code": "C-1",
+      "district_name": "Limited Commercial",
+      "source_platform": "municode",
+      "min_lot_area_sqft": null,
+      "min_lot_width_ft": null,
+      "front_setback_ft": null,
+      "side_setback_ft": null,
+      "rear_setback_ft": null,
+      "max_height_ft": null,
+      "max_coverage_pct": null
+    },
+    {
+      "district_code": "C-2",
+      "district_name": "General Commercial",
+      "source_platform": "municode",
+      "min_lot_area_sqft": null,
+      "min_lot_width_ft": null,
+      "front_setback_ft": null,
+      "side_setback_ft": null,
+      "rear_setback_ft": null,
+      "max_height_ft": null,
+      "max_coverage_pct": null
+    }
   ]
 }
