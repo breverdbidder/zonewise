@@ -1024,5 +1024,79 @@
       "max_building_coverage_pct": "35",
       "max_density_du_ac": "5.8"
     }
+  ],
+  "rockledge": [
+    {
+      "district_code": "R-1",
+      "district_name": "Single-Family Dwelling District",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 12000,
+      "min_lot_width_ft": 80,
+      "front_setback_ft": 35,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 30,
+      "max_height_ft": 25,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "R-2",
+      "district_name": "Single-Family Dwelling District",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 7500,
+      "min_lot_width_ft": 70,
+      "front_setback_ft": 25,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 20,
+      "max_height_ft": 25,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "R-2M",
+      "district_name": "Multi-Family Low Density District",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 7500,
+      "min_lot_width_ft": 70,
+      "front_setback_ft": 25,
+      "side_setback_ft": null,
+      "rear_setback_ft": 20,
+      "max_height_ft": 25,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "R-3",
+      "district_name": "Multi-Family High Density District",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 10000,
+      "min_lot_width_ft": 100,
+      "front_setback_ft": 25,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 20,
+      "max_height_ft": 25,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "C-1",
+      "district_name": "Neighborhood Retail Commercial District",
+      "source_platform": "municode",
+      "min_lot_area_sqft": 7500,
+      "min_lot_width_ft": 75,
+      "front_setback_ft": 25,
+      "side_setback_ft": 25,
+      "rear_setback_ft": 25,
+      "max_height_ft": 45,
+      "max_coverage_pct": 100
+    },
+    {
+      "district_code": "C-2",
+      "district_name": "General Commercial District",
+      "source_platform": "municode",
+      "min_lot_area_sqft": null,
+      "min_lot_width_ft": null,
+      "front_setback_ft": null,
+      "side_setback_ft": null,
+      "rear_setback_ft": null,
+      "max_height_ft": null,
+      "max_coverage_pct": 100
+    }
   ]
 }
