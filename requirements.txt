@@ -1,8 +1,18 @@
-# ZoneWise API Dependencies - Updated for compatibility
-# Fixed: supabase/httpx version conflict (was causing build failures)
-fastapi>=0.109.0
-uvicorn>=0.27.0
-pydantic>=2.5.3
-httpx>=0.28.0
-supabase>=2.10.0
+# ZoneWise Municipal Code Extraction System
+# Dependencies
+
+# HTTP client with async support
+httpx>=0.25.0
+
+# HTML parsing
+beautifulsoup4>=4.12.0
+lxml>=5.0.0
+
+# Data handling
+dataclasses-json>=0.6.0
+
+# For GitHub Actions
 python-dotenv>=1.0.0
+
+# Optional: For Playwright-based extraction (if Jina fails)
+# playwright>=1.40.0
