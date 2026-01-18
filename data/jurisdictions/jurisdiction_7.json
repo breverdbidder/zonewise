@@ -1,0 +1,114 @@
+[
+  {
+    "jurisdiction_id": 7,
+    "code": "R-1",
+    "name": "Single-Family Residential",
+    "category": "Residential",
+    "description": "Single-Family Residential district. Min lot: 7,500 sqft. Min width: 60 ft. Max height: 35 ft / 2 stories. Coverage: 40%. Setbacks: F:25/S:7.5/R:20 ft. Density: 5 units/acre. <!--DIMS:{\"min_lot_sqft\": 7500, \"min_lot_width_ft\": 60, \"max_height_ft\": 35, \"max_stories\": 2, \"coverage_pct\": 40, \"setbacks_ft\": {\"front\": 25, \"side\": 7.5, \"rear\": 20, \"corner\": null}, \"density\": 5, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "R-2",
+    "name": "Two-Family Residential",
+    "category": "Residential",
+    "description": "Two-Family Residential district. Min lot: 5,000 sqft. Min width: 50 ft. Max height: 35 ft / 2 stories. Coverage: 45%. Setbacks: F:20/S:5/R:15 ft. Density: 8 units/acre. <!--DIMS:{\"min_lot_sqft\": 5000, \"min_lot_width_ft\": 50, \"max_height_ft\": 35, \"max_stories\": 2, \"coverage_pct\": 45, \"setbacks_ft\": {\"front\": 20, \"side\": 5, \"rear\": 15, \"corner\": null}, \"density\": 8, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "R-3",
+    "name": "Multi-Family Low",
+    "category": "Residential",
+    "description": "Multi-Family Low district. Min lot: 10,000 sqft. Min width: 75 ft. Max height: 45 ft / 3 stories. Coverage: 50%. Setbacks: F:25/S:10/R:15 ft. Density: 15 units/acre. <!--DIMS:{\"min_lot_sqft\": 10000, \"min_lot_width_ft\": 75, \"max_height_ft\": 45, \"max_stories\": 3, \"coverage_pct\": 50, \"setbacks_ft\": {\"front\": 25, \"side\": 10, \"rear\": 15, \"corner\": null}, \"density\": 15, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "R-4",
+    "name": "Multi-Family Medium",
+    "category": "Residential",
+    "description": "Multi-Family Medium district. Min lot: 15,000 sqft. Min width: 100 ft. Max height: 55 ft / 5 stories. Coverage: 55%. Setbacks: F:25/S:15/R:20 ft. Density: 25 units/acre. <!--DIMS:{\"min_lot_sqft\": 15000, \"min_lot_width_ft\": 100, \"max_height_ft\": 55, \"max_stories\": 5, \"coverage_pct\": 55, \"setbacks_ft\": {\"front\": 25, \"side\": 15, \"rear\": 20, \"corner\": null}, \"density\": 25, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "R-5",
+    "name": "Multi-Family High",
+    "category": "Residential",
+    "description": "Multi-Family High district. Min lot: 20,000 sqft. Min width: 125 ft. Max height: 100 ft / 10 stories. Coverage: 60%. Setbacks: F:25/S:15/R:25 ft. Density: 40 units/acre. <!--DIMS:{\"min_lot_sqft\": 20000, \"min_lot_width_ft\": 125, \"max_height_ft\": 100, \"max_stories\": 10, \"coverage_pct\": 60, \"setbacks_ft\": {\"front\": 25, \"side\": 15, \"rear\": 25, \"corner\": null}, \"density\": 40, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "MH",
+    "name": "Mobile Home",
+    "category": "Other",
+    "description": "Mobile Home district. Min lot: 4,500 sqft. Min width: 45 ft. Max height: 25 ft / 1 stories. Coverage: 50%. Setbacks: F:15/S:5/R:10 ft. Density: 8 units/acre. <!--DIMS:{\"min_lot_sqft\": 4500, \"min_lot_width_ft\": 45, \"max_height_ft\": 25, \"max_stories\": 1, \"coverage_pct\": 50, \"setbacks_ft\": {\"front\": 15, \"side\": 5, \"rear\": 10, \"corner\": null}, \"density\": 8, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "RT",
+    "name": "Resort Tourist",
+    "category": "Residential",
+    "description": "Resort Tourist district. Min lot: 10,000 sqft. Min width: 80 ft. Max height: 100 ft / 10 stories. Coverage: 55%. Setbacks: F:25/S:10/R:20 ft. Density: 50 units/acre. <!--DIMS:{\"min_lot_sqft\": 10000, \"min_lot_width_ft\": 80, \"max_height_ft\": 100, \"max_stories\": 10, \"coverage_pct\": 55, \"setbacks_ft\": {\"front\": 25, \"side\": 10, \"rear\": 20, \"corner\": null}, \"density\": 50, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "C-1",
+    "name": "Neighborhood Commercial",
+    "category": "Commercial",
+    "description": "Neighborhood Commercial district. Min lot: 7,500 sqft. Min width: 60 ft. Max height: 35 ft / 2 stories. Coverage: 60%. Setbacks: F:25/S:10/R:15 ft. <!--DIMS:{\"min_lot_sqft\": 7500, \"min_lot_width_ft\": 60, \"max_height_ft\": 35, \"max_stories\": 2, \"coverage_pct\": 60, \"setbacks_ft\": {\"front\": 25, \"side\": 10, \"rear\": 15, \"corner\": null}, \"density\": null, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "C-2",
+    "name": "General Commercial",
+    "category": "Commercial",
+    "description": "General Commercial district. Min lot: 10,000 sqft. Min width: 75 ft. Max height: 55 ft / 5 stories. Coverage: 70%. Setbacks: F:25/S:10/R:15 ft. <!--DIMS:{\"min_lot_sqft\": 10000, \"min_lot_width_ft\": 75, \"max_height_ft\": 55, \"max_stories\": 5, \"coverage_pct\": 70, \"setbacks_ft\": {\"front\": 25, \"side\": 10, \"rear\": 15, \"corner\": null}, \"density\": null, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "C-3",
+    "name": "Tourist Commercial",
+    "category": "Commercial",
+    "description": "Tourist Commercial district. Min lot: 10,000 sqft. Min width: 75 ft. Max height: 100 ft / 10 stories. Coverage: 75%. Setbacks: F:20/S:10/R:15 ft. <!--DIMS:{\"min_lot_sqft\": 10000, \"min_lot_width_ft\": 75, \"max_height_ft\": 100, \"max_stories\": 10, \"coverage_pct\": 75, \"setbacks_ft\": {\"front\": 20, \"side\": 10, \"rear\": 15, \"corner\": null}, \"density\": null, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "I-1",
+    "name": "Industrial",
+    "category": "Industrial",
+    "description": "Industrial district. Min lot: 15,000 sqft. Min width: 100 ft. Max height: 45 ft / 3 stories. Coverage: 60%. Setbacks: F:30/S:15/R:20 ft. <!--DIMS:{\"min_lot_sqft\": 15000, \"min_lot_width_ft\": 100, \"max_height_ft\": 45, \"max_stories\": 3, \"coverage_pct\": 60, \"setbacks_ft\": {\"front\": 30, \"side\": 15, \"rear\": 20, \"corner\": null}, \"density\": null, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "P",
+    "name": "Public",
+    "category": "Institutional",
+    "description": "Public district. Min lot: 10,000 sqft. Min width: 75 ft. Max height: 55 ft / 4 stories. Coverage: 50%. Setbacks: F:25/S:15/R:20 ft. <!--DIMS:{\"min_lot_sqft\": 10000, \"min_lot_width_ft\": 75, \"max_height_ft\": 55, \"max_stories\": 4, \"coverage_pct\": 50, \"setbacks_ft\": {\"front\": 25, \"side\": 15, \"rear\": 20, \"corner\": null}, \"density\": null, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "PUD",
+    "name": "Planned Unit Development",
+    "category": "Mixed-Use",
+    "description": "Planned Unit Development district. Min lot: 43,560 sqft. Min width: 150 ft. Max height: 100 ft / 10 stories. Coverage: 50%. Setbacks: F:25/S:15/R:20 ft. Density: 30 units/acre. <!--DIMS:{\"min_lot_sqft\": 43560, \"min_lot_width_ft\": 150, \"max_height_ft\": 100, \"max_stories\": 10, \"coverage_pct\": 50, \"setbacks_ft\": {\"front\": 25, \"side\": 15, \"rear\": 20, \"corner\": null}, \"density\": 30, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "CON",
+    "name": "Conservation",
+    "category": "Conservation",
+    "description": "Conservation district. Min lot: 217,800 sqft. Min width: 300 ft. Max height: 25 ft / 1 stories. Coverage: 5%. Setbacks: F:75/S:50/R:75 ft. Density: 0.1 units/acre. <!--DIMS:{\"min_lot_sqft\": 217800, \"min_lot_width_ft\": 300, \"max_height_ft\": 25, \"max_stories\": 1, \"coverage_pct\": 5, \"setbacks_ft\": {\"front\": 75, \"side\": 50, \"rear\": 75, \"corner\": null}, \"density\": 0.1, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "REC",
+    "name": "Recreation",
+    "category": "Residential",
+    "description": "Recreation district. Min lot: 43,560 sqft. Min width: 200 ft. Max height: 35 ft / 2 stories. Coverage: 15%. Setbacks: F:50/S:25/R:50 ft. <!--DIMS:{\"min_lot_sqft\": 43560, \"min_lot_width_ft\": 200, \"max_height_ft\": 35, \"max_stories\": 2, \"coverage_pct\": 15, \"setbacks_ft\": {\"front\": 50, \"side\": 25, \"rear\": 50, \"corner\": null}, \"density\": null, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  },
+  {
+    "jurisdiction_id": 7,
+    "code": "MU",
+    "name": "Mixed Use",
+    "category": "Mixed-Use",
+    "description": "Mixed Use district. Min lot: 10,000 sqft. Min width: 75 ft. Max height: 75 ft / 7 stories. Coverage: 65%. Setbacks: F:20/S:10/R:15 ft. Density: 30 units/acre. <!--DIMS:{\"min_lot_sqft\": 10000, \"min_lot_width_ft\": 75, \"max_height_ft\": 75, \"max_stories\": 7, \"coverage_pct\": 65, \"setbacks_ft\": {\"front\": 20, \"side\": 10, \"rear\": 15, \"corner\": null}, \"density\": 30, \"floor_area_ratio\": null, \"source_url\": \"https://library.municode.com/fl/7\", \"source_section\": \"\", \"verified_date\": \"2026-01-18\"}-->"
+  }
+]
