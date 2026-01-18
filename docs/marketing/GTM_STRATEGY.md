@@ -76,6 +76,8 @@ Jason Lemkin demonstrated that AI agents can effectively replace the "mediocre m
 
 ## Distribution Strategy: AI-First, Zero Sales Headcount
 
+> 📘 **Core Engine:** [CONTENT_FLYWHEEL.md](./CONTENT_FLYWHEEL.md) — 5-Agent autonomous marketing system adapted from BidDeed.AI
+
 ### Channel Mix
 
 ```
@@ -85,11 +87,13 @@ MCP Marketplace (40%)          ← Primary: Zero CAC
     ├── Cursor MCP Directory
     └── Future: OpenAI GPT Store
     
-Content SEO (30%)              ← AI-Generated at Scale
+Content Flywheel (30%)         ← 5-Agent Autonomous Engine
     │
-    ├── 189 district-specific pages
-    ├── "[City] zoning requirements" keywords
-    └── Long-tail: "[District] setback rules"
+    ├── Agent 1: Content Generation (queries → posts)
+    ├── Agent 2: Distribution (LinkedIn/Twitter/Email/Blog)
+    ├── Agent 3: Engagement Tracking
+    ├── Agent 4: Conversion Attribution (UTM → leads)
+    └── Agent 5: Optimization Loop (self-improving)
     
 AI Outreach Agent (20%)        ← Replacing SDR Function
     │
@@ -101,6 +105,8 @@ Community/PLG (10%)            ← Viral Loop
     │
     └── Free tier (10 queries/mo) → word-of-mouth
 ```
+
+**Flywheel Economics:** $50/month (vs $3,000+ agency) • 95% automation • 0 human hours/week
 
 ### Distribution Timeline
 
@@ -229,6 +235,7 @@ The value proposition is not "cheaper than a consultant" but **"what consultants
 
 ## Related Documents
 
+- [CONTENT_FLYWHEEL.md](./CONTENT_FLYWHEEL.md) — **5-Agent autonomous marketing engine**
 - [MARKETING_PLAYBOOK.md](./MARKETING_PLAYBOOK.md) — Tactical marketing execution
 - [PRICING.md](./PRICING.md) — Pricing strategy and unit economics
 - [COMPETITIVE_ANALYSIS.md](./COMPETITIVE_ANALYSIS.md) — Deep competitive intelligence
