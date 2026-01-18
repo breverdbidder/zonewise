@@ -2,60 +2,88 @@
 
 > **Owner:** Claude AI Architect  
 > **Last Updated:** January 18, 2026  
-> **Strategic Framework:** Minimum Exceptional Product (MEP)
+> **Strategic Framework:** MEP + Lemkin Model + AI Agents
 
 ---
 
 ## Overview
 
-This folder contains ZoneWise's go-to-market strategy and marketing documentation, built on two foundational frameworks:
+ZoneWise's go-to-market strategy is built on three foundational frameworks:
 
-1. **MEP (Minimum Exceptional Product)** — Be exceptional at ONE thing (95% accurate compliance checks) before being adequate at many things
-2. **Lemkin AI Sales Transformation** — Zero traditional sales headcount, AI agents for customer acquisition
+1. **MEP (Minimum Exceptional Product)** — Be exceptional at ONE thing (95% accurate compliance checks)
+2. **Lemkin AI Sales Transformation** — Zero traditional sales headcount, AI agents only
+3. **Content Flywheel** — 5-agent autonomous marketing engine
+
+## Document Hierarchy
+
+```
+STRATEGY (What we do)
+├── MEP_STRATEGY.md          ← Master product philosophy
+├── GTM_STRATEGY.md          ← Go-to-market approach
+└── COMPETITIVE_ANALYSIS.md  ← Market positioning
+
+EXECUTION (How we do it)
+├── AI_AGENT_STRATEGY.md     ← 12-agent deployment plan (SaaStr model)
+├── CONTENT_FLYWHEEL.md      ← 5-agent marketing engine
+├── MARKETING_PLAYBOOK.md    ← Channel tactics
+└── PRICING.md               ← Revenue model
+
+OPERATIONS (When we do it)
+└── LAUNCH_CHECKLIST.md      ← Deployment timeline
+```
 
 ## Documents
 
-| Document | Purpose |
-|----------|---------|
-| [**MEP_STRATEGY.md**](./MEP_STRATEGY.md) | **MASTER STRATEGY** — Why ZoneWise chooses MEP over MVP |
-| [GTM_STRATEGY.md](./GTM_STRATEGY.md) | Go-to-market strategy, market positioning, target segments |
-| [CONTENT_FLYWHEEL.md](./CONTENT_FLYWHEEL.md) | **5-Agent autonomous marketing engine** — self-reinforcing growth loop |
-| [MARKETING_PLAYBOOK.md](./MARKETING_PLAYBOOK.md) | Tactical marketing execution, channel strategies |
-| [PRICING.md](./PRICING.md) | Pricing tiers, unit economics, competitive pricing |
-| [COMPETITIVE_ANALYSIS.md](./COMPETITIVE_ANALYSIS.md) | Competitor deep dives, moat building |
-| [LAUNCH_CHECKLIST.md](./LAUNCH_CHECKLIST.md) | Pre-launch requirements, go/no-go criteria |
+| Document | Purpose | Priority |
+|----------|---------|----------|
+| [**MEP_STRATEGY.md**](./MEP_STRATEGY.md) | Master philosophy: Exceptional > Viable | ⭐⭐⭐ |
+| [**AI_AGENT_STRATEGY.md**](./AI_AGENT_STRATEGY.md) | 12-agent deployment (SaaStr model) | ⭐⭐⭐ |
+| [GTM_STRATEGY.md](./GTM_STRATEGY.md) | Market positioning, target segments | ⭐⭐⭐ |
+| [CONTENT_FLYWHEEL.md](./CONTENT_FLYWHEEL.md) | 5-agent autonomous marketing | ⭐⭐ |
+| [MARKETING_PLAYBOOK.md](./MARKETING_PLAYBOOK.md) | Channel tactics, templates | ⭐⭐ |
+| [PRICING.md](./PRICING.md) | $0/99/299 tiers, unit economics | ⭐⭐ |
+| [COMPETITIVE_ANALYSIS.md](./COMPETITIVE_ANALYSIS.md) | Moat building, response playbook | ⭐ |
+| [LAUNCH_CHECKLIST.md](./LAUNCH_CHECKLIST.md) | 8-week deployment timeline | ⭐⭐⭐ |
 
 ## Key Strategic Principles
 
-### 1. MEP over MVP (Master Principle)
-
+### 1. MEP over MVP
 > **"We will be exceptional at one thing before being adequate at many things."**
 
-| Decision | MVP (Rejected) | MEP (Adopted) |
-|----------|----------------|---------------|
-| Launch scope | 67 FL counties | 1 county (Brevard) |
-| Accuracy target | 70% "good enough" | 95% exceptional |
-| Feature count | Many, shallow | Few, deep |
-| Expansion trigger | "Soon" | After 30 days at 95% |
-
-**ZoneWise's ONE Exceptional Thing:** Real-time, 95% accurate zoning compliance checks via MCP.
+| ZoneWise Decision | Choice |
+|-------------------|--------|
+| Launch scope | 1 county (Brevard) |
+| Accuracy target | 95% exceptional |
+| Expansion trigger | After 30 days at 95% |
 
 ### 2. Zero Sales Headcount (Lemkin Model)
-- MCP marketplace = primary acquisition (40%)
-- Content Flywheel = 5-agent engine (30%)
-- AI outreach agent (20%)
-- PLG/free tier (10%)
+Following SaaStr's proof: 20+ AI agents → 8-figure revenue with <10 humans
 
-### 3. "Agentic AI Ecosystem" Positioning
+| Category | ZoneWise Agents | Monthly Cost |
+|----------|-----------------|--------------|
+| Sales | 3 agents | $116 |
+| Support | 1 agent (MCP) | $0 |
+| Content | 5 agents (Flywheel) | $20 |
+| Operations | 3 agents | $20 |
+| **TOTAL** | **12 agents** | **$156/mo** |
+
+**Result:** 98% cost reduction vs traditional sales team
+
+### 3. Content Flywheel
+Self-reinforcing growth loop: Queries → Content → Leads → More Queries
+
+```
+Agent 1: Content Generation
+Agent 2: Content Distribution
+Agent 3: Engagement Tracking
+Agent 4: Conversion Attribution
+Agent 5: Optimization Loop
+```
+
+**Cost:** $50/month (vs $3,000+ agency)
+
+### 4. "Agentic AI Ecosystem" Positioning
 Sells *work performed by AI*, not software. 10-15x revenue multiple vs 3-5x SaaS.
-
-### 4. Training Data Moat
-- Real ordinance data (189 districts, 17 jurisdictions)
-- Zoning interpretation logic (encodes attorney knowledge)
-- Query accumulation (network effects)
-
-### 5. Content Flywheel (5-Agent Architecture)
-$50/month vs $3,000+ agency • 95% automation • 0 human hours/week
 
 ## The One Metric That Matters
 
@@ -63,11 +91,31 @@ $50/month vs $3,000+ agency • 95% automation • 0 human hours/week
 ACCURACY SCORE = Correct Compliance Checks / Total Checks × 100
 
 Target: 95%+
-Measurement: Weekly sampling of 50 random queries
-Validation: Manual verification against municipal records
-
 Everything else is secondary.
 ```
+
+## Quick Reference: Tool Stack
+
+### Sales Agents
+| Tool | Purpose | Cost |
+|------|---------|------|
+| Instantly.ai | AI SDR outbound | $97/mo |
+| Chatbase | AI BDR website | $19/mo |
+| Loops.so | Lead reactivation | $0/mo |
+
+### Content Agents
+| Tool | Purpose | Cost |
+|------|---------|------|
+| Smart Router | Content generation | $20/mo |
+| Buffer | Distribution | $0/mo |
+| Claude Artifacts | Images/diagrams | $0/mo |
+
+### Operations Agents
+| Tool | Purpose | Cost |
+|------|---------|------|
+| Zapier | Workflow automation | $20/mo |
+| Supabase | Database + analytics | $0/mo |
+| Slack | Notifications | $0/mo |
 
 ## Quick Links
 
@@ -79,9 +127,10 @@ Everything else is secondary.
 
 | Document | Frequency | Trigger |
 |----------|-----------|---------|
-| MEP_STRATEGY | Quarterly | Philosophy change (rare) |
-| GTM_STRATEGY | Quarterly | Major pivot or market change |
-| CONTENT_FLYWHEEL | Monthly | Agent performance review |
+| MEP_STRATEGY | Quarterly | Philosophy change |
+| AI_AGENT_STRATEGY | Monthly | Agent performance |
+| GTM_STRATEGY | Quarterly | Market change |
+| CONTENT_FLYWHEEL | Monthly | Performance review |
 | MARKETING_PLAYBOOK | Monthly | Campaign performance |
 | PRICING | Quarterly | Competitive pressure |
 | COMPETITIVE_ANALYSIS | Monthly | Market changes |
