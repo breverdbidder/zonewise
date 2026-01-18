@@ -14,6 +14,7 @@ This folder contains ZoneWise's go-to-market strategy and marketing documentatio
 | Document | Purpose |
 |----------|---------|
 | [GTM_STRATEGY.md](./GTM_STRATEGY.md) | Overall go-to-market strategy, market positioning, target segments |
+| [CONTENT_FLYWHEEL.md](./CONTENT_FLYWHEEL.md) | **5-Agent autonomous marketing engine** — the self-reinforcing growth loop |
 | [MARKETING_PLAYBOOK.md](./MARKETING_PLAYBOOK.md) | Tactical marketing execution, channel strategies, content calendar |
 | [PRICING.md](./PRICING.md) | Pricing tiers, unit economics, competitive pricing analysis |
 | [COMPETITIVE_ANALYSIS.md](./COMPETITIVE_ANALYSIS.md) | Competitor deep dives, moat building, response playbook |
@@ -38,6 +39,17 @@ Competitive advantage comes from:
 
 ### 4. Price Against Alternatives
 Pricing references consultant costs ($150-500/hr), not AI API costs ($0.03/query).
+
+### 4. Content Flywheel (5-Agent Architecture)
+Adapted from BidDeed.AI's proven marketing engine:
+- Agent 1: Content Generation (from zoning queries → marketing content)
+- Agent 2: Content Distribution (LinkedIn, Twitter, Email, Blog)
+- Agent 3: Engagement Tracking (metrics collection)
+- Agent 4: Conversion Attribution (UTM → leads)
+- Agent 5: Optimization Loop (AI-powered improvements)
+
+**Cost:** $50/month vs $3,000+ agency retainer (98% savings)
+**Automation:** 95%+ (0 human hours/week once deployed)
 
 ## Quick Links
 
