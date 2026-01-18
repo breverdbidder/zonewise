@@ -1,0 +1,687 @@
+{
+  "metadata": {
+    "extraction_date": "2026-01-18T20:29:44.379850",
+    "total_jurisdictions": 17,
+    "total_districts": 155,
+    "successful_extractions": 0,
+    "partial_extractions": 14,
+    "failed_extractions": 141
+  },
+  "extraction_summary": {
+    "Melbourne": {
+      "total": 14,
+      "partial": 14,
+      "failed": 0
+    },
+    "Palm Bay": {
+      "total": 11,
+      "partial": 0,
+      "failed": 11
+    },
+    "Titusville": {
+      "total": 13,
+      "partial": 0,
+      "failed": 13
+    },
+    "West Melbourne": {
+      "total": 11,
+      "partial": 0,
+      "failed": 11
+    },
+    "Rockledge": {
+      "total": 10,
+      "partial": 0,
+      "failed": 10
+    },
+    "Cocoa": {
+      "total": 10,
+      "partial": 0,
+      "failed": 10
+    },
+    "Cocoa Beach": {
+      "total": 9,
+      "partial": 0,
+      "failed": 9
+    },
+    "Cape Canaveral": {
+      "total": 9,
+      "partial": 0,
+      "failed": 9
+    },
+    "Satellite Beach": {
+      "total": 9,
+      "partial": 0,
+      "failed": 9
+    },
+    "Indian Harbour Beach": {
+      "total": 9,
+      "partial": 0,
+      "failed": 9
+    },
+    "Indialantic": {
+      "total": 7,
+      "partial": 0,
+      "failed": 7
+    },
+    "Melbourne Beach": {
+      "total": 8,
+      "partial": 0,
+      "failed": 8
+    },
+    "Melbourne Village": {
+      "total": 6,
+      "partial": 0,
+      "failed": 6
+    },
+    "Palm Shores": {
+      "total": 4,
+      "partial": 0,
+      "failed": 4
+    },
+    "Malabar": {
+      "total": 6,
+      "partial": 0,
+      "failed": 6
+    },
+    "Grant-Valkaria": {
+      "total": 6,
+      "partial": 0,
+      "failed": 6
+    },
+    "Unincorporated Brevard County": {
+      "total": 13,
+      "partial": 0,
+      "failed": 13
+    }
+  },
+  "melbourne_results": [
+    {
+      "code": "AEU",
+      "name": "Agricultural Estate Unit",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "REU",
+      "name": "Residential Estate Unit",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "R-1A",
+      "name": "Single-Family Residential (Low)",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "R-1B",
+      "name": "Single-Family Residential (Med)",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "R-1C",
+      "name": "Single-Family Residential (High)",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "R-2",
+      "name": "Two-Family Residential",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "R-3",
+      "name": "Multi-Family Residential",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "MH",
+      "name": "Mobile Home",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "C-P",
+      "name": "Professional Office",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "C-1",
+      "name": "Neighborhood Commercial",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "C-2",
+      "name": "General Commercial",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "C-3",
+      "name": "Highway Commercial",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "M-1",
+      "name": "Light Industrial",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    },
+    {
+      "code": "PUD",
+      "name": "Planned Unit Development",
+      "confidence": 0.15,
+      "dimensional_standards": {
+        "min_lot_size_sqft": null,
+        "min_lot_width_ft": null,
+        "min_lot_depth_ft": null,
+        "min_living_area_sqft": null,
+        "max_height_ft": null,
+        "max_stories": null,
+        "max_lot_coverage_pct": null,
+        "density_units_per_acre": 100.0,
+        "parking_spaces_required": null,
+        "setbacks": {
+          "front": {
+            "standard_ft": 25.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "side": {
+            "standard_ft": null,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          },
+          "rear": {
+            "standard_ft": 40.0,
+            "with_alley_ft": null,
+            "corner_lot_ft": null,
+            "adjacent_residential_ft": null,
+            "adjacent_commercial_ft": null,
+            "notes": null
+          }
+        }
+      }
+    }
+  ]
+}
