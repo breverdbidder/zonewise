@@ -579,11 +579,11 @@ def main():
     
     # Determine config path
     script_dir = Path(__file__).parent
-    config_path = script_dir / "config" / "brevard_jurisdictions.json"
+    config_path = script_dir.parent / "config" / "brevard_jurisdictions.json"
     
     if not config_path.exists():
         # Try alternate location
-        config_path = Path("config/brevard_jurisdictions.json")
+        config_path = Path("../config/brevard_jurisdictions.json")
     
     if not config_path.exists():
         logger.error(f"Config file not found: {config_path}")
@@ -608,8 +608,8 @@ def main():
         results = extractor.extract_all()
         
         # Save to JSON
-        output_path = f"data/real_districts_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-        os.makedirs("data", exist_ok=True)
+        output_path = f"../data/real_districts_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        os.makedirs("../data", exist_ok=True)
         extractor.save_results(output_path)
         
         # Save to Supabase
