@@ -2,141 +2,105 @@
 
 > **Owner:** Claude AI Architect  
 > **Last Updated:** January 18, 2026  
-> **Strategic Framework:** MEP + Lemkin Model + AI Agents
+> **Frameworks:** MEP + Lemkin 20-Agent Model + Robbins Six Needs Psychology
 
 ---
 
-## Overview
+## Strategic Framework Integration
 
-ZoneWise's go-to-market strategy is built on three foundational frameworks:
+ZoneWise's GTM uniquely combines TWO proven frameworks:
 
-1. **MEP (Minimum Exceptional Product)** — Be exceptional at ONE thing (95% accurate compliance checks)
-2. **Lemkin AI Sales Transformation** — Zero traditional sales headcount, AI agents only
-3. **Content Flywheel** — 5-agent autonomous marketing engine
+```
+┌─────────────────────────────────────────────────────────────────┐
+│              DUAL-FRAMEWORK GTM ARCHITECTURE                    │
+│                                                                 │
+│   OPERATIONAL LAYER (SaaStr/Lemkin)                            │
+│   ├── 16 AI agents across 5 pillars                            │
+│   ├── $300/month total agent cost                              │
+│   ├── 0.2 FTE human oversight                                  │
+│   └── Target: $1M ARR with single-digit headcount              │
+│                                                                 │
+│   PSYCHOLOGICAL LAYER (Tony Robbins)                           │
+│   ├── Six Human Needs targeting                                │
+│   ├── Identity Preservation messaging                          │
+│   ├── Persona-Need intensity mapping                           │
+│   └── Psychology-aware agent training                          │
+│                                                                 │
+│   RESULT: Agents that reach AND resonate                       │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
 
 ## Document Hierarchy
 
-```
-STRATEGY (What we do)
-├── MEP_STRATEGY.md          ← Master product philosophy
-├── GTM_STRATEGY.md          ← Go-to-market approach
-└── COMPETITIVE_ANALYSIS.md  ← Market positioning
+### 🎯 STRATEGY (What & Why)
+| Document | Purpose | Frameworks |
+|----------|---------|------------|
+| **[MEP_STRATEGY.md](./MEP_STRATEGY.md)** | Core product philosophy | MEP |
+| **[STRATEGIC_POSITIONING.md](../STRATEGIC_POSITIONING.md)** | Six Needs + Identity Preservation | Robbins |
+| [GTM_STRATEGY.md](./GTM_STRATEGY.md) | Market positioning | All |
+| [COMPETITIVE_ANALYSIS.md](./COMPETITIVE_ANALYSIS.md) | Moat building | MEP |
 
-EXECUTION (How we do it)
-├── AI_AGENT_STRATEGY.md     ← 12-agent deployment plan (SaaStr model)
-├── CONTENT_FLYWHEEL.md      ← 5-agent marketing engine
-├── MARKETING_PLAYBOOK.md    ← Channel tactics
-└── PRICING.md               ← Revenue model
+### 🤖 AGENT DEPLOYMENT (How)
+| Document | Purpose | Frameworks |
+|----------|---------|------------|
+| **[AI_AGENT_BLUEPRINT.md](./AI_AGENT_BLUEPRINT.md)** | 16-agent architecture | SaaStr |
+| **[AGENT_PSYCHOLOGY_INTEGRATION.md](./AGENT_PSYCHOLOGY_INTEGRATION.md)** | Psychology-aware agents | Robbins + SaaStr |
+| [CONTENT_FLYWHEEL.md](./CONTENT_FLYWHEEL.md) | 5-agent marketing engine | SaaStr |
 
-OPERATIONS (When we do it)
-└── LAUNCH_CHECKLIST.md      ← Deployment timeline
-```
-
-## Documents
-
-| Document | Purpose | Priority |
-|----------|---------|----------|
-| [**MEP_STRATEGY.md**](./MEP_STRATEGY.md) | Master philosophy: Exceptional > Viable | ⭐⭐⭐ |
-| [**AI_AGENT_STRATEGY.md**](./AI_AGENT_STRATEGY.md) | 12-agent deployment (SaaStr model) | ⭐⭐⭐ |
-| [GTM_STRATEGY.md](./GTM_STRATEGY.md) | Market positioning, target segments | ⭐⭐⭐ |
-| [CONTENT_FLYWHEEL.md](./CONTENT_FLYWHEEL.md) | 5-agent autonomous marketing | ⭐⭐ |
-| [MARKETING_PLAYBOOK.md](./MARKETING_PLAYBOOK.md) | Channel tactics, templates | ⭐⭐ |
-| [PRICING.md](./PRICING.md) | $0/99/299 tiers, unit economics | ⭐⭐ |
-| [COMPETITIVE_ANALYSIS.md](./COMPETITIVE_ANALYSIS.md) | Moat building, response playbook | ⭐ |
-| [LAUNCH_CHECKLIST.md](./LAUNCH_CHECKLIST.md) | 8-week deployment timeline | ⭐⭐⭐ |
-
-## Key Strategic Principles
-
-### 1. MEP over MVP
-> **"We will be exceptional at one thing before being adequate at many things."**
-
-| ZoneWise Decision | Choice |
-|-------------------|--------|
-| Launch scope | 1 county (Brevard) |
-| Accuracy target | 95% exceptional |
-| Expansion trigger | After 30 days at 95% |
-
-### 2. Zero Sales Headcount (Lemkin Model)
-Following SaaStr's proof: 20+ AI agents → 8-figure revenue with <10 humans
-
-| Category | ZoneWise Agents | Monthly Cost |
-|----------|-----------------|--------------|
-| Sales | 3 agents | $116 |
-| Support | 1 agent (MCP) | $0 |
-| Content | 5 agents (Flywheel) | $20 |
-| Operations | 3 agents | $20 |
-| **TOTAL** | **12 agents** | **$156/mo** |
-
-**Result:** 98% cost reduction vs traditional sales team
-
-### 3. Content Flywheel
-Self-reinforcing growth loop: Queries → Content → Leads → More Queries
-
-```
-Agent 1: Content Generation
-Agent 2: Content Distribution
-Agent 3: Engagement Tracking
-Agent 4: Conversion Attribution
-Agent 5: Optimization Loop
-```
-
-**Cost:** $50/month (vs $3,000+ agency)
-
-### 4. "Agentic AI Ecosystem" Positioning
-Sells *work performed by AI*, not software. 10-15x revenue multiple vs 3-5x SaaS.
-
-## The One Metric That Matters
-
-```
-ACCURACY SCORE = Correct Compliance Checks / Total Checks × 100
-
-Target: 95%+
-Everything else is secondary.
-```
-
-## Quick Reference: Tool Stack
-
-### Sales Agents
-| Tool | Purpose | Cost |
-|------|---------|------|
-| Instantly.ai | AI SDR outbound | $97/mo |
-| Chatbase | AI BDR website | $19/mo |
-| Loops.so | Lead reactivation | $0/mo |
-
-### Content Agents
-| Tool | Purpose | Cost |
-|------|---------|------|
-| Smart Router | Content generation | $20/mo |
-| Buffer | Distribution | $0/mo |
-| Claude Artifacts | Images/diagrams | $0/mo |
-
-### Operations Agents
-| Tool | Purpose | Cost |
-|------|---------|------|
-| Zapier | Workflow automation | $20/mo |
-| Supabase | Database + analytics | $0/mo |
-| Slack | Notifications | $0/mo |
-
-## Quick Links
-
-- **Product Repo:** [github.com/breverdbidder/zonewise](https://github.com/breverdbidder/zonewise)
-- **MCP Server:** `src/mcp/zonewise_mcp_server.py`
-- **Database:** Supabase (mocerqjnksmhcjzxrewo.supabase.co)
-
-## Update Schedule
-
-| Document | Frequency | Trigger |
-|----------|-----------|---------|
-| MEP_STRATEGY | Quarterly | Philosophy change |
-| AI_AGENT_STRATEGY | Monthly | Agent performance |
-| GTM_STRATEGY | Quarterly | Market change |
-| CONTENT_FLYWHEEL | Monthly | Performance review |
-| MARKETING_PLAYBOOK | Monthly | Campaign performance |
-| PRICING | Quarterly | Competitive pressure |
-| COMPETITIVE_ANALYSIS | Monthly | Market changes |
-| LAUNCH_CHECKLIST | Daily (pre-launch) | Task completion |
+### 💰 EXECUTION (When)
+| Document | Purpose |
+|----------|---------|
+| [MARKETING_PLAYBOOK.md](./MARKETING_PLAYBOOK.md) | Channel tactics |
+| [PRICING.md](./PRICING.md) | $0/99/299 tiers |
+| [LAUNCH_CHECKLIST.md](./LAUNCH_CHECKLIST.md) | 8-week timeline |
 
 ---
 
-*Maintained by Claude AI Architect for Everest Capital USA*  
-*"Exceptional beats viable. Every time."*
+## Quick Reference: Framework Summary
+
+### SaaStr/Lemkin Model (Operational)
+- **Source:** SaaStr's 20+ AI agents generating 8-figure revenue
+- **ZoneWise Adaptation:** 16 agents, $300/month, 0.2 FTE oversight
+- **Key Insight:** "Sales professionals become AI orchestrators"
+
+### Tony Robbins Model (Psychological)
+- **Source:** Six Human Needs framework + AI disruption analysis
+- **ZoneWise Application:** Need-based targeting per persona
+- **Key Insight:** "Identity preservation, not replacement"
+
+### Combined Formula
+```
+Agent Reach (16 agents × 5 pillars) 
+× Psychological Resonance (6 needs × 4 personas)
+= 10x Conversion Lift vs. generic messaging
+```
+
+---
+
+## User Psychology Quick Reference
+
+| Persona | Primary Need | Lead Message |
+|---------|-------------|--------------|
+| **Developer** | CERTAINTY | "Never get surprised by zoning again" |
+| **Attorney** | SIGNIFICANCE | "The AI-augmented expert" |
+| **Architect** | GROWTH + CERTAINTY | "Take on more ambitious projects" |
+| **Investor** | CERTAINTY + VARIETY | "Know before you buy" |
+
+---
+
+## Key Metrics
+
+| Category | Metric | Target |
+|----------|--------|--------|
+| **Operational** | Agent cost/month | <$300 |
+| **Operational** | Human oversight | 0.2 FTE |
+| **Psychological** | CERTAINTY conversion rate | 12% |
+| **Psychological** | SIGNIFICANCE conversion rate | 8% |
+| **Combined** | Overall conversion lift vs. baseline | 3-5x |
+
+---
+
+*"Messages that reach AND resonate."*  
+*ZoneWise GTM Framework v1.0*
