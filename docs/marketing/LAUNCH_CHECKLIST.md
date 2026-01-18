@@ -233,7 +233,45 @@
 
 ---
 
-## Phase 6: Launch (Week 8)
+## Phase 6: Content Flywheel Setup (Week 7)
+
+> 📘 **Full documentation:** [CONTENT_FLYWHEEL.md](./CONTENT_FLYWHEEL.md)
+
+### Flywheel Infrastructure
+
+- [ ] **Deploy Supabase schema**
+  - [ ] content_library table
+  - [ ] content_distribution table
+  - [ ] engagement_metrics table
+  - [ ] leads table
+  - [ ] conversion_attribution table
+  - **Owner:** Claude Code
+
+- [ ] **Build Agent 1 (Content Generation)**
+  - [ ] Content templates (4 types)
+  - [ ] Smart Router integration (90% FREE)
+  - [ ] Test with sample zoning data
+  - **Owner:** Claude Code
+
+- [ ] **Build Agent 2 (Distribution)**
+  - [ ] LinkedIn API OAuth setup
+  - [ ] Twitter API OAuth setup
+  - [ ] Resend email integration
+  - [ ] GitHub Actions workflow
+  - **Owner:** Claude Code
+
+### Flywheel Activation (Post-Launch)
+
+- [ ] **Build Agents 3-5**
+  - [ ] Agent 3: Engagement Tracking
+  - [ ] Agent 4: Conversion Attribution
+  - [ ] Agent 5: Optimization Loop
+  - **Owner:** Claude Code
+  - **Timeline:** Weeks 9-10
+
+---
+
+## Phase 7: Launch (Week 8)
 
 ### Pre-Launch (Day -3 to Day -1)
 
@@ -370,6 +408,7 @@
 ## Related Documents
 
 - [GTM_STRATEGY.md](./GTM_STRATEGY.md) — Overall strategy
+- [CONTENT_FLYWHEEL.md](./CONTENT_FLYWHEEL.md) — **5-Agent autonomous marketing engine**
 - [MARKETING_PLAYBOOK.md](./MARKETING_PLAYBOOK.md) — Marketing tactics
 - [PRICING.md](./PRICING.md) — Pricing details
 - [COMPETITIVE_ANALYSIS.md](./COMPETITIVE_ANALYSIS.md) — Competitive intel
