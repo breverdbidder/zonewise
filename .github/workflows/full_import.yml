@@ -1,0 +1,141 @@
+name: ZoneWise Full Parcel Import
+
+on:
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: 'Batch size for import'
+        default: '1000'
+        type: string
+      max_parcels:
+        description: 'Maximum parcels to import'
+        default: '50000'
+        type: string
+  schedule:
+    - cron: '0 4 * * 0'  # Weekly Sunday 4 AM
+
+jobs:
+  import-parcels:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install httpx
+      
+      - name: Import Brevard County Parcels
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          python3 << 'PYTHON'
+          import httpx
+          import os
+          import time
+          import sys
+
+          SUPABASE_URL = os.environ["SUPABASE_URL"]
+          SUPABASE_KEY = os.environ["SUPABASE_KEY"]
+          GIS_URL = "https://services7.arcgis.com/BDKC97XHbtyzbfkd/ArcGIS/rest/services/Brevard_County_Parcels/FeatureServer/0/query"
+
+          client = httpx.Client(timeout=60, verify=False)
+          headers = {
+              "apikey": SUPABASE_KEY,
+              "Authorization": f"Bearer {SUPABASE_KEY}",
+              "Content-Type": "application/json",
+              "Prefer": "resolution=merge-duplicates"
+          }
+
+          max_parcels = int("${{ inputs.max_parcels || '50000' }}")
+          batch_size = int("${{ inputs.batch_size || '1000' }}")
+          
+          print(f"Importing up to {max_parcels:,} parcels...")
+          
+          total = 0
+          offset = 0
+          
+          while total < max_parcels:
+              # Fetch from GIS
+              resp = client.get(GIS_URL, params={
+                  "where": "1=1",
+                  "outFields": "TaxAcct,Name,Acres,Township,Range,Section,SubMoniker,SubBlock,Lot",
+                  "returnGeometry": "true",
+                  "outSR": "3857",
+                  "resultOffset": offset,
+                  "resultRecordCount": batch_size,
+                  "f": "json"
+              })
+              
+              data = resp.json()
+              features = data.get("features", [])
+              
+              if not features:
+                  break
+              
+              parcels = []
+              for f in features:
+                  attrs = f.get("attributes", {})
+                  account = str(attrs.get("TaxAcct", ""))
+                  if not account or account == "None":
+                      continue
+                  
+                  geom = f.get("geometry", {})
+                  cx = cy = None
+                  if geom and "rings" in geom and geom["rings"]:
+                      ring = geom["rings"][0]
+                      if ring:
+                          cx = sum(p[0] for p in ring) / len(ring)
+                          cy = sum(p[1] for p in ring) / len(ring)
+                  
+                  parcels.append({
+                      "account": account,
+                      "parcel_id": attrs.get("Name", ""),
+                      "acres": attrs.get("Acres"),
+                      "township": attrs.get("Township", ""),
+                      "range": attrs.get("Range", ""),
+                      "section": attrs.get("Section", ""),
+                      "subdivision": attrs.get("SubMoniker", ""),
+                      "block": attrs.get("SubBlock", ""),
+                      "lot": str(attrs.get("Lot", ""))[:50],
+                      "centroid_x": cx,
+                      "centroid_y": cy
+                  })
+              
+              if parcels:
+                  resp = client.post(
+                      f"{SUPABASE_URL}/rest/v1/parcels",
+                      headers=headers,
+                      json=parcels
+                  )
+                  if resp.status_code in [200, 201]:
+                      total += len(parcels)
+                      print(f"Imported: {total:,}")
+                  else:
+                      print(f"Error: {resp.status_code} - {resp.text[:100]}")
+                      if "does not exist" in resp.text:
+                          print("Table does not exist - please create it first")
+                          sys.exit(1)
+              
+              offset += batch_size
+              time.sleep(0.2)
+          
+          print(f"\nComplete: {total:,} parcels imported")
+          PYTHON
+      
+      - name: Update checkpoint
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          curl -X POST "$SUPABASE_URL/rest/v1/claude_context_checkpoints" \
+            -H "apikey: $SUPABASE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"conversation_id":"zonewise_automated_import","checkpoint_number":1,"context_percent":100,"checkpoint_summary":"Automated parcel import completed","active_tasks":[],"key_points":["Parcel import complete"]}'
