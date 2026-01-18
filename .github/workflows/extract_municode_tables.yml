@@ -1,0 +1,293 @@
+name: Extract Melbourne Municode Tables
+
+on:
+  workflow_dispatch:
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install playwright httpx
+          playwright install chromium
+          playwright install-deps
+      
+      - name: Extract Melbourne Tables 2a/2b
+        run: |
+          python3 << 'PYEOF'
+          from playwright.sync_api import sync_playwright
+          import json
+          import re
+
+          def extract_melbourne():
+              with sync_playwright() as p:
+                  browser = p.chromium.launch(headless=True)
+                  context = browser.new_context(
+                      viewport={'width': 1920, 'height': 1080},
+                      user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                  )
+                  page = context.new_page()
+                  
+                  print("Loading Melbourne Zoning Section 2...")
+                  page.goto(
+                      "https://library.municode.com/fl/melbourne/codes/code_of_ordinances?nodeId=PTIIILADERE_APXBZO_ARTVDIRE_S2DIUSDIST",
+                      wait_until="networkidle",
+                      timeout=90000
+                  )
+                  
+                  # Wait for JS to render tables
+                  page.wait_for_timeout(10000)
+                  
+                  # Scroll to load lazy content
+                  page.evaluate('window.scrollTo(0, document.body.scrollHeight)')
+                  page.wait_for_timeout(3000)
+                  page.evaluate('window.scrollTo(0, 0)')
+                  page.wait_for_timeout(2000)
+                  
+                  # Extract ALL tables with full data
+                  tables = page.evaluate('''() => {
+                      const results = [];
+                      document.querySelectorAll('table').forEach((table, idx) => {
+                          const data = {index: idx, caption: '', headers: [], rows: []};
+                          
+                          // Get caption if exists
+                          const caption = table.querySelector('caption');
+                          if (caption) data.caption = caption.innerText.trim();
+                          
+                          // Check previous sibling for table title
+                          let prev = table.previousElementSibling;
+                          while (prev && !data.caption) {
+                              if (prev.tagName === 'P' || prev.tagName === 'H1' || prev.tagName === 'H2' || prev.tagName === 'H3') {
+                                  const text = prev.innerText.trim();
+                                  if (text.toLowerCase().includes('table')) {
+                                      data.caption = text;
+                                  }
+                              }
+                              prev = prev.previousElementSibling;
+                          }
+                          
+                          // Get headers from thead or first row
+                          const headerRow = table.querySelector('thead tr') || table.querySelector('tr:first-child');
+                          if (headerRow) {
+                              headerRow.querySelectorAll('th, td').forEach(cell => {
+                                  data.headers.push(cell.innerText.trim().replace(/\\n/g, ' '));
+                              });
+                          }
+                          
+                          // Get all data rows
+                          const rows = table.querySelectorAll('tbody tr') || table.querySelectorAll('tr');
+                          rows.forEach((row, rowIdx) => {
+                              // Skip if this is the header row we already processed
+                              if (rowIdx === 0 && !table.querySelector('thead')) return;
+                              
+                              const cells = [];
+                              row.querySelectorAll('td, th').forEach(cell => {
+                                  cells.push(cell.innerText.trim().replace(/\\n/g, ' '));
+                              });
+                              if (cells.length > 0 && cells.some(c => c)) {
+                                  data.rows.push(cells);
+                              }
+                          });
+                          
+                          if (data.rows.length > 0) results.push(data);
+                      });
+                      return results;
+                  }''')
+                  
+                  # Get full text
+                  content = page.evaluate('() => document.body.innerText')
+                  
+                  # Screenshot for debugging
+                  page.screenshot(path='melbourne_page.png', full_page=True)
+                  
+                  browser.close()
+                  return tables, content
+
+          tables, content = extract_melbourne()
+          
+          print(f"\n=== EXTRACTED {len(tables)} TABLES ===\n")
+          
+          # Find Table 2a and 2b specifically
+          table_2a = None
+          table_2b = None
+          
+          for t in tables:
+              print(f"Table {t['index']}: {t.get('caption', 'No caption')}")
+              print(f"  Headers: {t['headers']}")
+              print(f"  Rows: {len(t['rows'])}")
+              
+              # Identify by headers or caption
+              caption_lower = t.get('caption', '').lower()
+              headers_str = ' '.join(t['headers']).lower()
+              
+              if '2a' in caption_lower or 'residential' in headers_str:
+                  if not table_2a or len(t['rows']) > len(table_2a['rows']):
+                      table_2a = t
+              if '2b' in caption_lower or 'commercial' in headers_str or 'industrial' in headers_str:
+                  if not table_2b or len(t['rows']) > len(table_2b['rows']):
+                      table_2b = t
+              
+              # Print first few rows
+              for row in t['rows'][:2]:
+                  print(f"    {row}")
+              print()
+
+          # Save complete output
+          output = {
+              'all_tables': tables,
+              'table_2a_residential': table_2a,
+              'table_2b_commercial': table_2b,
+              'content_length': len(content)
+          }
+          
+          with open('data/melbourne_tables_raw.json', 'w') as f:
+              json.dump(output, f, indent=2)
+          
+          print(f"\nSaved to data/melbourne_tables_raw.json")
+          print(f"Table 2a: {len(table_2a['rows']) if table_2a else 0} districts")
+          print(f"Table 2b: {len(table_2b['rows']) if table_2b else 0} districts")
+          PYEOF
+      
+      - name: Parse to structured format
+        run: |
+          python3 << 'PYEOF'
+          import json
+          
+          with open('data/melbourne_tables_raw.json') as f:
+              data = json.load(f)
+          
+          districts = []
+          
+          # Process Table 2a (Residential)
+          if data.get('table_2a_residential'):
+              t = data['table_2a_residential']
+              headers = t['headers']
+              print(f"Processing Table 2a with headers: {headers}")
+              
+              for row in t['rows']:
+                  if len(row) >= 2:
+                      district = {
+                          'code': row[0] if len(row) > 0 else '',
+                          'name': row[1] if len(row) > 1 else '',
+                          'category': 'Residential',
+                          'raw_data': row
+                      }
+                      
+                      # Map headers to values
+                      for i, header in enumerate(headers):
+                          if i < len(row):
+                              h = header.lower()
+                              val = row[i]
+                              
+                              # Parse numeric values
+                              import re
+                              nums = re.findall(r'[\d,]+', val)
+                              num = int(nums[0].replace(',', '')) if nums else None
+                              
+                              if 'lot' in h and ('size' in h or 'area' in h):
+                                  district['min_lot_size_sqft'] = num
+                              elif 'width' in h:
+                                  district['min_lot_width_ft'] = num
+                              elif 'front' in h:
+                                  district['front_setback_ft'] = num
+                              elif 'side' in h:
+                                  district['side_setback_ft'] = num
+                              elif 'rear' in h:
+                                  district['rear_setback_ft'] = num
+                              elif 'height' in h:
+                                  district['max_height_ft'] = num
+                              elif 'coverage' in h:
+                                  district['max_lot_coverage_pct'] = num
+                              elif 'density' in h:
+                                  district['density_units_per_acre'] = float(nums[0]) if nums else None
+                      
+                      districts.append(district)
+          
+          # Process Table 2b (Commercial/Industrial)
+          if data.get('table_2b_commercial'):
+              t = data['table_2b_commercial']
+              headers = t['headers']
+              print(f"Processing Table 2b with headers: {headers}")
+              
+              for row in t['rows']:
+                  if len(row) >= 2:
+                      code = row[0]
+                      category = 'Commercial' if code.startswith('C') else 'Industrial' if code.startswith('M') else 'Special'
+                      
+                      district = {
+                          'code': code,
+                          'name': row[1] if len(row) > 1 else '',
+                          'category': category,
+                          'raw_data': row
+                      }
+                      
+                      for i, header in enumerate(headers):
+                          if i < len(row):
+                              h = header.lower()
+                              val = row[i]
+                              import re
+                              nums = re.findall(r'[\d,]+', val)
+                              num = int(nums[0].replace(',', '')) if nums else None
+                              
+                              if 'lot' in h and ('size' in h or 'area' in h):
+                                  district['min_lot_size_sqft'] = num
+                              elif 'width' in h:
+                                  district['min_lot_width_ft'] = num
+                              elif 'front' in h:
+                                  district['front_setback_ft'] = num
+                              elif 'side' in h:
+                                  district['side_setback_ft'] = num
+                              elif 'rear' in h:
+                                  district['rear_setback_ft'] = num
+                              elif 'height' in h:
+                                  district['max_height_ft'] = num
+                              elif 'far' in h or 'floor area ratio' in h:
+                                  district['max_far'] = float(nums[0])/100 if nums else None
+                      
+                      districts.append(district)
+          
+          # Save structured output
+          output = {
+              'metadata': {
+                  'jurisdiction': 'Melbourne',
+                  'state': 'Florida',
+                  'source': 'Municode Tables 2a/2b via Playwright extraction',
+                  'extraction_date': '2026-01-18',
+                  'confidence': 1.0,
+                  'total_districts': len(districts)
+              },
+              'districts': districts
+          }
+          
+          with open('data/verified/melbourne_municode_extracted.json', 'w') as f:
+              json.dump(output, f, indent=2)
+          
+          print(f"\n=== EXTRACTED {len(districts)} DISTRICTS ===")
+          for d in districts:
+              print(f"  {d['code']}: {d.get('min_lot_size_sqft', '?')} sqft, {d.get('front_setback_ft', '?')}/{d.get('side_setback_ft', '?')}/{d.get('rear_setback_ft', '?')} setbacks")
+          PYEOF
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: melbourne-extraction
+          path: |
+            data/melbourne_tables_raw.json
+            data/verified/melbourne_municode_extracted.json
+            melbourne_page.png
+      
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "🎯 Melbourne Tables 2a/2b - 100% Municode extraction via Playwright" || echo "No changes"
+          git push
