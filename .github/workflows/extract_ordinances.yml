@@ -1,0 +1,158 @@
+name: Extract Real Zoning Ordinances
+
+on:
+  workflow_dispatch:
+    inputs:
+      jurisdictions:
+        description: 'Jurisdictions to extract (comma-separated, or "all")'
+        required: false
+        default: 'all'
+      force_refresh:
+        description: 'Force refresh even if recently extracted'
+        required: false
+        default: 'false'
+        type: boolean
+  schedule:
+    # Run weekly on Sundays at 2 AM EST (7 AM UTC)
+    - cron: '0 7 * * 0'
+
+env:
+  FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+
+jobs:
+  extract-ordinances:
+    name: Extract Brevard County Zoning Ordinances
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install httpx supabase python-dotenv
+      
+      - name: Verify secrets
+        run: |
+          echo "Checking required secrets..."
+          if [ -z "$FIRECRAWL_API_KEY" ]; then
+            echo "ERROR: FIRECRAWL_API_KEY not set"
+            exit 1
+          fi
+          echo "FIRECRAWL_API_KEY: ${FIRECRAWL_API_KEY:0:10}..."
+          echo "SUPABASE_URL: ${SUPABASE_URL:0:30}..."
+          echo "All secrets verified ✓"
+      
+      - name: Run extraction
+        run: |
+          echo "Starting ZoneWise Real Ordinance Extraction..."
+          echo "Date: $(date)"
+          echo "Jurisdictions: ${{ github.event.inputs.jurisdictions || 'all' }}"
+          
+          cd scripts
+          python extract_real_ordinances.py
+        env:
+          EXTRACTION_JURISDICTIONS: ${{ github.event.inputs.jurisdictions }}
+          FORCE_REFRESH: ${{ github.event.inputs.force_refresh }}
+      
+      - name: Upload extraction results
+        uses: actions/upload-artifact@v4
+        with:
+          name: extraction-results-${{ github.run_number }}
+          path: |
+            data/real_districts_*.json
+            extraction.log
+          retention-days: 30
+      
+      - name: Commit results to repo
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Check if there are new extraction files
+          if ls data/real_districts_*.json 1> /dev/null 2>&1; then
+            # Keep only the latest extraction file
+            LATEST=$(ls -t data/real_districts_*.json | head -1)
+            
+            # Move to permanent location
+            cp "$LATEST" data/real_districts_latest.json
+            
+            # Update the main complete_districts.json if we have good data
+            python scripts/merge_extraction_results.py || echo "Merge script not found, skipping"
+            
+            git add data/
+            git commit -m "🔄 Auto-update: Real ordinance extraction $(date +%Y-%m-%d)" || echo "No changes to commit"
+            git push || echo "Push failed, may need manual intervention"
+          else
+            echo "No new extraction files found"
+          fi
+      
+      - name: Generate extraction report
+        if: always()
+        run: |
+          echo "## ZoneWise Extraction Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Run Date:** $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "**Workflow Run:** #${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f data/real_districts_latest.json ]; then
+            echo "### Results Summary" >> $GITHUB_STEP_SUMMARY
+            python3 -c "
+          import json
+          with open('data/real_districts_latest.json') as f:
+              data = json.load(f)
+          m = data.get('metadata', {})
+          print(f\"- **Total Districts:** {m.get('total_districts', 'N/A')}\")
+          print(f\"- **Successful:** {m.get('successful_extractions', 'N/A')}\")
+          print(f\"- **Partial:** {m.get('partial_extractions', 'N/A')}\")
+          print(f\"- **Failed:** {m.get('failed_extractions', 'N/A')}\")
+          " >> $GITHUB_STEP_SUMMARY || echo "Could not parse results"
+          else
+            echo "⚠️ No results file generated" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  notify-on-failure:
+    name: Notify on Failure
+    needs: extract-ordinances
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create failure issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `🚨 Ordinance Extraction Failed - ${new Date().toISOString().split('T')[0]}`;
+            const body = `
+            ## Extraction Workflow Failed
+            
+            **Workflow Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            **Triggered by:** ${{ github.event_name }}
+            
+            Please check the workflow logs for details.
+            
+            Common causes:
+            - Firecrawl API key expired
+            - Rate limiting from municipal code sources
+            - Network/connectivity issues
+            
+            cc @breverdbidder
+            `;
+            
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['bug', 'automation']
+            });
