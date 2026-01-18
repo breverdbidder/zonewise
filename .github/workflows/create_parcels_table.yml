@@ -1,0 +1,20 @@
+name: Create Parcels Table
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-table:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create parcels table via SQL
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          # Use Supabase SQL API to create table
+          curl -X POST "$SUPABASE_URL/rest/v1/rpc/exec_sql" \
+            -H "apikey: $SUPABASE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"sql": "CREATE TABLE IF NOT EXISTS public.parcels (id SERIAL PRIMARY KEY, account VARCHAR(20) UNIQUE NOT NULL, parcel_id VARCHAR(50), acres DECIMAL(10,4), zoning_code VARCHAR(20), township VARCHAR(10), range VARCHAR(10), section VARCHAR(10), subdivision VARCHAR(100), lot VARCHAR(50), block VARCHAR(50), centroid_x DECIMAL(15,6), centroid_y DECIMAL(15,6), created_at TIMESTAMP DEFAULT NOW())"}'
