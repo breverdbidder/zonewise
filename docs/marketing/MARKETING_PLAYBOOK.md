@@ -61,7 +61,32 @@ Following Lemkin's AI sales transformation model, ZoneWise marketing operates wi
 
 ---
 
-### 2. Content SEO (30% of Acquisition)
+### 2. Content Flywheel (30% of Acquisition)
+
+**Goal:** Autonomous content marketing engine that improves itself over time.
+
+> 📘 **Full documentation:** See [CONTENT_FLYWHEEL.md](./CONTENT_FLYWHEEL.md) for complete 5-agent architecture.
+
+**The Flywheel Loop:**
+```
+Zoning Queries → Content Generation → Distribution → 
+Engagement → Leads → More Queries → Better Content
+```
+
+**5 Agents:**
+1. **Content Generation** — Transforms queries/analysis into posts
+2. **Distribution** — Publishes to LinkedIn, Twitter, Email, Blog
+3. **Engagement Tracking** — Collects performance metrics
+4. **Conversion Attribution** — Links content to leads (UTM)
+5. **Optimization** — AI-powered strategy improvements
+
+**Cost:** $50/month (vs $3,000+ agency)
+**Automation:** 95%+
+**Human Hours:** 0/week once deployed
+
+---
+
+### 3. Content SEO (Subset of Flywheel)
 
 **Goal:** Rank for "[jurisdiction] zoning requirements" and "[district] setback rules."
 
@@ -152,7 +177,7 @@ zonewise.com/
 
 ---
 
-### 3. AI Outreach Agent (20% of Acquisition)
+### 4. AI Outreach Agent (20% of Acquisition)
 
 **Goal:** Replace SDR function with automated, personalized outreach.
 
@@ -241,7 +266,7 @@ Works for any Brevard County parcel.
 
 ---
 
-### 4. Community/PLG (10% of Acquisition)
+### 5. Community/PLG (10% of Acquisition)
 
 **Goal:** Create viral loop through free tier and community presence.
 
@@ -444,6 +469,7 @@ All marketing is AI-generated and distributed through free channels:
 ## Related Documents
 
 - [GTM_STRATEGY.md](./GTM_STRATEGY.md) — Overall go-to-market strategy
+- [CONTENT_FLYWHEEL.md](./CONTENT_FLYWHEEL.md) — **5-Agent autonomous marketing engine**
 - [PRICING.md](./PRICING.md) — Pricing strategy and tiers
 - [COMPETITIVE_ANALYSIS.md](./COMPETITIVE_ANALYSIS.md) — Competitive landscape
 - [LAUNCH_CHECKLIST.md](./LAUNCH_CHECKLIST.md) — Launch requirements
