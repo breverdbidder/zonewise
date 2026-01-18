@@ -1,0 +1,42 @@
+name: Import Real Zoning Data
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "IMPORT" to confirm data import'
+        required: true
+        default: ''
+
+jobs:
+  import-data:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.confirm == 'IMPORT'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install httpx
+      
+      - name: Import zoning districts to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python scripts/extract_real_zoning_data.py
+      
+      - name: Verify import
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          curl -s "${SUPABASE_URL}/rest/v1/zoning_districts?select=count" \
+            -H "apikey: ${SUPABASE_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_KEY}" \
+            -H "Prefer: count=exact"
