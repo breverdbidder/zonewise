@@ -1,21 +1,31 @@
 # ZoneWise Go-To-Market Strategy
 
 > **Version:** 1.0 | **Last Updated:** January 18, 2026  
-> **Status:** Pre-Launch | **Target Launch:** Q1 2026
+> **Status:** Pre-Launch | **Target Launch:** Q1 2026  
+> **Master Strategy:** [MEP_STRATEGY.md](./MEP_STRATEGY.md) — Minimum Exceptional Product
 
 ---
 
 ## Executive Summary
 
-ZoneWise enters the market as Florida's first **agentic AI zoning compliance platform**, applying the proven Lemkin model of AI-augmented operations. Following Jason Lemkin's experiment (SaaStr) replacing 10 human sales staff with 1.2 humans + 20 AI agents while maintaining comparable results, ZoneWise launches with **zero traditional sales headcount**.
+ZoneWise enters the market as Florida's first **agentic AI zoning compliance platform**, built on two strategic frameworks:
+
+1. **MEP (Minimum Exceptional Product)** — Be 95% accurate in ONE county before expanding to many
+2. **Lemkin AI Sales Transformation** — Zero traditional sales headcount, AI agents for acquisition
 
 ### Strategic Positioning
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  CRITICAL: "Agentic AI Ecosystem" (NOT SaaS)               │
-│  → 10-15x revenue multiple vs 3-5x SaaS valuation          │
-│  → Selling WORK performed by AI, not software licenses     │
+│  MEP PRINCIPLE: Exceptional at one thing > Adequate at many │
+│                                                             │
+│  ZoneWise's ONE Thing: 95% accurate compliance checks       │
+│  Scope: 1 county (Brevard) done exceptionally               │
+│  Expansion: Only after 30 days at 95% accuracy              │
+├─────────────────────────────────────────────────────────────┤
+│  POSITIONING: "Agentic AI Ecosystem" (NOT SaaS)             │
+│  → 10-15x revenue multiple vs 3-5x SaaS valuation           │
+│  → Selling WORK performed by AI, not software licenses      │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -235,6 +245,7 @@ The value proposition is not "cheaper than a consultant" but **"what consultants
 
 ## Related Documents
 
+- [**MEP_STRATEGY.md**](./MEP_STRATEGY.md) — **Master strategy: Why MEP over MVP**
 - [CONTENT_FLYWHEEL.md](./CONTENT_FLYWHEEL.md) — **5-Agent autonomous marketing engine**
 - [MARKETING_PLAYBOOK.md](./MARKETING_PLAYBOOK.md) — Tactical marketing execution
 - [PRICING.md](./PRICING.md) — Pricing strategy and unit economics
