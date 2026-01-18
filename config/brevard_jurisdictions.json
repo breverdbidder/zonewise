@@ -1,0 +1,440 @@
+{
+  "metadata": {
+    "county": "Brevard",
+    "state": "Florida",
+    "fips_code": "12009",
+    "total_jurisdictions": 17,
+    "last_updated": "2026-01-18",
+    "version": "3.0.0"
+  },
+  "jurisdictions": [
+    {
+      "id": 1,
+      "name": "Melbourne",
+      "type": "city",
+      "population": 86426,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/melbourne/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "PTIIILADERE_APXBZO_ARTVDIRE_S2DIUSDIST",
+          "title": "District Use and Dimensional Standards",
+          "contains_tables": ["Table 2a", "Table 2b"]
+        }
+      ],
+      "districts": [
+        {"code": "AEU", "name": "Agricultural Estate Unit", "category": "Agricultural"},
+        {"code": "REU", "name": "Residential Estate Unit", "category": "Residential"},
+        {"code": "R-1A", "name": "Single-Family Residential (Low)", "category": "Residential"},
+        {"code": "R-1B", "name": "Single-Family Residential (Med)", "category": "Residential"},
+        {"code": "R-1C", "name": "Single-Family Residential (High)", "category": "Residential"},
+        {"code": "R-2", "name": "Two-Family Residential", "category": "Residential"},
+        {"code": "R-3", "name": "Multi-Family Residential", "category": "Residential"},
+        {"code": "MH", "name": "Mobile Home", "category": "Residential"},
+        {"code": "C-P", "name": "Professional Office", "category": "Commercial"},
+        {"code": "C-1", "name": "Neighborhood Commercial", "category": "Commercial"},
+        {"code": "C-2", "name": "General Commercial", "category": "Commercial"},
+        {"code": "C-3", "name": "Highway Commercial", "category": "Commercial"},
+        {"code": "M-1", "name": "Light Industrial", "category": "Industrial"},
+        {"code": "PUD", "name": "Planned Unit Development", "category": "Special"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Palm Bay",
+      "type": "city",
+      "population": 119760,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/palm_bay/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "PTIICOOR_CH166ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "RE", "name": "Residential Estate", "category": "Residential"},
+        {"code": "RS-1", "name": "Single-Family Low Density", "category": "Residential"},
+        {"code": "RS-2", "name": "Single-Family Medium Density", "category": "Residential"},
+        {"code": "RS-3", "name": "Single-Family High Density", "category": "Residential"},
+        {"code": "RM-1", "name": "Multi-Family Low Density", "category": "Residential"},
+        {"code": "RM-2", "name": "Multi-Family High Density", "category": "Residential"},
+        {"code": "CN", "name": "Neighborhood Commercial", "category": "Commercial"},
+        {"code": "CG", "name": "General Commercial", "category": "Commercial"},
+        {"code": "IL", "name": "Light Industrial", "category": "Industrial"},
+        {"code": "IH", "name": "Heavy Industrial", "category": "Industrial"},
+        {"code": "PUD", "name": "Planned Unit Development", "category": "Special"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Titusville",
+      "type": "city",
+      "population": 51588,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/titusville/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "PTIICOOR_CH34ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "R-1A", "name": "Single-Family (10,000 sf)", "category": "Residential"},
+        {"code": "R-1B", "name": "Single-Family (7,500 sf)", "category": "Residential"},
+        {"code": "R-1C", "name": "Single-Family (6,000 sf)", "category": "Residential"},
+        {"code": "R-2", "name": "Two-Family", "category": "Residential"},
+        {"code": "R-3", "name": "Multi-Family", "category": "Residential"},
+        {"code": "MH-1", "name": "Mobile Home Park", "category": "Residential"},
+        {"code": "C-1", "name": "Professional/Office", "category": "Commercial"},
+        {"code": "C-2", "name": "Commercial Retail", "category": "Commercial"},
+        {"code": "C-3", "name": "Heavy Commercial", "category": "Commercial"},
+        {"code": "M-1", "name": "Light Industrial", "category": "Industrial"},
+        {"code": "M-2", "name": "Heavy Industrial", "category": "Industrial"},
+        {"code": "PD", "name": "Planned Development", "category": "Special"},
+        {"code": "CBD", "name": "Central Business District", "category": "Commercial"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "West Melbourne",
+      "type": "city",
+      "population": 27126,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/west_melbourne/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "PTIICOOR_CH98ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "R-1AA", "name": "Single-Family (15,000 sf)", "category": "Residential"},
+        {"code": "R-1A", "name": "Single-Family (10,000 sf)", "category": "Residential"},
+        {"code": "R-1B", "name": "Single-Family (7,500 sf)", "category": "Residential"},
+        {"code": "R-2", "name": "Two-Family", "category": "Residential"},
+        {"code": "R-3", "name": "Multi-Family", "category": "Residential"},
+        {"code": "C-1", "name": "Neighborhood Commercial", "category": "Commercial"},
+        {"code": "C-2", "name": "General Commercial", "category": "Commercial"},
+        {"code": "C-3", "name": "Heavy Commercial", "category": "Commercial"},
+        {"code": "M-1", "name": "Light Industrial", "category": "Industrial"},
+        {"code": "M-2", "name": "Heavy Industrial", "category": "Industrial"},
+        {"code": "PUD", "name": "Planned Unit Development", "category": "Special"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Rockledge",
+      "type": "city",
+      "population": 28156,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/rockledge/codes/land_development_regulations_",
+      "zoning_sections": [
+        {
+          "node_id": "LADERE_PTVIPLDIZO",
+          "title": "Planned Zoning Districts"
+        }
+      ],
+      "districts": [
+        {"code": "R-1AAA", "name": "Single-Family (20,000 sf)", "category": "Residential"},
+        {"code": "R-1AA", "name": "Single-Family (15,000 sf)", "category": "Residential"},
+        {"code": "R-1A", "name": "Single-Family (10,000 sf)", "category": "Residential"},
+        {"code": "R-1", "name": "Single-Family (7,500 sf)", "category": "Residential"},
+        {"code": "R-2", "name": "Two-Family", "category": "Residential"},
+        {"code": "R-3", "name": "Multi-Family", "category": "Residential"},
+        {"code": "C-1", "name": "Neighborhood Commercial", "category": "Commercial"},
+        {"code": "C-2", "name": "General Commercial", "category": "Commercial"},
+        {"code": "M-1", "name": "Light Industrial", "category": "Industrial"},
+        {"code": "PUD", "name": "Planned Unit Development", "category": "Special"}
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Cocoa",
+      "type": "city",
+      "population": 20802,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/cocoa/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "COOR_CH13ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "R-1A", "name": "Single-Family (10,000 sf)", "category": "Residential"},
+        {"code": "R-1B", "name": "Single-Family (7,500 sf)", "category": "Residential"},
+        {"code": "R-1C", "name": "Single-Family (6,000 sf)", "category": "Residential"},
+        {"code": "R-2", "name": "Two-Family", "category": "Residential"},
+        {"code": "R-3", "name": "Multi-Family", "category": "Residential"},
+        {"code": "C-1", "name": "Professional Office", "category": "Commercial"},
+        {"code": "C-2", "name": "Neighborhood Commercial", "category": "Commercial"},
+        {"code": "C-3", "name": "General Commercial", "category": "Commercial"},
+        {"code": "M-1", "name": "Light Industrial", "category": "Industrial"},
+        {"code": "PUD", "name": "Planned Unit Development", "category": "Special"}
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Cocoa Beach",
+      "type": "city",
+      "population": 12128,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/cocoa_beach/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "COOR_CH13ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "R-1", "name": "Single-Family", "category": "Residential"},
+        {"code": "R-2", "name": "Medium Density Residential", "category": "Residential"},
+        {"code": "R-3", "name": "High Density Residential", "category": "Residential"},
+        {"code": "C-1", "name": "Limited Commercial", "category": "Commercial"},
+        {"code": "C-2", "name": "General Commercial", "category": "Commercial"},
+        {"code": "C-3", "name": "Tourist Commercial", "category": "Commercial"},
+        {"code": "M-1", "name": "Light Industrial", "category": "Industrial"},
+        {"code": "RC", "name": "Recreation/Conservation", "category": "Special"},
+        {"code": "PUD", "name": "Planned Unit Development", "category": "Special"}
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Cape Canaveral",
+      "type": "city",
+      "population": 10600,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/cape_canaveral/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "PTIICOOR_CH110ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "R-1", "name": "Single-Family Low Density", "category": "Residential"},
+        {"code": "R-2", "name": "Single-Family Medium Density", "category": "Residential"},
+        {"code": "R-3", "name": "Multi-Family", "category": "Residential"},
+        {"code": "C-1", "name": "Low Intensity Commercial", "category": "Commercial"},
+        {"code": "C-2", "name": "Commercial", "category": "Commercial"},
+        {"code": "M-1", "name": "Light Industrial", "category": "Industrial"},
+        {"code": "I", "name": "Institutional", "category": "Special"},
+        {"code": "CON", "name": "Conservation", "category": "Special"},
+        {"code": "PUD", "name": "Planned Unit Development", "category": "Special"}
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Satellite Beach",
+      "type": "city",
+      "population": 11340,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/satellite_beach/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "COOR_CH114ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "R-1A", "name": "Single-Family (10,000 sf)", "category": "Residential"},
+        {"code": "R-1B", "name": "Single-Family (7,500 sf)", "category": "Residential"},
+        {"code": "R-2", "name": "Multi-Family Low Density", "category": "Residential"},
+        {"code": "R-3", "name": "Multi-Family High Density", "category": "Residential"},
+        {"code": "C-1", "name": "Neighborhood Commercial", "category": "Commercial"},
+        {"code": "C-2", "name": "General Commercial", "category": "Commercial"},
+        {"code": "P", "name": "Public/Institutional", "category": "Special"},
+        {"code": "OS", "name": "Open Space", "category": "Special"},
+        {"code": "PUD", "name": "Planned Unit Development", "category": "Special"}
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Indian Harbour Beach",
+      "type": "city",
+      "population": 9009,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/indian_harbour_beach/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "APXAZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "R-1AAA", "name": "Single-Family (15,000 sf)", "category": "Residential"},
+        {"code": "R-1AA", "name": "Single-Family (12,000 sf)", "category": "Residential"},
+        {"code": "R-1A", "name": "Single-Family (9,000 sf)", "category": "Residential"},
+        {"code": "R-2", "name": "Two-Family", "category": "Residential"},
+        {"code": "R-3", "name": "Multi-Family", "category": "Residential"},
+        {"code": "C-P", "name": "Professional Offices", "category": "Commercial"},
+        {"code": "B-1", "name": "General Commercial", "category": "Commercial"},
+        {"code": "M-1", "name": "Light Industrial", "category": "Industrial"},
+        {"code": "P-1", "name": "Institutional", "category": "Special"}
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Indialantic",
+      "type": "town",
+      "population": 2903,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/indialantic/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "COOR_CH23ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "R-1", "name": "Single-Family", "category": "Residential"},
+        {"code": "R-2", "name": "Two-Family", "category": "Residential"},
+        {"code": "R-3", "name": "Multi-Family", "category": "Residential"},
+        {"code": "C-1", "name": "Commercial", "category": "Commercial"},
+        {"code": "GU", "name": "Government Use", "category": "Special"},
+        {"code": "CON", "name": "Conservation", "category": "Special"},
+        {"code": "PUD", "name": "Planned Unit Development", "category": "Special"}
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Melbourne Beach",
+      "type": "town",
+      "population": 3257,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/melbourne_beach/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "PTIICOOR_CH26ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "R-1A", "name": "Single-Family (12,500 sf)", "category": "Residential"},
+        {"code": "R-1B", "name": "Single-Family (10,000 sf)", "category": "Residential"},
+        {"code": "R-1C", "name": "Single-Family (7,500 sf)", "category": "Residential"},
+        {"code": "R-2", "name": "Two-Family", "category": "Residential"},
+        {"code": "R-3", "name": "Multi-Family", "category": "Residential"},
+        {"code": "C-1", "name": "Commercial", "category": "Commercial"},
+        {"code": "P", "name": "Public", "category": "Special"},
+        {"code": "CON", "name": "Conservation", "category": "Special"}
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Melbourne Village",
+      "type": "town",
+      "population": 701,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/melbourne_village/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "PTIICOOR_CH18ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "R-1", "name": "Single-Family", "category": "Residential"},
+        {"code": "R-2", "name": "Two-Family", "category": "Residential"},
+        {"code": "C", "name": "Commercial", "category": "Commercial"},
+        {"code": "P", "name": "Public", "category": "Special"},
+        {"code": "CON", "name": "Conservation", "category": "Special"},
+        {"code": "PUD", "name": "Planned Unit Development", "category": "Special"}
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Palm Shores",
+      "type": "town",
+      "population": 1200,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/palm_shores/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "PTIICOOR_CH18ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "R-1", "name": "Single-Family", "category": "Residential"},
+        {"code": "C-1", "name": "Commercial", "category": "Commercial"},
+        {"code": "P", "name": "Public", "category": "Special"},
+        {"code": "CON", "name": "Conservation", "category": "Special"}
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Malabar",
+      "type": "town",
+      "population": 3177,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "PTIICOOR_CH18ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "A", "name": "Agricultural", "category": "Agricultural"},
+        {"code": "R-1", "name": "Single-Family", "category": "Residential"},
+        {"code": "R-2", "name": "Two-Family", "category": "Residential"},
+        {"code": "C", "name": "Commercial", "category": "Commercial"},
+        {"code": "P", "name": "Public", "category": "Special"},
+        {"code": "CON", "name": "Conservation", "category": "Special"}
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Grant-Valkaria",
+      "type": "town",
+      "population": 4750,
+      "source": "municode",
+      "base_url": "https://library.municode.com/fl/grant-valkaria/codes/code_of_ordinances",
+      "zoning_sections": [
+        {
+          "node_id": "PTIICOOR_CH18ZO",
+          "title": "Zoning"
+        }
+      ],
+      "districts": [
+        {"code": "A-1", "name": "Agricultural", "category": "Agricultural"},
+        {"code": "R-1", "name": "Single-Family", "category": "Residential"},
+        {"code": "R-2", "name": "Two-Family", "category": "Residential"},
+        {"code": "C-1", "name": "Commercial", "category": "Commercial"},
+        {"code": "P", "name": "Public", "category": "Special"},
+        {"code": "CON", "name": "Conservation", "category": "Special"}
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Unincorporated Brevard County",
+      "type": "county",
+      "population": 150000,
+      "source": "elaws",
+      "base_url": "http://brevardcounty.elaws.us/code",
+      "zoning_sections": [
+        {
+          "node_id": "coorbrcoflvoii_ch62_artvi",
+          "title": "Zoning Districts"
+        }
+      ],
+      "districts": [
+        {"code": "AU", "name": "Agricultural", "category": "Agricultural"},
+        {"code": "RR-1", "name": "Rural Residential", "category": "Residential"},
+        {"code": "SR", "name": "Suburban Residential", "category": "Residential"},
+        {"code": "RU-1-13", "name": "Single-Family (1,300 sf)", "category": "Residential"},
+        {"code": "RU-1-11", "name": "Single-Family (1,100 sf)", "category": "Residential"},
+        {"code": "RU-1-9", "name": "Single-Family (900 sf)", "category": "Residential"},
+        {"code": "RU-1-7", "name": "Single-Family (700 sf)", "category": "Residential"},
+        {"code": "RU-2-15", "name": "Multi-Family (15 du/ac)", "category": "Residential"},
+        {"code": "RU-2-30", "name": "Multi-Family (30 du/ac)", "category": "Residential"},
+        {"code": "BU-1", "name": "Retail Commercial", "category": "Commercial"},
+        {"code": "BU-2", "name": "General Commercial", "category": "Commercial"},
+        {"code": "IU", "name": "Industrial", "category": "Industrial"},
+        {"code": "PUD", "name": "Planned Unit Development", "category": "Special"}
+      ]
+    }
+  ]
+}
