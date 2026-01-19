@@ -1,0 +1,36 @@
+{
+  "name": "zonewise-verify-agent",
+  "version": "1.0.0",
+  "description": "ZoneWise Zoning District Verification Agent using Vercel AI SDK + Firecrawl",
+  "type": "module",
+  "main": "zonewise-verify-agent.js",
+  "scripts": {
+    "verify": "node zonewise-verify-agent.js",
+    "verify:rockledge": "node zonewise-verify-agent.js Rockledge 8",
+    "verify:all": "node zonewise-verify-agent.js --batch",
+    "test": "node verify-rockledge.js"
+  },
+  "dependencies": {
+    "ai": "^3.4.0",
+    "@ai-sdk/anthropic": "^0.0.50",
+    "@mendable/firecrawl-js": "^1.4.0",
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "BidDeed.AI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/breverdbidder/zonewise"
+  },
+  "keywords": [
+    "zoning",
+    "ai-agent",
+    "vercel-ai-sdk",
+    "firecrawl",
+    "florida",
+    "brevard-county"
+  ]
+}
