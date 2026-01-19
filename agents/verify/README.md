@@ -19,7 +19,7 @@ npm install
 
 # Set environment variables (or use defaults in code)
 export ANTHROPIC_API_KEY="your-key"
-export FIRECRAWL_API_KEY="fc-fa112951a9dc4e8c87119f61ee7ca942"
+export FIRECRAWL_API_KEY="your-firecrawl-api-key"
 
 # Verify a single jurisdiction
 npm run verify:rockledge
