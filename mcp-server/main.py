@@ -10,6 +10,7 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, List
+from contextlib import asynccontextmanager
 import httpx
 import json
 import os
@@ -23,6 +24,24 @@ SUPABASE_URL = os.getenv("SUPABASE_URL", "https://mocerqjnksmhcjzxrewo.supabase.
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
 # ============================================================================
+# LIFESPAN (replaces deprecated on_event)
+# ============================================================================
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    print("=" * 60)
+    print("ZoneWise MCP Server Starting...")
+    print("=" * 60)
+    print(f"Supabase URL: {SUPABASE_URL}")
+    print(f"Supabase Key: {'Set' if SUPABASE_KEY else 'Missing'}")
+    print("Coverage: Brevard County, FL (17 jurisdictions, 273 districts)")
+    print("=" * 60)
+    yield
+    # Shutdown
+    print("ZoneWise MCP Server shutting down...")
+
+# ============================================================================
 # FASTAPI APP
 # ============================================================================
 
@@ -31,7 +50,8 @@ app = FastAPI(
     description="Zoning Intelligence API for Brevard County, Florida. 17 jurisdictions, 273 districts, 100% verified.",
     version="1.0.0",
     docs_url="/docs",
-    redoc_url="/redoc"
+    redoc_url="/redoc",
+    lifespan=lifespan
 )
 
 # CORS for Claude Desktop and web clients
@@ -52,8 +72,8 @@ class ZoningDistrict(BaseModel):
     jurisdiction_id: int
     code: str
     name: str
-    category: Optional[str]
-    description: Optional[str]
+    category: Optional[str] = None
+    description: Optional[str] = None
     dims: Optional[dict] = None
 
 class Jurisdiction(BaseModel):
@@ -67,21 +87,21 @@ class ZoningQuery(BaseModel):
     address: Optional[str] = None
     jurisdiction: Optional[str] = None
     district_code: Optional[str] = None
-    use_type: Optional[str] = None  # residential, commercial, industrial
+    use_type: Optional[str] = None
     min_lot_sqft: Optional[int] = None
     max_height_ft: Optional[int] = None
 
 class DimensionalStandards(BaseModel):
-    min_lot_sqft: Optional[int]
-    min_lot_width_ft: Optional[int]
-    max_height_ft: Optional[int]
-    max_stories: Optional[int]
-    coverage_pct: Optional[int]
-    setbacks_ft: Optional[dict]
-    density: Optional[float]
-    floor_area_ratio: Optional[float]
-    source_url: Optional[str]
-    verified_date: Optional[str]
+    min_lot_sqft: Optional[int] = None
+    min_lot_width_ft: Optional[int] = None
+    max_height_ft: Optional[int] = None
+    max_stories: Optional[int] = None
+    coverage_pct: Optional[int] = None
+    setbacks_ft: Optional[dict] = None
+    density: Optional[float] = None
+    floor_area_ratio: Optional[float] = None
+    source_url: Optional[str] = None
+    verified_date: Optional[str] = None
 
 # ============================================================================
 # SUPABASE CLIENT
@@ -166,7 +186,6 @@ async def get_jurisdiction(jurisdiction_id: int):
     if not data:
         raise HTTPException(status_code=404, detail="Jurisdiction not found")
     
-    # Get district count
     districts = await supabase_query("zoning_districts", {
         "jurisdiction_id": f"eq.{jurisdiction_id}",
         "select": "id"
@@ -183,8 +202,8 @@ async def get_jurisdiction(jurisdiction_id: int):
 @app.get("/districts")
 async def list_districts(
     jurisdiction_id: Optional[int] = Query(None, description="Filter by jurisdiction ID"),
-    category: Optional[str] = Query(None, description="Filter by category (Residential, Commercial, Industrial)"),
-    limit: int = Query(50, le=273, description="Max results to return")
+    category: Optional[str] = Query(None, description="Filter by category"),
+    limit: int = Query(50, le=273, description="Max results")
 ):
     """List zoning districts with optional filters"""
     params = {"order": "jurisdiction_id,code", "limit": str(limit)}
@@ -196,7 +215,6 @@ async def list_districts(
     
     data = await supabase_query("zoning_districts", params)
     
-    # Parse DIMS for each district
     for d in data:
         d["dims"] = parse_dims(d.get("description"))
     
@@ -219,15 +237,7 @@ async def get_district(district_id: int):
 
 @app.get("/dims/{jurisdiction}/{code}")
 async def get_dimensional_standards(jurisdiction: str, code: str):
-    """
-    Get dimensional standards for a specific zoning district
-    
-    Examples:
-    - /dims/Melbourne/R-1A
-    - /dims/Palm%20Bay/RS-1
-    - /dims/Rockledge/C-2
-    """
-    # First get jurisdiction ID
+    """Get dimensional standards for a specific zoning district"""
     jur_data = await supabase_query("jurisdictions", {
         "name": f"ilike.{jurisdiction}",
         "county": "eq.Brevard"
@@ -238,7 +248,6 @@ async def get_dimensional_standards(jurisdiction: str, code: str):
     
     jur_id = jur_data[0]["id"]
     
-    # Get district
     district_data = await supabase_query("zoning_districts", {
         "jurisdiction_id": f"eq.{jur_id}",
         "code": f"eq.{code}"
@@ -269,14 +278,7 @@ async def search_districts(
     q: str = Query(..., min_length=2, description="Search query"),
     jurisdiction_id: Optional[int] = None
 ):
-    """
-    Search districts by name, code, or description
-    
-    Examples:
-    - /search?q=single-family
-    - /search?q=commercial&jurisdiction_id=1
-    - /search?q=PUD
-    """
+    """Search districts by name, code, or description"""
     params = {
         "or": f"(code.ilike.%{q}%,name.ilike.%{q}%,description.ilike.%{q}%)",
         "order": "jurisdiction_id,code",
@@ -291,11 +293,7 @@ async def search_districts(
     for d in data:
         d["dims"] = parse_dims(d.get("description"))
     
-    return {
-        "query": q,
-        "count": len(data),
-        "results": data
-    }
+    return {"query": q, "count": len(data), "results": data}
 
 # ----------------------------------------------------------------------------
 # LOOKUP BY USE TYPE
@@ -304,14 +302,11 @@ async def search_districts(
 @app.get("/lookup/residential")
 async def lookup_residential(
     jurisdiction_id: Optional[int] = None,
-    min_density: Optional[float] = Query(None, description="Minimum units per acre"),
-    max_density: Optional[float] = Query(None, description="Maximum units per acre")
+    min_density: Optional[float] = Query(None),
+    max_density: Optional[float] = Query(None)
 ):
     """Find residential zoning districts"""
-    params = {
-        "category": "eq.Residential",
-        "order": "jurisdiction_id,code"
-    }
+    params = {"category": "eq.Residential", "order": "jurisdiction_id,code"}
     if jurisdiction_id:
         params["jurisdiction_id"] = f"eq.{jurisdiction_id}"
     
@@ -322,7 +317,6 @@ async def lookup_residential(
         dims = parse_dims(d.get("description"))
         d["dims"] = dims
         
-        # Filter by density if specified
         if dims:
             density = dims.get("density")
             if min_density and (not density or density < min_density):
@@ -337,10 +331,7 @@ async def lookup_residential(
 @app.get("/lookup/commercial")
 async def lookup_commercial(jurisdiction_id: Optional[int] = None):
     """Find commercial zoning districts"""
-    params = {
-        "category": "eq.Commercial",
-        "order": "jurisdiction_id,code"
-    }
+    params = {"category": "eq.Commercial", "order": "jurisdiction_id,code"}
     if jurisdiction_id:
         params["jurisdiction_id"] = f"eq.{jurisdiction_id}"
     
@@ -354,10 +345,7 @@ async def lookup_commercial(jurisdiction_id: Optional[int] = None):
 @app.get("/lookup/industrial")
 async def lookup_industrial(jurisdiction_id: Optional[int] = None):
     """Find industrial zoning districts"""
-    params = {
-        "category": "eq.Industrial",
-        "order": "jurisdiction_id,code"
-    }
+    params = {"category": "eq.Industrial", "order": "jurisdiction_id,code"}
     if jurisdiction_id:
         params["jurisdiction_id"] = f"eq.{jurisdiction_id}"
     
@@ -374,20 +362,14 @@ async def lookup_industrial(jurisdiction_id: Optional[int] = None):
 
 @app.post("/mcp/tools/lookup_zoning")
 async def mcp_lookup_zoning(query: ZoningQuery):
-    """
-    MCP Tool: Lookup zoning information
-    
-    Used by Claude Desktop and other MCP clients
-    """
+    """MCP Tool: Lookup zoning information"""
     results = {}
     
     if query.jurisdiction and query.district_code:
-        # Direct lookup
         dims = await get_dimensional_standards(query.jurisdiction, query.district_code)
         results["district"] = dims
     
     elif query.jurisdiction:
-        # List all districts in jurisdiction
         jur_data = await supabase_query("jurisdictions", {
             "name": f"ilike.{query.jurisdiction}",
             "county": "eq.Brevard"
@@ -398,7 +380,6 @@ async def mcp_lookup_zoning(query: ZoningQuery):
             results["districts"] = districts
     
     elif query.use_type:
-        # Lookup by use type
         if query.use_type.lower() == "residential":
             results = await lookup_residential()
         elif query.use_type.lower() == "commercial":
@@ -407,20 +388,6 @@ async def mcp_lookup_zoning(query: ZoningQuery):
             results = await lookup_industrial()
     
     return results
-
-# ============================================================================
-# STARTUP
-# ============================================================================
-
-@app.on_event("startup")
-async def startup():
-    print("=" * 60)
-    print("ZoneWise MCP Server Starting...")
-    print("=" * 60)
-    print(f"Supabase URL: {SUPABASE_URL}")
-    print(f"Supabase Key: {'✅ Set' if SUPABASE_KEY else '❌ Missing'}")
-    print("Coverage: Brevard County, FL (17 jurisdictions, 273 districts)")
-    print("=" * 60)
 
 if __name__ == "__main__":
     import uvicorn
