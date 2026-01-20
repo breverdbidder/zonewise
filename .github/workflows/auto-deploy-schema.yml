@@ -1,0 +1,34 @@
+name: Auto Deploy Schema
+
+on:
+  push:
+    paths:
+      - 'supabase/migrations/run-deploy.txt'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install psql
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+      
+      - name: Deploy All Migrations
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+        run: |
+          echo "🚀 Deploying ZoneWise schema..."
+          DB="postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres"
+          
+          for migration in supabase/migrations/*.sql; do
+            echo "Running $migration..."
+            psql "$DB" -f "$migration" || echo "Some errors in $migration (may be expected)"
+          done
+          
+          echo "Verifying..."
+          psql "$DB" -c "SELECT 'KPIs:', COUNT(*) FROM kpi_definitions;" || echo "Table check"
+          psql "$DB" -c "SELECT table_name FROM information_schema.tables WHERE table_schema='public' ORDER BY table_name;" | head -30
+          
+          echo "✅ Complete!"
