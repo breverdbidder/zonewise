@@ -1,16 +1,21 @@
-name: Populate Sample Properties
+name: Populate ALL Brevard County Parcels
 
 on:
   workflow_dispatch:
     inputs:
-      parcels_per_jurisdiction:
-        description: 'Parcels per jurisdiction (100 = 1,700 total)'
+      batch_size:
+        description: 'Records per API request (max 1000)'
         required: true
-        default: '100'
+        default: '1000'
+      start_offset:
+        description: 'Starting offset (for resume after failure)'
+        required: true
+        default: '0'
 
 jobs:
-  populate:
+  populate-all:
     runs-on: ubuntu-latest
+    timeout-minutes: 180  # 3 hours max
     
     steps:
       - name: Checkout
@@ -24,110 +29,111 @@ jobs:
       - name: Install dependencies
         run: pip install requests
       
-      - name: Populate sample_properties
+      - name: Scrape ALL Brevard County Parcels
         env:
           SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-          PARCELS_LIMIT: ${{ inputs.parcels_per_jurisdiction }}
+          BATCH_SIZE: ${{ inputs.batch_size }}
+          START_OFFSET: ${{ inputs.start_offset }}
         run: |
           python << 'PYTHON_SCRIPT'
           import os
           import requests
           import json
           import time
+          from datetime import datetime
 
           SUPABASE_URL = os.environ["SUPABASE_URL"]
           SUPABASE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
           BCPAO_URL = "https://gis.brevardfl.gov/gissrv/rest/services/Base_Map/Parcel_New_WKID2881/MapServer/5/query"
-          LIMIT = int(os.environ.get("PARCELS_LIMIT", "100"))
+          BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "1000"))
+          START_OFFSET = int(os.environ.get("START_OFFSET", "0"))
+
+          # City to jurisdiction_id mapping
+          CITY_TO_JURISDICTION = {
+              "MELBOURNE": 1,
+              "PALM BAY": 2,
+              "INDIAN HARBOUR BEACH": 3,
+              "TITUSVILLE": 4,
+              "COCOA": 5,
+              "SATELLITE BEACH": 6,
+              "COCOA BEACH": 7,
+              "ROCKLEDGE": 8,
+              "WEST MELBOURNE": 9,
+              "CAPE CANAVERAL": 10,
+              "INDIALANTIC": 11,
+              "MELBOURNE BEACH": 12,
+              "MALABAR": 14,
+              "GRANT VALKARIA": 15,
+              "GRANT-VALKARIA": 15,
+              "PALM SHORES": 16,
+              "MELBOURNE VILLAGE": 17,
+          }
 
           headers = {
               "apikey": SUPABASE_KEY,
               "Authorization": f"Bearer {SUPABASE_KEY}",
               "Content-Type": "application/json",
-              "Prefer": "resolution=ignore-duplicates"
+              "Prefer": "resolution=merge-duplicates"  # Upsert on parcel_id
           }
 
-          JURISDICTIONS = {
-              1: "MELBOURNE", 2: "PALM BAY", 3: "INDIAN HARBOUR BEACH",
-              4: "TITUSVILLE", 5: "COCOA", 6: "SATELLITE BEACH",
-              7: "COCOA BEACH", 8: "ROCKLEDGE", 9: "WEST MELBOURNE",
-              10: "CAPE CANAVERAL", 11: "INDIALANTIC", 12: "MELBOURNE BEACH",
-              13: None, 14: "MALABAR", 15: "GRANT VALKARIA",
-              16: "PALM SHORES", 17: "MELBOURNE VILLAGE"
-          }
+          def get_jurisdiction_id(city):
+              """Map city to jurisdiction_id, default to 13 (Unincorporated)"""
+              if not city:
+                  return 13
+              city_upper = city.upper().strip()
+              return CITY_TO_JURISDICTION.get(city_upper, 13)
 
-          ALL_CITIES = [c for c in JURISDICTIONS.values() if c]
-
-          def query_bcpao(city, limit):
-              if city is None:
-                  # Unincorporated - exclude all known cities
-                  where = "ParcelType=0 AND CITY NOT IN ({})".format(
-                      ",".join(f"'{c}'" for c in ALL_CITIES)
-                  )
-              else:
-                  where = f"CITY='{city}' AND ParcelType=0"
-              
+          def query_bcpao_batch(offset, limit):
+              """Query BCPAO with pagination"""
               params = {
-                  "where": where,
-                  "outFields": "PARCEL_ID,TaxAcct,STREET_NUMBER,STREET_NAME,STREET_TYPE,CITY,STATE,ZIP_CODE,ACRES,LAND_VALUE,BLDG_VALUE,USE_CODE,USE_CODE_DESCRIPTION",
+                  "where": "ParcelType=0",
+                  "outFields": "OBJECTID,PARCEL_ID,TaxAcct,STREET_NUMBER,STREET_NAME,STREET_TYPE,CITY,STATE,ZIP_CODE,ACRES,LAND_VALUE,BLDG_VALUE,USE_CODE,USE_CODE_DESCRIPTION",
                   "returnGeometry": "false",
-                  "f": "json",
-                  "resultRecordCount": limit
+                  "orderByFields": "OBJECTID",
+                  "resultOffset": offset,
+                  "resultRecordCount": limit,
+                  "f": "json"
               }
               
               try:
-                  r = requests.get(BCPAO_URL, params=params, timeout=30)
+                  r = requests.get(BCPAO_URL, params=params, timeout=60)
                   data = r.json()
-                  return data.get("features", [])
+                  features = data.get("features", [])
+                  exceeded = data.get("exceededTransferLimit", False)
+                  return features, exceeded
               except Exception as e:
-                  print(f"  Error: {e}")
-                  return []
+                  print(f"  BCPAO Error at offset {offset}: {e}")
+                  return [], False
 
-          def insert_batch(records):
-              if not records:
-                  return 0
-              try:
-                  r = requests.post(
-                      f"{SUPABASE_URL}/rest/v1/sample_properties",
-                      headers=headers,
-                      json=records,
-                      timeout=60
-                  )
-                  if r.status_code in [200, 201]:
-                      return len(records)
-                  else:
-                      print(f"  Insert error: {r.status_code} - {r.text[:200]}")
-                      return 0
-              except Exception as e:
-                  print(f"  Exception: {e}")
-                  return 0
-
-          print("=" * 60)
-          print("ZoneWise Sample Properties Population")
-          print(f"Target: {LIMIT} parcels × 17 jurisdictions = {LIMIT * 17} records")
-          print("=" * 60)
-
-          total = 0
-          for jid, city in JURISDICTIONS.items():
-              print(f"\n[{jid:2d}] {city or 'Unincorporated'}...")
-              features = query_bcpao(city, LIMIT)
-              
+          def transform_features(features):
+              """Transform BCPAO features to sample_properties records"""
               records = []
               for f in features:
                   a = f.get("attributes", {})
-                  addr = " ".join(filter(None, [
+                  
+                  # Build address
+                  addr_parts = [
                       str(a.get("STREET_NUMBER", "")).strip(),
                       str(a.get("STREET_NAME", "")).strip(),
                       str(a.get("STREET_TYPE", "")).strip()
-                  ]))
+                  ]
+                  address = " ".join(filter(None, addr_parts)) or None
                   
-                  record = {
-                      "jurisdiction_id": jid,
-                      "parcel_id": a.get("PARCEL_ID"),
+                  # Get jurisdiction
+                  city = a.get("CITY")
+                  jurisdiction_id = get_jurisdiction_id(city)
+                  
+                  parcel_id = a.get("PARCEL_ID")
+                  if not parcel_id:
+                      continue
+                  
+                  records.append({
+                      "jurisdiction_id": jurisdiction_id,
+                      "parcel_id": parcel_id,
                       "tax_account": str(a.get("TaxAcct")) if a.get("TaxAcct") else None,
-                      "address": addr if addr.strip() else None,
-                      "city": a.get("CITY"),
+                      "address": address,
+                      "city": city,
                       "state": a.get("STATE", "FL"),
                       "zip_code": a.get("ZIP_CODE"),
                       "acres": a.get("ACRES"),
@@ -135,34 +141,128 @@ jobs:
                       "building_value": a.get("BLDG_VALUE"),
                       "use_code": a.get("USE_CODE"),
                       "use_description": a.get("USE_CODE_DESCRIPTION")
-                  }
-                  if record["parcel_id"]:
-                      records.append(record)
+                  })
               
-              inserted = insert_batch(records)
-              total += inserted
-              print(f"     ✓ {len(features)} queried, {inserted} inserted")
-              time.sleep(0.3)
+              return records
 
-          print("\n" + "=" * 60)
-          print(f"TOTAL INSERTED: {total} parcels")
-          print("=" * 60)
+          def insert_batch(records):
+              """Insert/upsert batch to Supabase"""
+              if not records:
+                  return 0
+              
+              try:
+                  r = requests.post(
+                      f"{SUPABASE_URL}/rest/v1/sample_properties",
+                      headers=headers,
+                      json=records,
+                      timeout=120
+                  )
+                  if r.status_code in [200, 201]:
+                      return len(records)
+                  else:
+                      print(f"  Supabase error: {r.status_code} - {r.text[:300]}")
+                      return 0
+              except Exception as e:
+                  print(f"  Insert exception: {e}")
+                  return 0
+
+          # Main execution
+          print("=" * 70)
+          print("ZoneWise FULL Brevard County Parcel Scrape")
+          print(f"Target: ~351,531 parcels")
+          print(f"Batch size: {BATCH_SIZE}")
+          print(f"Starting offset: {START_OFFSET}")
+          print(f"Started: {datetime.now().isoformat()}")
+          print("=" * 70)
+
+          offset = START_OFFSET
+          total_inserted = 0
+          batch_num = 0
+          has_more = True
+          errors = 0
+          max_errors = 10
+
+          while has_more and errors < max_errors:
+              batch_num += 1
+              print(f"\n[Batch {batch_num}] Offset {offset}...", end=" ", flush=True)
+              
+              # Query BCPAO
+              features, exceeded = query_bcpao_batch(offset, BATCH_SIZE)
+              
+              if not features:
+                  errors += 1
+                  print(f"No features returned (error {errors}/{max_errors})")
+                  time.sleep(5)
+                  continue
+              
+              # Transform and insert
+              records = transform_features(features)
+              inserted = insert_batch(records)
+              total_inserted += inserted
+              
+              print(f"fetched {len(features)}, inserted {inserted}, total: {total_inserted}")
+              
+              # Check if more data
+              if len(features) < BATCH_SIZE or not exceeded:
+                  has_more = False
+                  print("\nReached end of data.")
+              else:
+                  offset += BATCH_SIZE
+                  time.sleep(0.5)  # Rate limiting
+              
+              # Progress checkpoint every 50 batches
+              if batch_num % 50 == 0:
+                  print(f"\n>>> CHECKPOINT: {total_inserted} parcels at offset {offset}")
+                  print(f">>> Resume with start_offset={offset} if workflow fails")
+
+          # Summary
+          print("\n" + "=" * 70)
+          print("SCRAPE COMPLETE")
+          print(f"Total batches: {batch_num}")
+          print(f"Total inserted: {total_inserted}")
+          print(f"Final offset: {offset}")
+          print(f"Completed: {datetime.now().isoformat()}")
+          print("=" * 70)
+          
+          # Save checkpoint for potential resume
+          with open("checkpoint.txt", "w") as f:
+              f.write(f"last_offset={offset}\n")
+              f.write(f"total_inserted={total_inserted}\n")
           PYTHON_SCRIPT
       
-      - name: Verify counts
+      - name: Upload checkpoint
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scrape-checkpoint
+          path: checkpoint.txt
+          retention-days: 7
+      
+      - name: Verify final counts
         env:
           SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
-          echo "=== Verification ==="
-          RESPONSE=$(curl -s "$SUPABASE_URL/rest/v1/sample_properties?select=jurisdiction_id" \
+          echo "=== Final Verification ==="
+          
+          # Total count
+          TOTAL=$(curl -s "$SUPABASE_URL/rest/v1/sample_properties?select=id" \
             -H "apikey: $SUPABASE_SERVICE_KEY" \
             -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
-            -H "Prefer: count=exact" -I)
-          echo "$RESPONSE" | grep -i "x-total-count" || echo "Count not found in headers"
+            -H "Prefer: count=exact" -I | grep -i "x-total-count" | cut -d: -f2 | tr -d ' \r')
+          echo "Total parcels in database: $TOTAL"
           
+          # Count by jurisdiction
           echo ""
-          echo "=== Sample records ==="
-          curl -s "$SUPABASE_URL/rest/v1/sample_properties?select=jurisdiction_id,parcel_id,address,city&limit=5" \
+          echo "=== Counts by Jurisdiction ==="
+          curl -s "$SUPABASE_URL/rest/v1/rpc/count_by_jurisdiction" \
             -H "apikey: $SUPABASE_SERVICE_KEY" \
-            -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" | python3 -m json.tool || cat
+            -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
+            -X POST 2>/dev/null || echo "(RPC not available - run manual query)"
+          
+          # Sample records
+          echo ""
+          echo "=== Sample Records ==="
+          curl -s "$SUPABASE_URL/rest/v1/sample_properties?select=parcel_id,address,city,jurisdiction_id&limit=10" \
+            -H "apikey: $SUPABASE_SERVICE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" | python3 -m json.tool 2>/dev/null || cat
