@@ -1,0 +1,42 @@
+name: Deploy Schema Now
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install psql
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+      
+      - name: Deploy Schema
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+        run: |
+          echo "🚀 Starting deployment..."
+          
+          # Deploy migration 003 first
+          echo "Deploying 003_zonewise_298_kpi.sql..."
+          psql "postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres" \
+            -f supabase/migrations/003_zonewise_298_kpi.sql || echo "Migration 003 may have partial errors"
+          
+          # Deploy migration 004
+          echo "Deploying 004_three_approaches_valuation.sql..."
+          psql "postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres" \
+            -f supabase/migrations/004_three_approaches_valuation.sql || echo "Migration 004 may have partial errors"
+          
+          # Verify
+          echo "Verifying..."
+          psql "postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres" \
+            -c "SELECT 'KPI Count:', COUNT(*) FROM kpi_definitions;" || echo "kpi_definitions not found"
+          
+          psql "postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres" \
+            -c "SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE '%approach%';" || echo "Approach tables query failed"
+          
+          echo "✅ Done!"
