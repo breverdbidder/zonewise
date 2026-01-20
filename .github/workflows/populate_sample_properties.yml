@@ -1,0 +1,168 @@
+name: Populate Sample Properties
+
+on:
+  workflow_dispatch:
+    inputs:
+      parcels_per_jurisdiction:
+        description: 'Parcels per jurisdiction (100 = 1,700 total)'
+        required: true
+        default: '100'
+
+jobs:
+  populate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install requests
+      
+      - name: Populate sample_properties
+        env:
+          SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          PARCELS_LIMIT: ${{ inputs.parcels_per_jurisdiction }}
+        run: |
+          python << 'PYTHON_SCRIPT'
+          import os
+          import requests
+          import json
+          import time
+
+          SUPABASE_URL = os.environ["SUPABASE_URL"]
+          SUPABASE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
+          BCPAO_URL = "https://gis.brevardfl.gov/gissrv/rest/services/Base_Map/Parcel_New_WKID2881/MapServer/5/query"
+          LIMIT = int(os.environ.get("PARCELS_LIMIT", "100"))
+
+          headers = {
+              "apikey": SUPABASE_KEY,
+              "Authorization": f"Bearer {SUPABASE_KEY}",
+              "Content-Type": "application/json",
+              "Prefer": "resolution=ignore-duplicates"
+          }
+
+          JURISDICTIONS = {
+              1: "MELBOURNE", 2: "PALM BAY", 3: "INDIAN HARBOUR BEACH",
+              4: "TITUSVILLE", 5: "COCOA", 6: "SATELLITE BEACH",
+              7: "COCOA BEACH", 8: "ROCKLEDGE", 9: "WEST MELBOURNE",
+              10: "CAPE CANAVERAL", 11: "INDIALANTIC", 12: "MELBOURNE BEACH",
+              13: None, 14: "MALABAR", 15: "GRANT VALKARIA",
+              16: "PALM SHORES", 17: "MELBOURNE VILLAGE"
+          }
+
+          ALL_CITIES = [c for c in JURISDICTIONS.values() if c]
+
+          def query_bcpao(city, limit):
+              if city is None:
+                  # Unincorporated - exclude all known cities
+                  where = "ParcelType=0 AND CITY NOT IN ({})".format(
+                      ",".join(f"'{c}'" for c in ALL_CITIES)
+                  )
+              else:
+                  where = f"CITY='{city}' AND ParcelType=0"
+              
+              params = {
+                  "where": where,
+                  "outFields": "PARCEL_ID,TaxAcct,STREET_NUMBER,STREET_NAME,STREET_TYPE,CITY,STATE,ZIP_CODE,ACRES,LAND_VALUE,BLDG_VALUE,USE_CODE,USE_CODE_DESCRIPTION",
+                  "returnGeometry": "false",
+                  "f": "json",
+                  "resultRecordCount": limit
+              }
+              
+              try:
+                  r = requests.get(BCPAO_URL, params=params, timeout=30)
+                  data = r.json()
+                  return data.get("features", [])
+              except Exception as e:
+                  print(f"  Error: {e}")
+                  return []
+
+          def insert_batch(records):
+              if not records:
+                  return 0
+              try:
+                  r = requests.post(
+                      f"{SUPABASE_URL}/rest/v1/sample_properties",
+                      headers=headers,
+                      json=records,
+                      timeout=60
+                  )
+                  if r.status_code in [200, 201]:
+                      return len(records)
+                  else:
+                      print(f"  Insert error: {r.status_code} - {r.text[:200]}")
+                      return 0
+              except Exception as e:
+                  print(f"  Exception: {e}")
+                  return 0
+
+          print("=" * 60)
+          print("ZoneWise Sample Properties Population")
+          print(f"Target: {LIMIT} parcels × 17 jurisdictions = {LIMIT * 17} records")
+          print("=" * 60)
+
+          total = 0
+          for jid, city in JURISDICTIONS.items():
+              print(f"\n[{jid:2d}] {city or 'Unincorporated'}...")
+              features = query_bcpao(city, LIMIT)
+              
+              records = []
+              for f in features:
+                  a = f.get("attributes", {})
+                  addr = " ".join(filter(None, [
+                      str(a.get("STREET_NUMBER", "")).strip(),
+                      str(a.get("STREET_NAME", "")).strip(),
+                      str(a.get("STREET_TYPE", "")).strip()
+                  ]))
+                  
+                  record = {
+                      "jurisdiction_id": jid,
+                      "parcel_id": a.get("PARCEL_ID"),
+                      "tax_account": str(a.get("TaxAcct")) if a.get("TaxAcct") else None,
+                      "address": addr if addr.strip() else None,
+                      "city": a.get("CITY"),
+                      "state": a.get("STATE", "FL"),
+                      "zip_code": a.get("ZIP_CODE"),
+                      "acres": a.get("ACRES"),
+                      "land_value": a.get("LAND_VALUE"),
+                      "building_value": a.get("BLDG_VALUE"),
+                      "use_code": a.get("USE_CODE"),
+                      "use_description": a.get("USE_CODE_DESCRIPTION")
+                  }
+                  if record["parcel_id"]:
+                      records.append(record)
+              
+              inserted = insert_batch(records)
+              total += inserted
+              print(f"     ✓ {len(features)} queried, {inserted} inserted")
+              time.sleep(0.3)
+
+          print("\n" + "=" * 60)
+          print(f"TOTAL INSERTED: {total} parcels")
+          print("=" * 60)
+          PYTHON_SCRIPT
+      
+      - name: Verify counts
+        env:
+          SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          echo "=== Verification ==="
+          RESPONSE=$(curl -s "$SUPABASE_URL/rest/v1/sample_properties?select=jurisdiction_id" \
+            -H "apikey: $SUPABASE_SERVICE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
+            -H "Prefer: count=exact" -I)
+          echo "$RESPONSE" | grep -i "x-total-count" || echo "Count not found in headers"
+          
+          echo ""
+          echo "=== Sample records ==="
+          curl -s "$SUPABASE_URL/rest/v1/sample_properties?select=jurisdiction_id,parcel_id,address,city&limit=5" \
+            -H "apikey: $SUPABASE_SERVICE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" | python3 -m json.tool || cat
