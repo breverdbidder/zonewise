@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: zonewise-api
+    runtime: python
+    region: oregon
+    plan: starter
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: FRONTEND_URL
+        value: https://zonewise-v3.pages.dev
+      - key: ENV
+        value: production
+    healthCheckPath: /health
+    autoDeploy: false
