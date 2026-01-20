@@ -22,7 +22,7 @@ from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
-CENSUS_API_KEY = os.getenv("CENSUS_API_KEY", "8c6ef3cae6a2f2b8d5b7a8c9e0f1d2c3")
+CENSUS_API_KEY = os.getenv("CENSUS_API_KEY", "")
 CENSUS_BASE_URL = "https://api.census.gov/data"
 
 # Variables for ACS 5-year estimates
