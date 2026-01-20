@@ -1,26 +1,27 @@
-name: Populate ALL Brevard County Parcels
+name: Populate ALL Brevard Parcels
 
 on:
   workflow_dispatch:
     inputs:
       batch_size:
-        description: 'Records per API request (max 1000)'
+        description: 'Records per API call (max 1000)'
         required: true
         default: '1000'
       start_offset:
-        description: 'Starting offset (for resume after failure)'
+        description: 'Starting offset (for resuming)'
+        required: true
+        default: '0'
+      max_records:
+        description: 'Max records to fetch (0 = all ~351K)'
         required: true
         default: '0'
 
 jobs:
   populate-all:
     runs-on: ubuntu-latest
-    timeout-minutes: 180  # 3 hours max
+    timeout-minutes: 360  # 6 hours max
     
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -29,27 +30,36 @@ jobs:
       - name: Install dependencies
         run: pip install requests
       
-      - name: Scrape ALL Brevard County Parcels
+      - name: Fetch and insert ALL parcels
         env:
           SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           BATCH_SIZE: ${{ inputs.batch_size }}
           START_OFFSET: ${{ inputs.start_offset }}
+          MAX_RECORDS: ${{ inputs.max_records }}
         run: |
           python << 'PYTHON_SCRIPT'
           import os
           import requests
-          import json
           import time
-          from datetime import datetime
+          import sys
 
           SUPABASE_URL = os.environ["SUPABASE_URL"]
           SUPABASE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
           BCPAO_URL = "https://gis.brevardfl.gov/gissrv/rest/services/Base_Map/Parcel_New_WKID2881/MapServer/5/query"
+          
           BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "1000"))
           START_OFFSET = int(os.environ.get("START_OFFSET", "0"))
+          MAX_RECORDS = int(os.environ.get("MAX_RECORDS", "0"))
 
-          # City to jurisdiction_id mapping
+          headers = {
+              "apikey": SUPABASE_KEY,
+              "Authorization": f"Bearer {SUPABASE_KEY}",
+              "Content-Type": "application/json",
+              "Prefer": "resolution=ignore-duplicates"
+          }
+
+          # City to Jurisdiction ID mapping
           CITY_TO_JURISDICTION = {
               "MELBOURNE": 1,
               "PALM BAY": 2,
@@ -70,25 +80,18 @@ jobs:
               "MELBOURNE VILLAGE": 17,
           }
 
-          headers = {
-              "apikey": SUPABASE_KEY,
-              "Authorization": f"Bearer {SUPABASE_KEY}",
-              "Content-Type": "application/json",
-              "Prefer": "resolution=merge-duplicates"  # Upsert on parcel_id
-          }
-
           def get_jurisdiction_id(city):
-              """Map city to jurisdiction_id, default to 13 (Unincorporated)"""
+              """Map city name to jurisdiction ID, default to 13 (Unincorporated)."""
               if not city:
                   return 13
               city_upper = city.upper().strip()
               return CITY_TO_JURISDICTION.get(city_upper, 13)
 
           def query_bcpao_batch(offset, limit):
-              """Query BCPAO with pagination"""
+              """Query BCPAO with pagination using resultOffset."""
               params = {
                   "where": "ParcelType=0",
-                  "outFields": "OBJECTID,PARCEL_ID,TaxAcct,STREET_NUMBER,STREET_NAME,STREET_TYPE,CITY,STATE,ZIP_CODE,ACRES,LAND_VALUE,BLDG_VALUE,USE_CODE,USE_CODE_DESCRIPTION",
+                  "outFields": "PARCEL_ID,TaxAcct,STREET_NUMBER,STREET_NAME,STREET_TYPE,CITY,STATE,ZIP_CODE,ACRES,LAND_VALUE,BLDG_VALUE,USE_CODE,USE_CODE_DESCRIPTION",
                   "returnGeometry": "false",
                   "orderByFields": "OBJECTID",
                   "resultOffset": offset,
@@ -99,40 +102,70 @@ jobs:
               try:
                   r = requests.get(BCPAO_URL, params=params, timeout=60)
                   data = r.json()
+                  
+                  if "error" in data:
+                      print(f"  API Error: {data['error']}")
+                      return [], False
+                  
                   features = data.get("features", [])
                   exceeded = data.get("exceededTransferLimit", False)
-                  return features, exceeded
+                  
+                  return features, exceeded or len(features) == limit
               except Exception as e:
-                  print(f"  BCPAO Error at offset {offset}: {e}")
+                  print(f"  Request error: {e}")
                   return [], False
 
+          def insert_batch(records):
+              """Insert batch to Supabase with upsert."""
+              if not records:
+                  return 0
+              
+              # Split into chunks of 500 for Supabase
+              chunk_size = 500
+              total_inserted = 0
+              
+              for i in range(0, len(records), chunk_size):
+                  chunk = records[i:i+chunk_size]
+                  try:
+                      r = requests.post(
+                          f"{SUPABASE_URL}/rest/v1/sample_properties",
+                          headers=headers,
+                          json=chunk,
+                          timeout=120
+                      )
+                      if r.status_code in [200, 201]:
+                          total_inserted += len(chunk)
+                      else:
+                          print(f"    Insert error: {r.status_code} - {r.text[:100]}")
+                  except Exception as e:
+                      print(f"    Insert exception: {e}")
+              
+              return total_inserted
+
           def transform_features(features):
-              """Transform BCPAO features to sample_properties records"""
+              """Transform BCPAO features to sample_properties records."""
               records = []
               for f in features:
                   a = f.get("attributes", {})
                   
-                  # Build address
-                  addr_parts = [
+                  addr = " ".join(filter(None, [
                       str(a.get("STREET_NUMBER", "")).strip(),
                       str(a.get("STREET_NAME", "")).strip(),
                       str(a.get("STREET_TYPE", "")).strip()
-                  ]
-                  address = " ".join(filter(None, addr_parts)) or None
-                  
-                  # Get jurisdiction
-                  city = a.get("CITY")
-                  jurisdiction_id = get_jurisdiction_id(city)
+                  ]))
                   
                   parcel_id = a.get("PARCEL_ID")
                   if not parcel_id:
                       continue
                   
+                  city = a.get("CITY")
+                  jurisdiction_id = get_jurisdiction_id(city)
+                  
                   records.append({
                       "jurisdiction_id": jurisdiction_id,
                       "parcel_id": parcel_id,
                       "tax_account": str(a.get("TaxAcct")) if a.get("TaxAcct") else None,
-                      "address": address,
+                      "address": addr if addr.strip() else None,
                       "city": city,
                       "state": a.get("STATE", "FL"),
                       "zip_code": a.get("ZIP_CODE"),
@@ -145,98 +178,73 @@ jobs:
               
               return records
 
-          def insert_batch(records):
-              """Insert/upsert batch to Supabase"""
-              if not records:
-                  return 0
-              
-              try:
-                  r = requests.post(
-                      f"{SUPABASE_URL}/rest/v1/sample_properties",
-                      headers=headers,
-                      json=records,
-                      timeout=120
-                  )
-                  if r.status_code in [200, 201]:
-                      return len(records)
-                  else:
-                      print(f"  Supabase error: {r.status_code} - {r.text[:300]}")
-                      return 0
-              except Exception as e:
-                  print(f"  Insert exception: {e}")
-                  return 0
-
           # Main execution
           print("=" * 70)
-          print("ZoneWise FULL Brevard County Parcel Scrape")
-          print(f"Target: ~351,531 parcels")
+          print("ZoneWise - FULL Brevard County Parcel Extraction")
+          print(f"BCPAO Total: ~351,531 parcels")
           print(f"Batch size: {BATCH_SIZE}")
           print(f"Starting offset: {START_OFFSET}")
-          print(f"Started: {datetime.now().isoformat()}")
+          print(f"Max records: {MAX_RECORDS if MAX_RECORDS > 0 else 'ALL'}")
           print("=" * 70)
 
           offset = START_OFFSET
+          total_fetched = 0
           total_inserted = 0
           batch_num = 0
           has_more = True
           errors = 0
           max_errors = 10
 
-          while has_more and errors < max_errors:
+          while has_more:
               batch_num += 1
-              print(f"\n[Batch {batch_num}] Offset {offset}...", end=" ", flush=True)
+              print(f"\nBatch {batch_num}: offset={offset}...")
               
-              # Query BCPAO
-              features, exceeded = query_bcpao_batch(offset, BATCH_SIZE)
+              features, has_more = query_bcpao_batch(offset, BATCH_SIZE)
               
               if not features:
                   errors += 1
-                  print(f"No features returned (error {errors}/{max_errors})")
+                  if errors >= max_errors:
+                      print(f"Too many errors ({errors}), stopping.")
+                      break
+                  print(f"  Empty batch, retrying in 5s... (error {errors}/{max_errors})")
                   time.sleep(5)
                   continue
               
-              # Transform and insert
+              errors = 0  # Reset error count on success
+              total_fetched += len(features)
+              
               records = transform_features(features)
               inserted = insert_batch(records)
               total_inserted += inserted
               
-              print(f"fetched {len(features)}, inserted {inserted}, total: {total_inserted}")
+              print(f"  ✓ Fetched: {len(features)}, Inserted: {inserted}")
+              print(f"  Running total: {total_fetched:,} fetched, {total_inserted:,} inserted")
               
-              # Check if more data
-              if len(features) < BATCH_SIZE or not exceeded:
-                  has_more = False
-                  print("\nReached end of data.")
-              else:
-                  offset += BATCH_SIZE
-                  time.sleep(0.5)  # Rate limiting
+              offset += BATCH_SIZE
+              
+              # Check max records limit
+              if MAX_RECORDS > 0 and total_fetched >= MAX_RECORDS:
+                  print(f"\nReached max records limit ({MAX_RECORDS})")
+                  break
+              
+              # Rate limiting
+              time.sleep(0.5)
               
               # Progress checkpoint every 50 batches
               if batch_num % 50 == 0:
-                  print(f"\n>>> CHECKPOINT: {total_inserted} parcels at offset {offset}")
-                  print(f">>> Resume with start_offset={offset} if workflow fails")
+                  print(f"\n{'='*40}")
+                  print(f"CHECKPOINT: {total_fetched:,} records processed")
+                  print(f"Next offset: {offset}")
+                  print(f"{'='*40}\n")
 
-          # Summary
           print("\n" + "=" * 70)
-          print("SCRAPE COMPLETE")
+          print("EXTRACTION COMPLETE")
           print(f"Total batches: {batch_num}")
-          print(f"Total inserted: {total_inserted}")
+          print(f"Total fetched: {total_fetched:,}")
+          print(f"Total inserted: {total_inserted:,}")
           print(f"Final offset: {offset}")
-          print(f"Completed: {datetime.now().isoformat()}")
           print("=" * 70)
-          
-          # Save checkpoint for potential resume
-          with open("checkpoint.txt", "w") as f:
-              f.write(f"last_offset={offset}\n")
-              f.write(f"total_inserted={total_inserted}\n")
           PYTHON_SCRIPT
-      
-      - name: Upload checkpoint
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: scrape-checkpoint
-          path: checkpoint.txt
-          retention-days: 7
       
       - name: Verify final counts
         env:
@@ -245,12 +253,13 @@ jobs:
         run: |
           echo "=== Final Verification ==="
           
-          # Total count
+          # Get total count
           TOTAL=$(curl -s "$SUPABASE_URL/rest/v1/sample_properties?select=id" \
             -H "apikey: $SUPABASE_SERVICE_KEY" \
             -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
             -H "Prefer: count=exact" -I | grep -i "x-total-count" | cut -d: -f2 | tr -d ' \r')
-          echo "Total parcels in database: $TOTAL"
+          
+          echo "Total parcels in sample_properties: $TOTAL"
           
           # Count by jurisdiction
           echo ""
@@ -258,11 +267,5 @@ jobs:
           curl -s "$SUPABASE_URL/rest/v1/rpc/count_by_jurisdiction" \
             -H "apikey: $SUPABASE_SERVICE_KEY" \
             -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
-            -X POST 2>/dev/null || echo "(RPC not available - run manual query)"
-          
-          # Sample records
-          echo ""
-          echo "=== Sample Records ==="
-          curl -s "$SUPABASE_URL/rest/v1/sample_properties?select=parcel_id,address,city,jurisdiction_id&limit=10" \
-            -H "apikey: $SUPABASE_SERVICE_KEY" \
-            -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" | python3 -m json.tool 2>/dev/null || cat
+            -H "Content-Type: application/json" \
+            -d '{}' 2>/dev/null || echo "RPC not available, skipping jurisdiction breakdown"
