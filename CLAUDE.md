@@ -148,3 +148,73 @@ CREATE TABLE queries (
 ---
 
 *Last updated: 2026-01-21*
+---
+
+# ZoneWise Autonomous Improvement Protocol
+
+## Greptile-Powered Development Loop
+
+When working on ZoneWise, use Greptile MCP to understand the codebase before making changes.
+
+### Before ANY Code Change:
+```
+1. Query Greptile: "What does [file/component] do and how is it connected to other parts?"
+2. Query Greptile: "What are the dependencies and side effects of changing [file]?"
+3. Query Greptile: "Are there existing tests for [component]? What's the testing pattern?"
+```
+
+### Sprint Task Workflow:
+```
+1. Call get_next_task('breverdbidder/zonewise') from Supabase
+2. Call start_task(task_id)
+3. Query Greptile for context on the task area
+4. Implement the fix/feature
+5. Write tests (pytest)
+6. Run tests locally
+7. Create PR with descriptive title
+8. Call complete_task(task_id, pr_url)
+9. Repeat
+```
+
+### Greptile Query Templates:
+
+**For Bug Fixes:**
+- "Find all places where [error/bug pattern] might occur in this codebase"
+- "What error handling exists for [component] and what's missing?"
+
+**For New Features:**
+- "What's the existing pattern for [feature type] in this codebase?"
+- "Where should [new component] be integrated based on current architecture?"
+
+**For Refactoring:**
+- "What files depend on [module] that would be affected by changes?"
+- "What's the test coverage for [area] before I refactor?"
+
+**For Testing:**
+- "Show me the testing patterns used in this project"
+- "What edge cases should I test for [function/endpoint]?"
+
+### Code Quality Standards:
+- All new code must have tests (pytest)
+- Use type hints (Python 3.11+)
+- Follow existing code patterns (query Greptile if unsure)
+- Error handling with circuit breakers (tenacity)
+- Structured logging to Supabase
+
+### PR Naming Convention:
+`[ZW-XXX] Brief description of change`
+
+### Supabase Functions:
+```sql
+-- Get next ZoneWise task
+SELECT * FROM get_next_task('breverdbidder/zonewise');
+
+-- Start working on task
+SELECT start_task('task-uuid-here');
+
+-- Complete task with PR
+SELECT complete_task('task-uuid-here', 'https://github.com/breverdbidder/zonewise/pull/XX');
+
+-- Mark task as failed
+SELECT fail_task('task-uuid-here', 'Error description');
+```
