@@ -4,13 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       batch_size:
-        description: 'Records per batch'
+        description: 'Records per BCPAO request'
         required: true
-        default: '500'
-      start_offset:
-        description: 'Starting offset (for resuming)'
-        required: true
-        default: '0'
+        default: '100'
 
 jobs:
   add-geometry:
@@ -31,7 +27,6 @@ jobs:
           SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           BATCH_SIZE: ${{ inputs.batch_size }}
-          START_OFFSET: ${{ inputs.start_offset }}
         run: |
           python << 'PYTHON_SCRIPT'
           import os
@@ -43,46 +38,49 @@ jobs:
           SUPABASE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
           BCPAO_URL = "https://gis.brevardfl.gov/gissrv/rest/services/Base_Map/Parcel_New_WKID2881/MapServer/5/query"
 
-          BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "500"))
-          START_OFFSET = int(os.environ.get("START_OFFSET", "0"))
+          BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "100"))
 
           headers = {
               "apikey": SUPABASE_KEY,
               "Authorization": f"Bearer {SUPABASE_KEY}",
-              "Content-Type": "application/json",
-              "Prefer": "return=minimal"
+              "Content-Type": "application/json"
           }
 
-          def get_parcels_without_geometry(limit, offset):
-              """Get parcel_ids that need geometry."""
-              params = {
-                  "select": "id,parcel_id",
-                  "geometry": "is.null",
-                  "limit": limit,
-                  "offset": offset,
-                  "order": "id"
-              }
-              try:
-                  r = requests.get(
-                      f"{SUPABASE_URL}/rest/v1/sample_properties",
-                      headers=headers,
-                      params=params,
-                      timeout=60
-                  )
-                  if r.status_code == 200:
-                      return r.json()
-                  else:
-                      print(f"  Fetch error: {r.status_code}")
-                      return []
-              except Exception as e:
-                  print(f"  Exception: {e}")
-                  return []
+          def get_total_count():
+              """Get total parcels count."""
+              r = requests.get(
+                  f"{SUPABASE_URL}/rest/v1/sample_properties?select=id",
+                  headers={**headers, "Prefer": "count=exact"},
+                  timeout=30
+              )
+              count = r.headers.get("content-range", "").split("/")[-1]
+              return int(count) if count.isdigit() else 0
 
-          def fetch_geometry_batch(parcel_ids):
-              """Fetch geometry from BCPAO for multiple parcels."""
-              # Build WHERE clause for multiple parcels
-              escaped = [f"'{pid}'" for pid in parcel_ids]
-              where = f"PARCEL_ID IN ({','.join(escaped)})"
+          def get_parcel_batch(offset, limit):
+              """Get batch of parcel_ids by offset."""
+              r = requests.get(
+                  f"{SUPABASE_URL}/rest/v1/sample_properties",
+                  headers=headers,
+                  params={
+                      "select": "id,parcel_id",
+                      "order": "id",
+                      "offset": offset,
+                      "limit": limit
+                  },
+                  timeout=60
+              )
+              if r.status_code == 200:
+                  return r.json()
+              return []
+
+          def fetch_geometry_from_bcpao(parcel_ids):
+              """Fetch geometry from BCPAO for parcel IDs."""
+              if not parcel_ids:
+                  return {}
+              
+              # Escape parcel IDs for SQL
+              escaped = [pid.replace("'", "''") for pid in parcel_ids]
+              where = f"PARCEL_ID IN ({','.join(f\"'{p}'\" for p in escaped)})"
               
               params = {
                   "where": where,
@@ -97,10 +95,8 @@ jobs:
                   data = r.json()
                   
                   if "error" in data:
-                      print(f"  BCPAO Error: {data['error']}")
                       return {}
                   
-                  # Build dict of parcel_id -> geometry
                   result = {}
                   for f in data.get("features", []):
                       pid = f.get("attributes", {}).get("PARCEL_ID")
@@ -109,11 +105,11 @@ jobs:
                           result[pid] = geom
                   return result
               except Exception as e:
-                  print(f"  BCPAO Exception: {e}")
+                  print(f"  BCPAO error: {e}")
                   return {}
 
-          def update_geometry(record_id, geometry):
-              """Update single record with geometry."""
+          def update_parcel_geometry(record_id, geometry):
+              """Update single parcel with geometry."""
               try:
                   r = requests.patch(
                       f"{SUPABASE_URL}/rest/v1/sample_properties?id=eq.{record_id}",
@@ -125,64 +121,51 @@ jobs:
               except:
                   return False
 
-          def update_geometry_batch(updates):
-              """Batch update geometries."""
-              success = 0
-              for record_id, geometry in updates:
-                  if update_geometry(record_id, geometry):
-                      success += 1
-              return success
-
+          # Main
           print("=" * 70)
-          print("ZoneWise - Adding Geometry to 351K Parcels")
-          print(f"Batch size: {BATCH_SIZE} | Start offset: {START_OFFSET}")
+          print("ZoneWise - Adding Geometry to ALL Parcels")
           print("=" * 70)
 
-          offset = START_OFFSET
+          total = get_total_count()
+          print(f"Total parcels: {total:,}")
+          print(f"Batch size: {BATCH_SIZE}")
+          print(f"Estimated batches: {(total // BATCH_SIZE) + 1}")
+          print("=" * 70)
+
+          offset = 0
           total_updated = 0
           batch_num = 0
-          empty_batches = 0
 
-          while True:
+          while offset < total:
               batch_num += 1
               
-              # Get parcels needing geometry
-              parcels = get_parcels_without_geometry(BATCH_SIZE, offset)
-              
+              # Get parcels from Supabase
+              parcels = get_parcel_batch(offset, BATCH_SIZE)
               if not parcels:
-                  empty_batches += 1
-                  if empty_batches >= 3:
-                      print("No more parcels to process")
-                      break
-                  offset += BATCH_SIZE
-                  continue
+                  print(f"  No parcels at offset {offset}")
+                  break
               
-              empty_batches = 0
               parcel_ids = [p["parcel_id"] for p in parcels]
               id_map = {p["parcel_id"]: p["id"] for p in parcels}
               
               # Fetch geometry from BCPAO
-              geometries = fetch_geometry_batch(parcel_ids)
+              geometries = fetch_geometry_from_bcpao(parcel_ids)
               
-              # Update records
-              updates = []
+              # Update each parcel
+              batch_updated = 0
               for pid, geom in geometries.items():
                   if pid in id_map:
-                      updates.append((id_map[pid], geom))
+                      if update_parcel_geometry(id_map[pid], geom):
+                          batch_updated += 1
               
-              updated = update_geometry_batch(updates)
-              total_updated += updated
+              total_updated += batch_updated
               
-              if batch_num % 10 == 0:
-                  print(f"Batch {batch_num}: {total_updated:,} updated (offset {offset})")
+              if batch_num % 50 == 0:
+                  pct = (offset / total) * 100
+                  print(f"Batch {batch_num}: {total_updated:,} updated ({pct:.1f}%)")
               
               offset += BATCH_SIZE
-              time.sleep(0.3)
-              
-              # Safety limit
-              if batch_num > 1000:
-                  print("Safety limit reached")
-                  break
+              time.sleep(0.2)
 
           print("=" * 70)
           print(f"COMPLETE: {total_updated:,} parcels updated with geometry")
@@ -195,9 +178,28 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
           echo "=== Geometry Stats ==="
+          python3 << 'EOF'
+          import requests
+          import os
+          
+          url = os.environ["SUPABASE_URL"]
+          key = os.environ["SUPABASE_SERVICE_KEY"]
+          headers = {"apikey": key, "Authorization": f"Bearer {key}"}
           
           # Count with geometry
-          curl -s "$SUPABASE_URL/rest/v1/sample_properties?select=id&geometry=not.is.null" \
-            -H "apikey: $SUPABASE_SERVICE_KEY" \
-            -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
-            -H "Prefer: count=exact" -I 2>/dev/null | grep -i "x-total-count" || echo "Count failed"
+          r = requests.get(
+              f"{url}/rest/v1/sample_properties?select=id&geometry=not.is.null",
+              headers={**headers, "Prefer": "count=exact"}
+          )
+          with_geom = r.headers.get("content-range", "0/0").split("/")[-1]
+          
+          # Total
+          r2 = requests.get(
+              f"{url}/rest/v1/sample_properties?select=id",
+              headers={**headers, "Prefer": "count=exact"}
+          )
+          total = r2.headers.get("content-range", "0/0").split("/")[-1]
+          
+          print(f"With geometry: {with_geom}")
+          print(f"Total parcels: {total}")
+          EOF
