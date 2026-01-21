@@ -169,3 +169,39 @@ Only escalate to Ariel if:
 **Last Updated:** 2026-01-20
 **AI Architect:** Claude (Sonnet 4.5)
 **Product Owner:** Ariel Shapira
+---
+
+## Supabase MCP Integration
+
+### Configuration
+This repo uses Supabase MCP for direct database operations during Claude Code sessions.
+- **Package**: @supabase/mcp-server
+- **Token**: SUPABASE_MCP_TOKEN (GitHub Secret)
+- **Project**: mocerqjnksmhcjzxrewo.supabase.co
+
+### MCP Operation Rules
+
+#### ✅ AUTONOMOUS (No Approval)
+- CREATE TABLE, ALTER TABLE ADD COLUMN
+- CREATE INDEX, CREATE VIEW
+- SELECT (any query)
+- INSERT (any amount)
+- UPDATE/DELETE ≤100 rows
+
+#### ⚠️ REQUIRES CONFIRMATION  
+- UPDATE/DELETE >100 rows
+- Schema changes to core tables
+- New foreign key constraints
+
+#### 🚫 NEVER WITHOUT EXPLICIT APPROVAL
+- DROP TABLE
+- TRUNCATE
+- ALTER TABLE DROP COLUMN
+- DELETE/UPDATE without WHERE clause
+
+### Audit Logging
+Log all schema changes and bulk operations to `activities` table:
+```sql
+INSERT INTO activities (activity_type, description, metadata, created_at)
+VALUES ('mcp_operation', 'description', '{"operation": "..."}', NOW());
+```
