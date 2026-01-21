@@ -1,97 +1,115 @@
 {
-  "project": "ZoneWise",
+  "project": "ZoneWise.ai",
   "version": "0.1.0",
-  "last_updated": "2026-01-20T00:00:00Z",
-  "updated_by": "Claude AI Architect",
+  "status": "INITIALIZATION",
+  "last_updated": "2026-01-21T14:57:53Z",
+  "updated_by": "Claude Opus 4.5",
   
-  "current_phase": "PRE-MVP",
-  "target_gtm": "Q1 2026",
+  "domain": {
+    "primary": "zonewise.ai",
+    "registrar": "Cloudflare",
+    "created": "2026-01-21",
+    "expires": "2028-01-21",
+    "nameservers": ["pablo.ns.cloudflare.com", "vita.ns.cloudflare.com"],
+    "status": "active"
+  },
   
-  "completed_features": [],
+  "infrastructure": {
+    "github_repo": "breverdbidder/zonewise",
+    "supabase_project": null,
+    "cloudflare_pages": null,
+    "stripe_account": null
+  },
   
-  "in_progress": [
+  "data": {
+    "jurisdictions": 17,
+    "zoning_districts": 273,
+    "source": "Municode",
+    "verified": true
+  },
+  
+  "stack": {
+    "frontend": "Next.js 14",
+    "database": "Supabase",
+    "ai": "Claude Sonnet 4.5",
+    "auth": "Makerkit Pro",
+    "payments": "Stripe",
+    "hosting": "Cloudflare Pages"
+  },
+  
+  "milestones": [
     {
-      "feature": "Repository Setup",
-      "started": "2026-01-20",
-      "status": "active",
-      "notes": "Creating workflow documentation and initial structure"
-    }
-  ],
-  
-  "blocked": [],
-  
-  "next_actions": [
-    {
-      "priority": 1,
-      "action": "Purchase Makerkit Pro ($299)",
-      "owner": "Ariel",
-      "type": "approval_needed"
+      "name": "Domain Acquisition",
+      "status": "COMPLETED",
+      "date": "2026-01-21",
+      "notes": "zonewise.ai purchased via Cloudflare for $70/year"
     },
     {
-      "priority": 2,
-      "action": "Initialize Vite + React + TypeScript project",
-      "owner": "Claude Code",
-      "type": "autonomous"
+      "name": "GitHub Repo Setup",
+      "status": "IN_PROGRESS",
+      "date": "2026-01-21",
+      "notes": "Creating initial structure"
     },
     {
-      "priority": 3,
-      "action": "Set up Supabase tables (jurisdictions, districts, use_types)",
-      "owner": "Claude Code",
-      "type": "autonomous"
+      "name": "Makerkit Pro Purchase",
+      "status": "APPROVED",
+      "date": null,
+      "notes": "$299 - awaiting purchase"
     },
     {
-      "priority": 4,
-      "action": "Create base UI with Lovable",
-      "owner": "Ariel + Lovable",
-      "type": "collaborative"
+      "name": "Supabase Project Setup",
+      "status": "PENDING",
+      "date": null,
+      "notes": null
     },
     {
-      "priority": 5,
-      "action": "Integrate Mapbox with district boundaries",
-      "owner": "Claude Code",
-      "type": "autonomous"
+      "name": "MVP Development",
+      "status": "PENDING",
+      "date": null,
+      "notes": "Claude Code 7hr session"
+    },
+    {
+      "name": "GTM Launch",
+      "status": "PENDING",
+      "date": null,
+      "notes": "Target Q1 2026"
     }
   ],
   
   "recent_decisions": [
     {
-      "date": "2026-01-20",
-      "decision": "Use three-way sync workflow: GitHub ↔ Claude Code ↔ Lovable",
-      "rationale": "Proven pattern from BidDeed.AI development",
-      "decided_by": "Ariel + Claude"
+      "date": "2026-01-21",
+      "decision": "Selected zonewise.ai over zonewise.com",
+      "rationale": "zonewise.com taken; .ai better for AI product branding",
+      "decided_by": "Ariel Shapira"
     },
     {
-      "date": "2026-01-20",
-      "decision": "Stack: GitHub + Supabase + Cloudflare + Makerkit Pro",
-      "rationale": "Same stack as BidDeed.AI for consistency",
-      "decided_by": "Ariel"
+      "date": "2026-01-21",
+      "decision": "Cloudflare as registrar",
+      "rationale": "At-cost pricing, existing stack integration, best DNS",
+      "decided_by": "Claude Opus 4.5"
     }
   ],
   
-  "metrics": {
-    "districts_verified": 273,
-    "jurisdictions_covered": 17,
-    "municode_verification": "100%"
+  "blockers": [],
+  
+  "next_actions": [
+    "Create GitHub repository breverdbidder/zonewise",
+    "Purchase Makerkit Pro ($299)",
+    "Create Supabase project",
+    "Initialize Next.js with Makerkit template",
+    "Import zoning district data"
+  ],
+  
+  "team": {
+    "product_owner": "Ariel Shapira",
+    "ai_architect": "Claude Opus 4.5",
+    "development": "Claude Code"
   },
   
-  "integrations": {
-    "supabase": {
-      "project_id": "TBD",
-      "status": "not_started"
-    },
-    "mapbox": {
-      "token": "TBD",
-      "status": "not_started"
-    },
-    "cloudflare": {
-      "project": "zonewise",
-      "status": "not_started"
-    },
-    "lovable": {
-      "project_id": "TBD",
-      "status": "not_started"
-    }
-  },
-  
-  "checkpoints": []
+  "contacts": {
+    "owner_email": "brevardbidderai@gmail.com",
+    "owner_phone": "+1-561-809-0929",
+    "location": "Satellite Beach, FL 32937"
+  }
 }
