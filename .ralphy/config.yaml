@@ -1,0 +1,109 @@
+# =============================================================================
+# RALPHY PROJECT CONFIGURATION - ZoneWise
+# =============================================================================
+# Florida's expert zoning intelligence platform
+# =============================================================================
+
+project:
+  name: "ZoneWise"
+  description: "Florida's expert zoning intelligence platform - wise about zoning"
+  language: "TypeScript"
+  framework: "Next.js + Makerkit Pro"
+  version: "1.0.0"
+
+repository:
+  owner: "breverdbidder"
+  name: "zonewise"
+  default_branch: "main"
+  
+commands:
+  test: "npm test"
+  lint: "npm run lint"
+  format: "npm run format"
+  type_check: "npm run typecheck"
+  build: "npm run build"
+  dev: "npm run dev"
+  
+checks:
+  - "npm run lint"
+  - "npm run typecheck"
+
+rules:
+  # Code style
+  - "Use TypeScript strict mode with no any types"
+  - "Follow Next.js 14 App Router conventions"
+  - "Use Tailwind CSS for styling - no custom CSS files"
+  - "Use shadcn/ui components from @/components/ui"
+  - "Server components by default, 'use client' only when needed"
+  
+  # Architecture rules
+  - "Zoning data lives in src/data/districts/ as JSON"
+  - "MCP server code in src/mcp/"
+  - "API routes in app/api/"
+  - "Use Supabase for database operations"
+  
+  # ZoneWise specific
+  - "273 verified zoning districts - never hallucinate district data"
+  - "17 jurisdictions - all Municode verified"
+  - "Cite Municode URLs for all zoning references"
+  
+  # Testing
+  - "Write tests for zoning lookup functions"
+  - "Mock Supabase calls in tests"
+  
+  # Documentation
+  - "Update README with new features"
+  - "Add JSDoc comments to exported functions"
+
+boundaries:
+  never_touch:
+    - "*.env*"
+    - "*.lock"
+    - "node_modules/**"
+    - ".next/**"
+    - "src/data/districts/*.json"  # Verified data - don't modify
+    
+  caution:
+    - "supabase/migrations/**"
+    - "src/mcp/**"
+
+llm_config:
+  default_model: "claude-sonnet-4-5-20250929"
+  fallback_model: "gemini-2.5-flash"
+  max_tokens: 4096
+  temperature: 0.1
+  
+execution:
+  max_iterations: 50
+  timeout_minutes: 60
+  retry_attempts: 3
+  pause_between_iterations_seconds: 2
+  
+commit:
+  prefix: "🏛️"
+  format: "{prefix} {type}: {description}"
+  types:
+    - "feat"
+    - "fix"
+    - "refactor"
+    - "test"
+    - "docs"
+    - "chore"
+
+integrations:
+  supabase:
+    tables:
+      - "sprint_tasks"
+      - "insights"
+      - "zoning_districts"
+      - "zoning_lookups"
+    
+  github:
+    auto_commit: true
+    auto_push: true
+    create_prs: false
+
+parallel:
+  enabled: false
+  max_agents: 3
+  isolation: "worktree"
