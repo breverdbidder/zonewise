@@ -1,98 +1,111 @@
 /**
  * ZoneWise V3 - Panel Sync Store
- * Manages state synchronization between Map and Chat panels.
+ * Zustand store for synchronizing state between MapPanel and ChatPanel.
  */
 
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
-interface Parcel {
-  id: string;
-  parcel_id: string;
-  address: string;
-  zone_code: string;
-  zone_category: string;
-  hbu_score: number;
-  foreclosure_status?: string;
-  coordinates: [number, number];
+interface MapViewport {
+  center: [number, number];
+  zoom: number;
+  bounds?: [[number, number], [number, number]];
 }
 
-interface MapHighlight {
-  parcel_id: string;
-  style: 'primary' | 'secondary' | 'comparison';
-  duration_ms?: number;
-}
-
-interface ChatContext {
-  current_parcel?: string;
-  current_address?: string;
-  current_zone?: string;
-  visible_parcels: string[];
-  active_layers: string[];
-  map_bounds?: [number, number, number, number];
-}
-
-interface SyncEvent {
-  type: string;
-  payload: Record<string, unknown>;
-  timestamp: number;
+interface Message {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
 }
 
 interface PanelSyncState {
-  // Selected parcel (shared between panels)
-  selectedParcel: Parcel | null;
-  setSelectedParcel: (parcel: Parcel | null) => void;
-
-  // Map highlights from chat
-  mapHighlights: MapHighlight[];
-  setMapHighlights: (highlights: MapHighlight[]) => void;
-  clearHighlights: () => void;
-
-  // Chat context from map
-  chatContext: ChatContext;
-  setChatContext: (context: Partial<ChatContext>) => void;
-
-  // Sync events queue
-  eventQueue: SyncEvent[];
-  enqueueEvent: (event: SyncEvent) => void;
-  dequeueEvent: () => SyncEvent | undefined;
+  // Map State
+  selectedParcelId: string | null;
+  mapViewport: MapViewport | null;
+  activeLayers: string[];
+  zoneFilter: string[];
+  
+  // Chat State
+  conversationHistory: Message[];
+  lastQuery: string | null;
+  
+  // Session
+  sessionId: string | null;
+  
+  // Actions
+  setSelectedParcelId: (id: string | null) => void;
+  setMapViewport: (viewport: MapViewport) => void;
+  setActiveLayers: (layers: string[]) => void;
+  toggleLayer: (layer: string) => void;
+  setZoneFilter: (zones: string[]) => void;
+  setConversationHistory: (messages: Message[]) => void;
+  addMessage: (message: Message) => void;
+  setLastQuery: (query: string | null) => void;
+  setSessionId: (id: string) => void;
+  reset: () => void;
 }
 
-export const usePanelSyncStore = create<PanelSyncState>((set, get) => ({
-  selectedParcel: null,
-  setSelectedParcel: (parcel) => {
-    set({ selectedParcel: parcel });
-    // Auto-update chat context
-    if (parcel) {
-      get().setChatContext({
-        current_parcel: parcel.id,
-        current_address: parcel.address,
-        current_zone: parcel.zone_code,
-      });
+const initialState = {
+  selectedParcelId: null,
+  mapViewport: null,
+  activeLayers: ['parcels', 'zoning'],
+  zoneFilter: [],
+  conversationHistory: [],
+  lastQuery: null,
+  sessionId: null,
+};
+
+export const usePanelSyncStore = create<PanelSyncState>()(
+  persist(
+    (set, get) => ({
+      ...initialState,
+
+      setSelectedParcelId: (id) => set({ selectedParcelId: id }),
+
+      setMapViewport: (viewport) => set({ mapViewport: viewport }),
+
+      setActiveLayers: (layers) => set({ activeLayers: layers }),
+
+      toggleLayer: (layer) => {
+        const current = get().activeLayers;
+        if (current.includes(layer)) {
+          set({ activeLayers: current.filter(l => l !== layer) });
+        } else {
+          set({ activeLayers: [...current, layer] });
+        }
+      },
+
+      setZoneFilter: (zones) => set({ zoneFilter: zones }),
+
+      setConversationHistory: (messages) => set({ conversationHistory: messages }),
+
+      addMessage: (message) => {
+        const current = get().conversationHistory;
+        set({ conversationHistory: [...current.slice(-50), message] }); // Keep last 50
+      },
+
+      setLastQuery: (query) => set({ lastQuery: query }),
+
+      setSessionId: (id) => set({ sessionId: id }),
+
+      reset: () => set(initialState),
+    }),
+    {
+      name: 'zonewise-panel-sync',
+      storage: createJSONStorage(() => sessionStorage),
+      partialize: (state) => ({
+        selectedParcelId: state.selectedParcelId,
+        mapViewport: state.mapViewport,
+        activeLayers: state.activeLayers,
+        sessionId: state.sessionId,
+      }),
     }
-  },
+  )
+);
 
-  mapHighlights: [],
-  setMapHighlights: (highlights) => set({ mapHighlights: highlights }),
-  clearHighlights: () => set({ mapHighlights: [] }),
+// Selector hooks for performance
+export const useSelectedParcel = () => usePanelSyncStore((s) => s.selectedParcelId);
+export const useMapViewport = () => usePanelSyncStore((s) => s.mapViewport);
+export const useActiveLayers = () => usePanelSyncStore((s) => s.activeLayers);
+export const useConversationHistory = () => usePanelSyncStore((s) => s.conversationHistory);
 
-  chatContext: {
-    visible_parcels: [],
-    active_layers: ['zoning'],
-  },
-  setChatContext: (context) =>
-    set((state) => ({
-      chatContext: { ...state.chatContext, ...context },
-    })),
-
-  eventQueue: [],
-  enqueueEvent: (event) =>
-    set((state) => ({
-      eventQueue: [...state.eventQueue, event],
-    })),
-  dequeueEvent: () => {
-    const state = get();
-    const [first, ...rest] = state.eventQueue;
-    set({ eventQueue: rest });
-    return first;
-  },
-}));
+export default usePanelSyncStore;
