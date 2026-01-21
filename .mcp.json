@@ -16,25 +16,12 @@
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
       }
     },
-    "brave-search": {
+    "greptile": {
       "command": "npx",
-      "args": ["-y", "@anthropics/brave-search-mcp"],
+      "args": ["-y", "greptile-mcp-server"],
       "env": {
-        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
-      }
-    },
-    "memory": {
-      "command": "npx",
-      "args": ["-y", "@anthropics/memory-mcp"],
-      "env": {
-        "MEMORY_STORAGE_PATH": "~/.claude-code/memory"
-      }
-    },
-    "puppeteer": {
-      "command": "npx",
-      "args": ["-y", "@anthropics/puppeteer-mcp"],
-      "env": {
-        "PUPPETEER_HEADLESS": "true"
+        "GREPTILE_API_KEY": "${GREPTILE_API_KEY}",
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
       }
     }
   }
