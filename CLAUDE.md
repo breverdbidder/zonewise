@@ -1,207 +1,150 @@
-# ZoneWise - Claude Code Context
-
-> AI Architect Instructions for Autonomous Development
+# CLAUDE.md - AI Architect Instructions for ZoneWise.ai
 
 ## 🎯 Project Overview
 
-**ZoneWise** is an AI-powered zoning intelligence platform providing:
-- 273 REAL zoning districts (100% Municode-verified)
-- 17 Florida jurisdictions
-- MCP server integration for LLM access
-- SaaS platform via Makerkit Pro
+ZoneWise.ai is an AI-powered zoning intelligence platform. This document provides context for Claude (AI Architect) and Claude Code (Agentic Engineer) when working on this repository.
 
-**GTM Target:** Q1 2026
+## 🏗️ Architecture Principles
 
-## 🛠️ Tech Stack
+### Agentic Development
+- **Autonomous execution:** Make decisions and execute without asking permission
+- **Minimal human-in-the-loop:** Ariel reviews weekly summaries, not daily tasks
+- **Self-documenting:** Update PROJECT_STATE.json after significant changes
 
-| Layer | Technology |
-|-------|------------|
-| Frontend | React + TypeScript + Vite + Tailwind CSS |
-| Backend | Supabase (PostgreSQL + Auth + Edge Functions) |
-| Maps | Mapbox GL JS |
-| AI | Claude API (via Smart Router) |
-| Deployment | Cloudflare Pages |
-| CI/CD | GitHub Actions |
-| Framework | Makerkit Pro ($299) |
+### Stack Decisions (LOCKED)
+| Component | Choice | Rationale |
+|-----------|--------|-----------|
+| Framework | Next.js 14 (App Router) | SSR, API routes, Vercel-compatible |
+| Database | Supabase | PostgreSQL + Auth + Realtime |
+| Styling | Tailwind CSS | Utility-first, shadcn/ui compatible |
+| Auth/Billing | Makerkit Pro | Pre-built SaaS boilerplate |
+| AI | Claude Sonnet 4.5 | Best reasoning for zoning interpretation |
+| Hosting | Cloudflare Pages | Edge performance, free tier |
+| Domain | zonewise.ai | Cloudflare Registrar |
 
-## 📁 Key Files
+## 📋 Development Rules
 
-```
-zonewise/
-├── CLAUDE.md              ← YOU ARE HERE
-├── PROJECT_STATE.json     ← Current state (UPDATE THIS)
-├── src/
-│   ├── lib/supabase.ts    ← Database client
-│   ├── hooks/             ← Data fetching hooks
-│   ├── components/        ← UI components
-│   └── pages/             ← Route pages
-├── supabase/
-│   └── migrations/        ← Database schema
-└── .github/workflows/     ← CI/CD pipelines
-```
+### DO ✅
+- Commit frequently with descriptive messages
+- Run tests before pushing
+- Update PROJECT_STATE.json with decisions
+- Use TypeScript strict mode
+- Follow existing code patterns
+- Deploy to Cloudflare Pages automatically
 
-## ⚡ Development Rules
-
-### ALWAYS Do:
-1. **Read PROJECT_STATE.json first** - Know current status before coding
-2. **Update PROJECT_STATE.json** - After every significant change
-3. **Use real data only** - Never mock/placeholder data
-4. **Run `npm run build`** - Before committing
-5. **Commit frequently** - Small, descriptive commits
-6. **Push to GitHub** - Auto-deploys via Cloudflare
-
-### NEVER Do:
-1. ❌ Ask permission - Execute and report results
-2. ❌ Use placeholder data - Always real Supabase queries
-3. ❌ Leave console.logs - Clean code only
-4. ❌ Skip TypeScript types - Full type safety required
-5. ❌ Create ZIP files - GitHub is source of truth
-6. ❌ Use Google Drive - Everything in repo
-
-## 🗄️ Database Schema
-
-### Tables
-```sql
--- Core tables
-jurisdictions       -- 17 FL jurisdictions
-zoning_districts    -- 273 districts
-use_types          -- Permitted/conditional uses
-regulations        -- Setbacks, heights, FAR
-
--- Analytics
-user_searches      -- Search history
-saved_properties   -- User favorites
-```
-
-### Key Queries
-```typescript
-// Get all districts for a jurisdiction
-const { data } = await supabase
-  .from('zoning_districts')
-  .select('*, jurisdictions(*)')
-  .eq('jurisdiction_id', jurisdictionId);
-
-// Search by use type
-const { data } = await supabase
-  .from('use_types')
-  .select('*, zoning_districts(*)')
-  .ilike('use_name', `%${search}%`);
-```
+### DON'T ❌
+- Ask permission for routine tasks
+- Create ZIP files or use Google Drive
+- Install packages without checking alternatives
+- Skip error handling
+- Hardcode API keys (use environment variables)
 
 ## 🔑 Environment Variables
 
-```env
-VITE_SUPABASE_URL=https://mocerqjnksmhcjzxrewo.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJ...
-VITE_MAPBOX_TOKEN=pk.eyJ...
+```bash
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+
+# Anthropic
+ANTHROPIC_API_KEY=
+
+# Stripe
+STRIPE_SECRET_KEY=
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_WEBHOOK_SECRET=
 ```
 
-## 📊 Current State
+## 📊 Data Model
 
-Check `PROJECT_STATE.json` for:
-- `current_phase` - Where we are
-- `completed_features` - What's done
-- `in_progress` - Active work
-- `blocked` - Issues needing resolution
-- `next_actions` - Priority queue
+### Core Tables
+
+```sql
+-- Jurisdictions (cities/counties)
+CREATE TABLE jurisdictions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  state TEXT DEFAULT 'FL',
+  municode_url TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Zoning Districts
+CREATE TABLE zoning_districts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  jurisdiction_id UUID REFERENCES jurisdictions(id),
+  code TEXT NOT NULL,           -- e.g., "R-1", "C-2"
+  name TEXT NOT NULL,           -- e.g., "Single Family Residential"
+  description TEXT,
+  allowed_uses JSONB,
+  setbacks JSONB,
+  height_limits JSONB,
+  lot_requirements JSONB,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- User Queries (for analytics)
+CREATE TABLE queries (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES auth.users(id),
+  question TEXT NOT NULL,
+  jurisdiction_id UUID REFERENCES jurisdictions(id),
+  district_code TEXT,
+  response TEXT,
+  tokens_used INTEGER,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
 
 ## 🚀 Deployment
 
-```bash
-# Local dev
-npm run dev
+### Cloudflare Pages
+- **Production:** Automatic deploy on `main` branch push
+- **Preview:** Automatic deploy on PR creation
+- **Build command:** `npm run build`
+- **Output directory:** `.next`
 
-# Build & deploy (auto via GitHub Actions)
-git push origin main
-```
+### GitHub Actions
+- CI runs on every push
+- Tests must pass before merge
+- Auto-deploy to Cloudflare Pages
 
-**Live URLs:**
-- Production: https://zonewise.pages.dev
-- Preview: https://{branch}.zonewise.pages.dev
+## 📁 Key Files
 
-## 🔄 Workflow Integration
+| File | Purpose |
+|------|---------|
+| `PROJECT_STATE.json` | Current state, recent decisions, blockers |
+| `CLAUDE.md` | This file - AI context |
+| `docs/PRD.md` | Product requirements document |
+| `src/lib/zoning-ai.ts` | Core AI interpretation logic |
+| `src/lib/supabase.ts` | Database client |
 
-### With Lovable
-- Lovable syncs from `main` branch
-- UI changes in Lovable auto-push to GitHub
-- Pull before starting Claude Code session
+## 🔄 Workflow
 
-### With GitHub Actions
-- Push to `main` → Auto-deploy to Cloudflare
-- All secrets in GitHub Settings
+### Claude Code Session Flow
+1. Read `PROJECT_STATE.json` for current context
+2. Check `docs/` for requirements
+3. Implement features/fixes
+4. Update `PROJECT_STATE.json`
+5. Commit and push
+6. Cloudflare auto-deploys
 
-## 📋 Task Execution Pattern
+### Escalation Protocol
+1. Try to solve autonomously (3 attempts)
+2. Log blocker to `PROJECT_STATE.json`
+3. Only then surface to Ariel with:
+   - Problem description
+   - Attempts made
+   - Recommended solution
 
-```markdown
-1. Read PROJECT_STATE.json
-2. Identify highest priority task
-3. Implement solution
-4. Test locally (npm run build)
-5. Commit with descriptive message
-6. Update PROJECT_STATE.json
-7. Push to GitHub
-8. Repeat
-```
+## 📈 Success Metrics
 
-## 🎨 Design System
-
-| Element | Value |
-|---------|-------|
-| Primary | #1E3A5F (Navy) |
-| Accent | #0D9488 (Teal) |
-| Background | #FFFFFF |
-| Text | #1F2937 |
-| Border Radius | 8px |
-| Font | Inter |
-
-## 📞 Escalation
-
-Only escalate to Ariel if:
-- Spend > $10 required
-- Production data deletion needed
-- Schema breaking changes
-- Security/auth changes
-
-**Format:** `BLOCKED: [issue]. Tried: [attempts]. Recommend: [solution].`
+- **Query accuracy:** >95% correct zoning interpretations
+- **Response time:** <3 seconds for standard queries
+- **Uptime:** 99.9%
+- **User satisfaction:** >4.5/5 rating
 
 ---
 
-**Last Updated:** 2026-01-20
-**AI Architect:** Claude (Sonnet 4.5)
-**Product Owner:** Ariel Shapira
----
-
-## Supabase MCP Integration
-
-### Configuration
-This repo uses Supabase MCP for direct database operations during Claude Code sessions.
-- **Package**: @supabase/mcp-server
-- **Token**: SUPABASE_MCP_TOKEN (GitHub Secret)
-- **Project**: mocerqjnksmhcjzxrewo.supabase.co
-
-### MCP Operation Rules
-
-#### ✅ AUTONOMOUS (No Approval)
-- CREATE TABLE, ALTER TABLE ADD COLUMN
-- CREATE INDEX, CREATE VIEW
-- SELECT (any query)
-- INSERT (any amount)
-- UPDATE/DELETE ≤100 rows
-
-#### ⚠️ REQUIRES CONFIRMATION  
-- UPDATE/DELETE >100 rows
-- Schema changes to core tables
-- New foreign key constraints
-
-#### 🚫 NEVER WITHOUT EXPLICIT APPROVAL
-- DROP TABLE
-- TRUNCATE
-- ALTER TABLE DROP COLUMN
-- DELETE/UPDATE without WHERE clause
-
-### Audit Logging
-Log all schema changes and bulk operations to `activities` table:
-```sql
-INSERT INTO activities (activity_type, description, metadata, created_at)
-VALUES ('mcp_operation', 'description', '{"operation": "..."}', NOW());
-```
+*Last updated: 2026-01-21*
