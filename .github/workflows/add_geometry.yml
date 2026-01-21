@@ -47,7 +47,6 @@ jobs:
           }
 
           def get_total_count():
-              """Get total parcels count."""
               r = requests.get(
                   f"{SUPABASE_URL}/rest/v1/sample_properties?select=id",
                   headers={**headers, "Prefer": "count=exact"},
@@ -57,7 +56,6 @@ jobs:
               return int(count) if count.isdigit() else 0
 
           def get_parcel_batch(offset, limit):
-              """Get batch of parcel_ids by offset."""
               r = requests.get(
                   f"{SUPABASE_URL}/rest/v1/sample_properties",
                   headers=headers,
@@ -74,13 +72,12 @@ jobs:
               return []
 
           def fetch_geometry_from_bcpao(parcel_ids):
-              """Fetch geometry from BCPAO for parcel IDs."""
               if not parcel_ids:
                   return {}
               
-              # Escape parcel IDs for SQL
               escaped = [pid.replace("'", "''") for pid in parcel_ids]
-              where = f"PARCEL_ID IN ({','.join(f\"'{p}'\" for p in escaped)})"
+              quoted = ["'" + p + "'" for p in escaped]
+              where = "PARCEL_ID IN (" + ",".join(quoted) + ")"
               
               params = {
                   "where": where,
@@ -109,7 +106,6 @@ jobs:
                   return {}
 
           def update_parcel_geometry(record_id, geometry):
-              """Update single parcel with geometry."""
               try:
                   r = requests.patch(
                       f"{SUPABASE_URL}/rest/v1/sample_properties?id=eq.{record_id}",
@@ -121,7 +117,6 @@ jobs:
               except:
                   return False
 
-          # Main
           print("=" * 70)
           print("ZoneWise - Adding Geometry to ALL Parcels")
           print("=" * 70)
@@ -139,7 +134,6 @@ jobs:
           while offset < total:
               batch_num += 1
               
-              # Get parcels from Supabase
               parcels = get_parcel_batch(offset, BATCH_SIZE)
               if not parcels:
                   print(f"  No parcels at offset {offset}")
@@ -148,10 +142,8 @@ jobs:
               parcel_ids = [p["parcel_id"] for p in parcels]
               id_map = {p["parcel_id"]: p["id"] for p in parcels}
               
-              # Fetch geometry from BCPAO
               geometries = fetch_geometry_from_bcpao(parcel_ids)
               
-              # Update each parcel
               batch_updated = 0
               for pid, geom in geometries.items():
                   if pid in id_map:
@@ -186,14 +178,12 @@ jobs:
           key = os.environ["SUPABASE_SERVICE_KEY"]
           headers = {"apikey": key, "Authorization": f"Bearer {key}"}
           
-          # Count with geometry
           r = requests.get(
               f"{url}/rest/v1/sample_properties?select=id&geometry=not.is.null",
               headers={**headers, "Prefer": "count=exact"}
           )
           with_geom = r.headers.get("content-range", "0/0").split("/")[-1]
           
-          # Total
           r2 = requests.get(
               f"{url}/rest/v1/sample_properties?select=id",
               headers={**headers, "Prefer": "count=exact"}
