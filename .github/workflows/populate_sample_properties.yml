@@ -20,16 +20,16 @@ jobs:
   populate-all:
     runs-on: ubuntu-latest
     timeout-minutes: 360
-    
+
     steps:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: pip install requests
-      
+
       - name: Fetch and insert ALL parcels
         env:
           SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
@@ -46,17 +46,17 @@ jobs:
           SUPABASE_URL = os.environ["SUPABASE_URL"]
           SUPABASE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
           BCPAO_URL = "https://gis.brevardfl.gov/gissrv/rest/services/Base_Map/Parcel_New_WKID2881/MapServer/5/query"
-          
+
           BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "1000"))
           START_OFFSET = int(os.environ.get("START_OFFSET", "0"))
           MAX_RECORDS = int(os.environ.get("MAX_RECORDS", "0"))
 
-          # UPSERT headers - merge duplicates instead of erroring
+          # UPSERT headers - on conflict, merge/ignore
           headers = {
               "apikey": SUPABASE_KEY,
               "Authorization": f"Bearer {SUPABASE_KEY}",
               "Content-Type": "application/json",
-              "Prefer": "resolution=merge-duplicates,return=minimal"
+              "Prefer": "resolution=merge-duplicates"
           }
 
           CITY_TO_JURISDICTION = {
@@ -95,14 +95,18 @@ jobs:
                   print(f"  Request error: {e}")
                   return [], False
 
-          def insert_batch(records):
+          def upsert_batch(records):
+              """Upsert with ON CONFLICT handling via RPC or chunked POST."""
               if not records:
                   return 0
-              chunk_size = 500
-              total = 0
+              
+              chunk_size = 200  # Smaller chunks for reliability
+              total_upserted = 0
+              
               for i in range(0, len(records), chunk_size):
                   chunk = records[i:i+chunk_size]
                   try:
+                      # Use POST with upsert header
                       r = requests.post(
                           f"{SUPABASE_URL}/rest/v1/sample_properties",
                           headers=headers,
@@ -110,25 +114,42 @@ jobs:
                           timeout=120
                       )
                       if r.status_code in [200, 201]:
-                          total += len(chunk)
+                          total_upserted += len(chunk)
+                      elif r.status_code == 409:
+                          # Duplicate - try one by one
+                          for rec in chunk:
+                              try:
+                                  r2 = requests.post(
+                                      f"{SUPABASE_URL}/rest/v1/sample_properties",
+                                      headers=headers,
+                                      json=[rec],
+                                      timeout=30
+                                  )
+                                  if r2.status_code in [200, 201]:
+                                      total_upserted += 1
+                              except:
+                                  pass
                       else:
-                          print(f"    Insert error: {r.status_code} - {r.text[:100]}")
+                          print(f"    Chunk error: {r.status_code}")
                   except Exception as e:
                       print(f"    Exception: {e}")
-              return total
+              
+              return total_upserted
 
           def transform_features(features):
               records = []
               for f in features:
                   a = f.get("attributes", {})
+                  parcel_id = a.get("PARCEL_ID")
+                  if not parcel_id:
+                      continue
+                  
                   addr = " ".join(filter(None, [
                       str(a.get("STREET_NUMBER", "")).strip(),
                       str(a.get("STREET_NAME", "")).strip(),
                       str(a.get("STREET_TYPE", "")).strip()
                   ]))
-                  parcel_id = a.get("PARCEL_ID")
-                  if not parcel_id:
-                      continue
+                  
                   records.append({
                       "jurisdiction_id": get_jurisdiction_id(a.get("CITY")),
                       "parcel_id": parcel_id,
@@ -146,13 +167,13 @@ jobs:
               return records
 
           print("=" * 70)
-          print("ZoneWise - FULL Brevard County Parcel Extraction (UPSERT MODE)")
+          print("ZoneWise - FULL Brevard County Parcel Extraction")
           print(f"Target: ~351,531 parcels | Batch: {BATCH_SIZE} | Start: {START_OFFSET}")
           print("=" * 70)
 
           offset = START_OFFSET
           total_fetched = 0
-          total_inserted = 0
+          total_upserted = 0
           batch_num = 0
           has_more = True
           errors = 0
@@ -160,33 +181,36 @@ jobs:
           while has_more:
               batch_num += 1
               features, has_more = query_bcpao_batch(offset, BATCH_SIZE)
-              
+
               if not features:
                   errors += 1
                   if errors >= 10:
+                      print(f"Too many errors, stopping at offset {offset}")
                       break
                   time.sleep(5)
                   continue
-              
+
               errors = 0
               total_fetched += len(features)
               records = transform_features(features)
-              inserted = insert_batch(records)
-              total_inserted += inserted
-              
-              if batch_num % 10 == 0:
-                  print(f"Batch {batch_num}: {total_fetched:,} fetched, {total_inserted:,} upserted")
-              
+              upserted = upsert_batch(records)
+              total_upserted += upserted
+
+              if batch_num % 25 == 0:
+                  print(f"Batch {batch_num}: {total_fetched:,} fetched, {total_upserted:,} upserted")
+
               offset += BATCH_SIZE
+
               if MAX_RECORDS > 0 and total_fetched >= MAX_RECORDS:
                   break
-              time.sleep(0.3)
 
-          print("\n" + "=" * 70)
-          print(f"COMPLETE: {total_fetched:,} fetched, {total_inserted:,} upserted")
+              time.sleep(0.2)
+
+          print("=" * 70)
+          print(f"COMPLETE: {total_fetched:,} fetched, {total_upserted:,} upserted")
           print("=" * 70)
           PYTHON_SCRIPT
-      
+
       - name: Verify final counts
         env:
           SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
@@ -196,12 +220,12 @@ jobs:
           curl -s "$SUPABASE_URL/rest/v1/sample_properties?select=id" \
             -H "apikey: $SUPABASE_SERVICE_KEY" \
             -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
-            -H "Prefer: count=exact" -I | grep -i "content-range"
-          
+            -H "Prefer: count=exact" -I 2>/dev/null | grep -i "x-total-count"
+
           echo ""
-          echo "=== Count by Jurisdiction ==="
+          echo "=== By Jurisdiction ==="
           curl -s "$SUPABASE_URL/rest/v1/rpc/count_by_jurisdiction" \
             -H "apikey: $SUPABASE_SERVICE_KEY" \
             -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
             -H "Content-Type: application/json" \
-            -d '{}'
+            -d '{}' | python3 -m json.tool || echo "RPC failed"
