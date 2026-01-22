@@ -1,0 +1,1634 @@
+{
+  "summary": {
+    "total_jurisdictions": 64,
+    "template_distribution": {
+      "elaws": 5,
+      "custom_hybrid": 3,
+      "standard_next": 56
+    },
+    "template_percentages": {
+      "elaws": 7.8,
+      "custom_hybrid": 4.7,
+      "standard_next": 87.5
+    },
+    "high_confidence_count": 61,
+    "low_confidence_count": 0
+  },
+  "config": {
+    "generated_at": "2026-01-22T05:48:27.469609",
+    "templates": {
+      "standard_next": {
+        "count": 56,
+        "selectors": {
+          "toc_container": "#toc, .toc-container, [data-testid='toc']",
+          "chapter_list": ".chapter-list li, .toc-item",
+          "section_content": ".chunk-content, .section-content",
+          "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+          "zoning_districts": ".zoning-district, [data-district]",
+          "search_input": "input[type='search'], .search-box input",
+          "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+        },
+        "jurisdictions": [
+          {
+            "slug": "largo",
+            "county": "Pinellas",
+            "url": "https://library.municode.com/fl/largo/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "cape_coral",
+            "county": "Lee",
+            "url": "https://library.municode.com/fl/cape_coral/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "volusia_county",
+            "county": "Volusia",
+            "url": "https://library.municode.com/fl/volusia_county/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "titusville",
+            "county": "Brevard",
+            "url": "https://library.municode.com/fl/titusville/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "lakeland",
+            "county": "Polk",
+            "url": "https://library.municode.com/fl/lakeland/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "winter_garden",
+            "county": "Orange",
+            "url": "https://library.municode.com/fl/winter_garden/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "miami_dade_county",
+            "county": "Miami-Dade",
+            "url": "https://library.municode.com/fl/miami_-_dade_county/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "duval_county",
+            "county": "Duval",
+            "url": "https://library.municode.com/fl/jacksonville/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "ocoee",
+            "county": "Orange",
+            "url": "https://library.municode.com/fl/ocoee/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "lee_county",
+            "county": "Lee",
+            "url": "https://library.municode.com/fl/lee_county/codes/land_development_code",
+            "confidence": 0.8
+          },
+          {
+            "slug": "orlando",
+            "county": "Orange",
+            "url": "https://library.municode.com/fl/orlando/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "broward_county",
+            "county": "Broward",
+            "url": "https://library.municode.com/fl/broward_county/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "cocoa_beach",
+            "county": "Brevard",
+            "url": "https://library.municode.com/fl/cocoa_beach/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "apopka",
+            "county": "Orange",
+            "url": "https://library.municode.com/fl/apopka/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "longwood",
+            "county": "Seminole",
+            "url": "https://library.municode.com/fl/longwood/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "hialeah",
+            "county": "Miami-Dade",
+            "url": "https://library.municode.com/fl/hialeah/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "miami",
+            "county": "Miami-Dade",
+            "url": "https://library.municode.com/fl/miami/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "temple_terrace",
+            "county": "Hillsborough",
+            "url": "https://library.municode.com/fl/temple_terrace/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "fort_lauderdale",
+            "county": "Broward",
+            "url": "https://library.municode.com/fl/fort_lauderdale/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "clearwater",
+            "county": "Pinellas",
+            "url": "https://library.municode.com/fl/clearwater/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "miami_beach",
+            "county": "Miami-Dade",
+            "url": "https://library.municode.com/fl/miami_beach/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "melbourne",
+            "county": "Brevard",
+            "url": "https://library.municode.com/fl/melbourne/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "sanford",
+            "county": "Seminole",
+            "url": "https://library.municode.com/fl/sanford/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "winter_springs",
+            "county": "Seminole",
+            "url": "https://library.municode.com/fl/winter_springs/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "brevard_county",
+            "county": "Brevard",
+            "url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "oviedo",
+            "county": "Seminole",
+            "url": "https://library.municode.com/fl/oviedo/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "boca_raton",
+            "county": "Palm Beach",
+            "url": "https://library.municode.com/fl/boca_raton/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "palm_beach_county",
+            "county": "Palm Beach",
+            "url": "https://library.municode.com/fl/palm_beach_county/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "hillsborough_county",
+            "county": "Hillsborough",
+            "url": "https://library.municode.com/fl/hillsborough_county/codes/code_of_ordinances_and_laws",
+            "confidence": 0.8
+          },
+          {
+            "slug": "orange_county",
+            "county": "Orange",
+            "url": "https://library.municode.com/fl/orange_county/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "st_petersburg",
+            "county": "Pinellas",
+            "url": "https://library.municode.com/fl/st._petersburg/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "altamonte_springs",
+            "county": "Seminole",
+            "url": "https://library.municode.com/fl/altamonte_springs/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "winter_park",
+            "county": "Orange",
+            "url": "https://library.municode.com/fl/winter_park/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "cocoa",
+            "county": "Brevard",
+            "url": "https://library.municode.com/fl/cocoa/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "west_palm_beach",
+            "county": "Palm Beach",
+            "url": "https://library.municode.com/fl/west_palm_beach/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "casselberry",
+            "county": "Seminole",
+            "url": "https://library.municode.com/fl/casselberry/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "rockledge",
+            "county": "Brevard",
+            "url": "https://library.municode.com/fl/rockledge/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "seminole_county",
+            "county": "Seminole",
+            "url": "https://library.municode.com/fl/seminole_county/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "tampa",
+            "county": "Hillsborough",
+            "url": "https://library.municode.com/fl/tampa/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "daytona_beach",
+            "county": "Volusia",
+            "url": "https://library.municode.com/fl/daytona_beach/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "cape_canaveral",
+            "county": "Brevard",
+            "url": "https://library.municode.com/fl/cape_canaveral/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "pembroke_pines",
+            "county": "Broward",
+            "url": "https://library.municode.com/fl/pembroke_pines/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "fort_myers",
+            "county": "Lee",
+            "url": "https://library.municode.com/fl/fort_myers/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "plant_city",
+            "county": "Hillsborough",
+            "url": "https://library.municode.com/fl/plant_city/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "delray_beach",
+            "county": "Palm Beach",
+            "url": "https://library.municode.com/fl/delray_beach/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "deltona",
+            "county": "Volusia",
+            "url": "https://library.municode.com/fl/deltona/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "lake_mary",
+            "county": "Seminole",
+            "url": "https://library.municode.com/fl/lake_mary/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "jacksonville",
+            "county": "Duval",
+            "url": "https://library.municode.com/fl/jacksonville/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "coral_gables",
+            "county": "Miami-Dade",
+            "url": "https://library.municode.com/fl/coral_gables/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "jacksonville_beach",
+            "county": "Duval",
+            "url": "https://library.municode.com/fl/jacksonville_beach/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "winter_haven",
+            "county": "Polk",
+            "url": "https://library.municode.com/fl/winter_haven/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "west_melbourne",
+            "county": "Brevard",
+            "url": "https://library.municode.com/fl/west_melbourne/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "hollywood",
+            "county": "Broward",
+            "url": "https://library.municode.com/fl/hollywood/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "palm_bay",
+            "county": "Brevard",
+            "url": "https://library.municode.com/fl/palm_bay/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "polk_county",
+            "county": "Polk",
+            "url": "https://library.municode.com/fl/polk_county/codes/code_of_ordinances",
+            "confidence": 0.8
+          },
+          {
+            "slug": "pinellas_county",
+            "county": "Pinellas",
+            "url": "https://library.municode.com/fl/pinellas_county/codes/code_of_ordinances",
+            "confidence": 0.8
+          }
+        ]
+      },
+      "custom_hybrid": {
+        "count": 3,
+        "selectors": {},
+        "jurisdictions": [
+          {
+            "slug": "grant_valkaria",
+            "county": "Brevard",
+            "url": "",
+            "confidence": 0.5
+          },
+          {
+            "slug": "melbourne_village",
+            "county": "Brevard",
+            "url": "",
+            "confidence": 0.5
+          },
+          {
+            "slug": "palm_shores",
+            "county": "Brevard",
+            "url": "",
+            "confidence": 0.5
+          }
+        ]
+      },
+      "elaws": {
+        "count": 5,
+        "selectors": {
+          "toc_container": "#tocNav, .toc-list",
+          "chapter_list": ".tocEntry, .toc-entry a",
+          "section_content": "#contentSection, .content-area",
+          "dimensional_table": "table.use-table, table.dimensional",
+          "zoning_districts": ".district-header, h2.district",
+          "search_input": "#searchInput, .ecode-search",
+          "nav_breadcrumb": "#breadcrumb, .nav-path"
+        },
+        "jurisdictions": [
+          {
+            "slug": "satellite_beach",
+            "county": "Brevard",
+            "url": "https://ecode360.com/SA2513",
+            "confidence": 0.95
+          },
+          {
+            "slug": "indian_harbour_beach",
+            "county": "Brevard",
+            "url": "https://ecode360.com/IN0780",
+            "confidence": 0.95
+          },
+          {
+            "slug": "indialantic",
+            "county": "Brevard",
+            "url": "https://ecode360.com/IN0700",
+            "confidence": 0.95
+          },
+          {
+            "slug": "melbourne_beach",
+            "county": "Brevard",
+            "url": "https://ecode360.com/ME0969",
+            "confidence": 0.95
+          },
+          {
+            "slug": "malabar",
+            "county": "Brevard",
+            "url": "https://ecode360.com/MA2430",
+            "confidence": 0.95
+          }
+        ]
+      }
+    }
+  },
+  "results": [
+    {
+      "jurisdiction": "brevard_county",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.245135",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "melbourne",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/melbourne/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.218918",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "palm_bay",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/palm_bay/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.290453",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "titusville",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/titusville/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.298208",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "cocoa",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/cocoa/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.278226",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "rockledge",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/rockledge/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.282101",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "west_melbourne",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/west_melbourne/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.289618",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "satellite_beach",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "elaws",
+      "url": "https://ecode360.com/SA2513",
+      "confidence": 0.95,
+      "selectors": {
+        "toc_container": "#tocNav, .toc-list",
+        "chapter_list": ".tocEntry, .toc-entry a",
+        "section_content": "#contentSection, .content-area",
+        "dimensional_table": "table.use-table, table.dimensional",
+        "zoning_districts": ".district-header, h2.district",
+        "search_input": "#searchInput, .ecode-search",
+        "nav_breadcrumb": "#breadcrumb, .nav-path"
+      },
+      "detected_at": "2026-01-22T05:48:25.985640",
+      "notes": "Platform: elaws"
+    },
+    {
+      "jurisdiction": "indian_harbour_beach",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "elaws",
+      "url": "https://ecode360.com/IN0780",
+      "confidence": 0.95,
+      "selectors": {
+        "toc_container": "#tocNav, .toc-list",
+        "chapter_list": ".tocEntry, .toc-entry a",
+        "section_content": "#contentSection, .content-area",
+        "dimensional_table": "table.use-table, table.dimensional",
+        "zoning_districts": ".district-header, h2.district",
+        "search_input": "#searchInput, .ecode-search",
+        "nav_breadcrumb": "#breadcrumb, .nav-path"
+      },
+      "detected_at": "2026-01-22T05:48:25.985674",
+      "notes": "Platform: elaws"
+    },
+    {
+      "jurisdiction": "cape_canaveral",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/cape_canaveral/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.283475",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "cocoa_beach",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/cocoa_beach/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.900440",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "indialantic",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "elaws",
+      "url": "https://ecode360.com/IN0700",
+      "confidence": 0.95,
+      "selectors": {
+        "toc_container": "#tocNav, .toc-list",
+        "chapter_list": ".tocEntry, .toc-entry a",
+        "section_content": "#contentSection, .content-area",
+        "dimensional_table": "table.use-table, table.dimensional",
+        "zoning_districts": ".district-header, h2.district",
+        "search_input": "#searchInput, .ecode-search",
+        "nav_breadcrumb": "#breadcrumb, .nav-path"
+      },
+      "detected_at": "2026-01-22T05:48:25.987650",
+      "notes": "Platform: elaws"
+    },
+    {
+      "jurisdiction": "melbourne_beach",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "elaws",
+      "url": "https://ecode360.com/ME0969",
+      "confidence": 0.95,
+      "selectors": {
+        "toc_container": "#tocNav, .toc-list",
+        "chapter_list": ".tocEntry, .toc-entry a",
+        "section_content": "#contentSection, .content-area",
+        "dimensional_table": "table.use-table, table.dimensional",
+        "zoning_districts": ".district-header, h2.district",
+        "search_input": "#searchInput, .ecode-search",
+        "nav_breadcrumb": "#breadcrumb, .nav-path"
+      },
+      "detected_at": "2026-01-22T05:48:25.987661",
+      "notes": "Platform: elaws"
+    },
+    {
+      "jurisdiction": "malabar",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "elaws",
+      "url": "https://ecode360.com/MA2430",
+      "confidence": 0.95,
+      "selectors": {
+        "toc_container": "#tocNav, .toc-list",
+        "chapter_list": ".tocEntry, .toc-entry a",
+        "section_content": "#contentSection, .content-area",
+        "dimensional_table": "table.use-table, table.dimensional",
+        "zoning_districts": ".district-header, h2.district",
+        "search_input": "#searchInput, .ecode-search",
+        "nav_breadcrumb": "#breadcrumb, .nav-path"
+      },
+      "detected_at": "2026-01-22T05:48:25.987667",
+      "notes": "Platform: elaws"
+    },
+    {
+      "jurisdiction": "grant_valkaria",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "custom_hybrid",
+      "url": "",
+      "confidence": 0.5,
+      "selectors": {},
+      "detected_at": "2026-01-22T05:48:25.987673",
+      "notes": "Platform: custom"
+    },
+    {
+      "jurisdiction": "melbourne_village",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "custom_hybrid",
+      "url": "",
+      "confidence": 0.5,
+      "selectors": {},
+      "detected_at": "2026-01-22T05:48:25.987680",
+      "notes": "Platform: custom"
+    },
+    {
+      "jurisdiction": "palm_shores",
+      "county": "Brevard",
+      "state": "FL",
+      "template": "custom_hybrid",
+      "url": "",
+      "confidence": 0.5,
+      "selectors": {},
+      "detected_at": "2026-01-22T05:48:25.987684",
+      "notes": "Platform: custom"
+    },
+    {
+      "jurisdiction": "orange_county",
+      "county": "Orange",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/orange_county/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.272722",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "orlando",
+      "county": "Orange",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/orlando/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.732351",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "winter_park",
+      "county": "Orange",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/winter_park/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.277650",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "apopka",
+      "county": "Orange",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/apopka/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.943446",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "ocoee",
+      "county": "Orange",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/ocoee/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.705867",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "winter_garden",
+      "county": "Orange",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/winter_garden/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.681631",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "seminole_county",
+      "county": "Seminole",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/seminole_county/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.282433",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "sanford",
+      "county": "Seminole",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/sanford/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.243435",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "altamonte_springs",
+      "county": "Seminole",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/altamonte_springs/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.274296",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "casselberry",
+      "county": "Seminole",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/casselberry/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.281771",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "lake_mary",
+      "county": "Seminole",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/lake_mary/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.285627",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "longwood",
+      "county": "Seminole",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/longwood/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.957535",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "oviedo",
+      "county": "Seminole",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/oviedo/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.245781",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "winter_springs",
+      "county": "Seminole",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/winter_springs/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.244807",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "hillsborough_county",
+      "county": "Hillsborough",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/hillsborough_county/codes/code_of_ordinances_and_laws",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.272161",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "tampa",
+      "county": "Hillsborough",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/tampa/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.282717",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "plant_city",
+      "county": "Hillsborough",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/plant_city/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.284478",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "temple_terrace",
+      "county": "Hillsborough",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/temple_terrace/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.047275",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "pinellas_county",
+      "county": "Pinellas",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/pinellas_county/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.468905",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "st_petersburg",
+      "county": "Pinellas",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/st._petersburg/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.273911",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "clearwater",
+      "county": "Pinellas",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/clearwater/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.112551",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "largo",
+      "county": "Pinellas",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/largo/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.283494",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "miami_dade_county",
+      "county": "Miami-Dade",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/miami_-_dade_county/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.688449",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "miami",
+      "county": "Miami-Dade",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/miami/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.977013",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "miami_beach",
+      "county": "Miami-Dade",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/miami_beach/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.128573",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "hialeah",
+      "county": "Miami-Dade",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/hialeah/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.973388",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "coral_gables",
+      "county": "Miami-Dade",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/coral_gables/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.286322",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "broward_county",
+      "county": "Broward",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/broward_county/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.826339",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "fort_lauderdale",
+      "county": "Broward",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/fort_lauderdale/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.097964",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "hollywood",
+      "county": "Broward",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/hollywood/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.290103",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "pembroke_pines",
+      "county": "Broward",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/pembroke_pines/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.283866",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "palm_beach_county",
+      "county": "Palm Beach",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/palm_beach_county/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.270519",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "west_palm_beach",
+      "county": "Palm Beach",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/west_palm_beach/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.281353",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "boca_raton",
+      "county": "Palm Beach",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/boca_raton/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.262916",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "delray_beach",
+      "county": "Palm Beach",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/delray_beach/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.284956",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "lee_county",
+      "county": "Lee",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/lee_county/codes/land_development_code",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.727226",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "fort_myers",
+      "county": "Lee",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/fort_myers/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.284171",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "cape_coral",
+      "county": "Lee",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/cape_coral/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.284370",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "volusia_county",
+      "county": "Volusia",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/volusia_county/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.290504",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "daytona_beach",
+      "county": "Volusia",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/daytona_beach/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.283045",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "deltona",
+      "county": "Volusia",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/deltona/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.285307",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "duval_county",
+      "county": "Duval",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/jacksonville/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.701697",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "jacksonville",
+      "county": "Duval",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/jacksonville/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.285974",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "jacksonville_beach",
+      "county": "Duval",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/jacksonville_beach/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.287919",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "polk_county",
+      "county": "Polk",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/polk_county/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.292588",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "lakeland",
+      "county": "Polk",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/lakeland/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:26.576487",
+      "notes": "Platform: municode"
+    },
+    {
+      "jurisdiction": "winter_haven",
+      "county": "Polk",
+      "state": "FL",
+      "template": "standard_next",
+      "url": "https://library.municode.com/fl/winter_haven/codes/code_of_ordinances",
+      "confidence": 0.8,
+      "selectors": {
+        "toc_container": "#toc, .toc-container, [data-testid='toc']",
+        "chapter_list": ".chapter-list li, .toc-item",
+        "section_content": ".chunk-content, .section-content",
+        "dimensional_table": "table.dimensional-standards, table[class*='standards']",
+        "zoning_districts": ".zoning-district, [data-district]",
+        "search_input": "input[type='search'], .search-box input",
+        "nav_breadcrumb": ".breadcrumb, nav[aria-label='breadcrumb']"
+      },
+      "detected_at": "2026-01-22T05:48:27.288411",
+      "notes": "Platform: municode"
+    }
+  ]
+}
