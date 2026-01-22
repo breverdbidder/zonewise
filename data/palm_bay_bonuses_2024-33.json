@@ -1,0 +1,89 @@
+{
+  "source": {
+    "ordinance": "Ord. 2024-33",
+    "passed_date": "2024-09-19",
+    "section": "§ 173.053",
+    "table": "Table 173-8",
+    "title": "Development Bonus Program"
+  },
+  "requirements": {
+    "criteria_1": "The proposed project shall not have a negative impact on the transportation level of service.",
+    "criteria_2": "The new development shall mitigate any impacts it may have on the scale character of existing residential sites abutting the proposed project.",
+    "criteria_3": "The applicant shall enter into a developers agreement with the city committing to the number of affordable units approved and ensuring that the units will remain affordable for a period of time to be designated by the Council."
+  },
+  "bonuses": [
+    {
+      "feature_name": "Vertical mixed-use (residential and commercial or office)",
+      "density_bonus": null,
+      "intensity_bonus": null,
+      "height_bonus": "2 stories",
+      "other_bonus": null,
+      "conditions": "Minimum of 5 residential units provided"
+    },
+    {
+      "feature_name": "Affordable housing",
+      "density_bonus": "Max allowed in FLU category",
+      "intensity_bonus": null,
+      "height_bonus": "2 stories",
+      "other_bonus": null,
+      "conditions": "A minimum of 25% of total units in development shall be affordable. Developer's agreement committing to keeping the units affordable for a minimum of 30 years."
+    },
+    {
+      "feature_name": "Public Open Space and Amenities",
+      "density_bonus": "2 additional units per acre for every 3,000 sq. ft. of amenities",
+      "intensity_bonus": "0.02 additional FAR for every 3,000 sq. ft. of amenities",
+      "height_bonus": "1 story for every 3,000 sq. ft. of amenities",
+      "other_bonus": null,
+      "conditions": "Urban plaza or park with amenities, at least three thousand (3,000) square feet in area or multi-use trails connecting to other systems outside the development. The amenities shall be privately-owned and maintained, but open to the public."
+    },
+    {
+      "feature_name": "Parking garage under residential, office or commercial development",
+      "density_bonus": null,
+      "intensity_bonus": null,
+      "height_bonus": "1 additional floor per garage level provided",
+      "other_bonus": null,
+      "conditions": "The facade facing the street shall incorporate active uses (residential, commercial or office)"
+    },
+    {
+      "feature_name": "Access to Waterfront (Turkey Creek, Palm Bay, and the Indian River Lagoon)",
+      "density_bonus": null,
+      "intensity_bonus": null,
+      "height_bonus": "1 additional floor",
+      "other_bonus": null,
+      "conditions": "One or combination of the following: 1. View of the water from the public right-of-way (in the form of breezeways); 2. Access to the water in the form of boat ramps, fishing piers, or beach; 3. Outdoor dining facing the water."
+    },
+    {
+      "feature_name": "Low Impact Design",
+      "density_bonus": "2 additional units per acre",
+      "intensity_bonus": "0.02 additional FAR",
+      "height_bonus": null,
+      "other_bonus": null,
+      "conditions": "Designs shall, at a minimum, manage and capture stormwater runoff, to the maximum extent feasible, in a manner consistent with the integrated management practices (IMPs) as outlined in the City's Low Impact Development Manual."
+    },
+    {
+      "feature_name": "Emergency storm shelters in mobile home or RV parks",
+      "density_bonus": "2 additional units per acre",
+      "intensity_bonus": null,
+      "height_bonus": null,
+      "other_bonus": null,
+      "conditions": "Shelters which meet the design and construction requirements established within the latest 'ICC 500 ICC/NSSA Standard for the Design and Construction of Storm Shelters'"
+    },
+    {
+      "feature_name": "Use of living shoreline techniques to prevent shoreline erosion",
+      "density_bonus": null,
+      "intensity_bonus": null,
+      "height_bonus": null,
+      "parking_reduction": "Reduced parking (up to 10% of the minimum number of spaces required)",
+      "conditions": "One or more techniques"
+    },
+    {
+      "feature_name": "Co-location of water-dependent and water-related uses",
+      "density_bonus": null,
+      "intensity_bonus": null,
+      "height_bonus": null,
+      "parking_reduction": "Reduced parking (up to 10% of the minimum number of spaces required)",
+      "conditions": "Minimum of 2 water-dependent uses; or 1 water-dependent and 1 water-related uses. Uses must be located within the same structure or provide cross access via a shared pedestrian pathway."
+    }
+  ],
+  "note": "Where the features listed above are already required by the Land Development Code, they shall be provided without a bonus."
+}
