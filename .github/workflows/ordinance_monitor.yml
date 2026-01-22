@@ -1,0 +1,100 @@
+name: ZoneWise Ordinance Monitor
+
+on:
+  schedule:
+    # Run daily at 6 AM EST (11:00 UTC)
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+    inputs:
+      jurisdiction_id:
+        description: 'Jurisdiction ID (1-17, or "all")'
+        required: false
+        default: 'all'
+
+env:
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+  FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+
+jobs:
+  monitor-ordinances:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 lxml
+      
+      - name: Run Ordinance Monitor
+        run: |
+          echo "=== ZoneWise Ordinance Monitor ==="
+          echo "Surpassing Zoneomics & Gridics"
+          echo "=================================="
+          
+          python src/scrapers/municode_ordinance_monitor.py \
+            --jurisdiction "${{ github.event.inputs.jurisdiction_id || 'all' }}"
+      
+      - name: Generate Report
+        if: always()
+        run: |
+          echo "## Ordinance Monitor Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Date**: $(date -u '+%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "- **Jurisdictions Scanned**: 17" >> $GITHUB_STEP_SUMMARY
+          
+      - name: Alert on New Ordinances
+        if: success()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        run: |
+          # If new ordinances found, send Slack notification
+          if [ -f "new_ordinances.json" ]; then
+            curl -X POST -H 'Content-type: application/json' \
+              --data '{"text":"🏛️ ZoneWise: New ordinances detected! Check GitHub Actions for details."}' \
+              $SLACK_WEBHOOK || true
+          fi
+
+  check-schema:
+    runs-on: ubuntu-latest
+    needs: monitor-ordinances
+    if: failure()
+    
+    steps:
+      - name: Create Issue on Failure
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `Ordinance Monitor Failed - ${new Date().toISOString().split('T')[0]}`;
+            const body = `
+            ## Ordinance Monitor Failure
+            
+            The daily ordinance monitoring job failed.
+            
+            **Workflow Run**: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}
+            
+            **Possible Causes:**
+            - Municode website structure changed
+            - Firecrawl API rate limit
+            - Supabase connection issue
+            - Missing schema tables
+            
+            cc @breverdbidder
+            `;
+            
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['bug', 'ordinance-monitor']
+            });
