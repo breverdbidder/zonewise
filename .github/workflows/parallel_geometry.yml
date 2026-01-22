@@ -1,0 +1,156 @@
+name: Parallel Geometry Worker
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_id:
+        description: 'Start ID (inclusive)'
+        required: true
+      end_id:
+        description: 'End ID (exclusive)'
+        required: true
+      worker_name:
+        description: 'Worker identifier (1-4)'
+        required: true
+        default: '1'
+
+jobs:
+  fetch-geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Fetch geometry for ID range
+        env:
+          SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
+          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          START_ID: ${{ inputs.start_id }}
+          END_ID: ${{ inputs.end_id }}
+          WORKER: ${{ inputs.worker_name }}
+        run: |
+          python << 'PYTHON_SCRIPT'
+          import os
+          import requests
+          import json
+          import time
+
+          SUPABASE_URL = os.environ["SUPABASE_URL"]
+          SUPABASE_KEY = os.environ["SUPABASE_KEY"]
+          START_ID = int(os.environ["START_ID"])
+          END_ID = int(os.environ["END_ID"])
+          WORKER = os.environ["WORKER"]
+
+          BCPAO_URL = "https://gis.brevardfl.gov/gissrv/rest/services/Base_Map/Parcel_New_WKID2881/MapServer/5/query"
+          BATCH_SIZE = 50  # Parcels per BCPAO request
+
+          headers = {
+              "apikey": SUPABASE_KEY,
+              "Authorization": f"Bearer {SUPABASE_KEY}",
+              "Content-Type": "application/json",
+              "Prefer": "return=minimal"
+          }
+
+          print(f"🚀 Worker {WORKER} starting: ID {START_ID:,} to {END_ID:,}")
+          
+          total_updated = 0
+          current_id = START_ID
+          errors = 0
+          
+          while current_id < END_ID:
+              # Get batch of parcels without geometry in this range
+              url = f"{SUPABASE_URL}/rest/v1/sample_properties"
+              params = {
+                  "select": "id,parcel_id",
+                  "id": f"gte.{current_id}",
+                  "geometry": "is.null",
+                  "order": "id.asc",
+                  "limit": str(BATCH_SIZE)
+              }
+              
+              # Add end_id filter
+              full_url = f"{url}?select=id,parcel_id&id=gte.{current_id}&id=lt.{END_ID}&geometry=is.null&order=id.asc&limit={BATCH_SIZE}"
+              
+              try:
+                  resp = requests.get(full_url, headers=headers, timeout=30)
+                  parcels = resp.json()
+              except Exception as e:
+                  print(f"❌ Supabase error: {e}")
+                  errors += 1
+                  if errors > 10:
+                      print("Too many errors, stopping")
+                      break
+                  time.sleep(5)
+                  continue
+              
+              if not parcels:
+                  print(f"✅ Worker {WORKER} complete! Updated {total_updated:,} parcels")
+                  break
+              
+              # Build BCPAO query for these parcel IDs
+              parcel_ids = [p['parcel_id'] for p in parcels]
+              where_clause = " OR ".join([f"Name='{pid}'" for pid in parcel_ids])
+              
+              bcpao_params = {
+                  "where": where_clause,
+                  "outFields": "Name",
+                  "returnGeometry": "true",
+                  "outSR": "4326",
+                  "f": "json"
+              }
+              
+              try:
+                  bcpao_resp = requests.get(BCPAO_URL, params=bcpao_params, timeout=60)
+                  bcpao_data = bcpao_resp.json()
+                  features = bcpao_data.get("features", [])
+              except Exception as e:
+                  print(f"❌ BCPAO error: {e}")
+                  errors += 1
+                  current_id = parcels[-1]['id'] + 1
+                  time.sleep(2)
+                  continue
+              
+              # Build geometry lookup
+              geom_lookup = {}
+              for f in features:
+                  name = f.get("attributes", {}).get("Name", "")
+                  geom = f.get("geometry", {})
+                  if name and geom:
+                      geom_lookup[name] = geom
+              
+              # Update Supabase for each parcel
+              updated_batch = 0
+              for p in parcels:
+                  geom = geom_lookup.get(p['parcel_id'])
+                  if geom:
+                      update_url = f"{SUPABASE_URL}/rest/v1/sample_properties?id=eq.{p['id']}"
+                      try:
+                          update_resp = requests.patch(
+                              update_url,
+                              headers=headers,
+                              json={"geometry": geom},
+                              timeout=10
+                          )
+                          if update_resp.status_code in [200, 204]:
+                              updated_batch += 1
+                      except:
+                          pass
+              
+              total_updated += updated_batch
+              current_id = parcels[-1]['id'] + 1
+              
+              if total_updated % 500 == 0:
+                  pct = (current_id - START_ID) / (END_ID - START_ID) * 100
+                  print(f"📊 Worker {WORKER}: {total_updated:,} updated | {pct:.1f}% of range")
+              
+              time.sleep(0.5)  # Rate limiting
+          
+          print(f"🏁 Worker {WORKER} finished: {total_updated:,} parcels updated")
+          PYTHON_SCRIPT
