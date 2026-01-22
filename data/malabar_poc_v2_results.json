@@ -1,0 +1,402 @@
+{
+  "jurisdiction": "Malabar",
+  "jurisdiction_id": 14,
+  "scrape_date": "2026-01-22T16:37:33.126984",
+  "total_raw": 110,
+  "after_dedup": 43,
+  "passed_validation": 38,
+  "failed_validation": 5,
+  "success_rate": 0.88,
+  "threshold": 0.8,
+  "passed_threshold": true,
+  "records": [
+    {
+      "ordinance_number": "94-4",
+      "title": "Article II - LAND USE AND ZONING",
+      "full_text_length": 44313,
+      "passed_date": "4-3-95",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTIILAUSZO",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-2.1.",
+      "title": "Section 1-2.1. - Implementing the Comprehensive Plan.",
+      "full_text_length": 502,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTIILAUSZO",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "94-4",
+      "title": "Section 1-2.2. - Zoning districts established.",
+      "full_text_length": 2042,
+      "passed_date": "4-3-95",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTIILAUSZO",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-2.3.",
+      "title": "Section 1-2.3. - Official Zoning Map and district boundaries.",
+      "full_text_length": 1442,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTIILAUSZO",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-2.4.",
+      "title": "Section 1-2.4. - Interpretation of district boundaries.",
+      "full_text_length": 2569,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTIILAUSZO",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-2.5.",
+      "title": "Section 1-2.5. - Compliance with district regulations.",
+      "full_text_length": 791,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTIILAUSZO",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "12-48",
+      "title": "Section 1-2.6. - Land use classifications.",
+      "full_text_length": 35670,
+      "passed_date": "1-23-12",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTIILAUSZO",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-2.7.",
+      "title": "Section 1-2.7. - Procedures and criteria for review of \"similar\" uses.",
+      "full_text_length": 1007,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTIILAUSZO",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "94-4",
+      "title": "Article III - DISTRICT PROVISIONS",
+      "full_text_length": 44224,
+      "passed_date": "7-1-76",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTIIIDIPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "94-4",
+      "title": "Section 1-3.1. - Purpose and intent of districts.",
+      "full_text_length": 16785,
+      "passed_date": "7-1-76",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTIIIDIPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "94-4",
+      "title": "Section 1-3.2. - Land use by districts.",
+      "full_text_length": 5790,
+      "passed_date": "4-3-95",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTIIIDIPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "92-8",
+      "title": "Section 1-3.3. - Size and dimension criteria.",
+      "full_text_length": 21053,
+      "passed_date": "8-18-92",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTIIIDIPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "08-04",
+      "title": "Article V - GENERAL PROVISIONS",
+      "full_text_length": 88309,
+      "passed_date": "4-7-08",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "08-04",
+      "title": "Section 1-5.1. - Height exceptions.",
+      "full_text_length": 1071,
+      "passed_date": "4-7-08",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "92-8",
+      "title": "Section 1-5.2. - Encroachments into required yards.",
+      "full_text_length": 2235,
+      "passed_date": "8-18-92",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-5.3.",
+      "title": "Section 1-5.3. - Lots of record less than minimum size (grandfather clause).",
+      "full_text_length": 903,
+      "passed_date": "7-1-76",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "92-8",
+      "title": "Section 1-5.4. - Regulations for required yards.",
+      "full_text_length": 4115,
+      "passed_date": "8-18-92",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-5.5.",
+      "title": "Section 1-5.5. - Wastewater facilities.",
+      "full_text_length": 857,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "2021-22",
+      "title": "Section 1-5.6. - Accessory buildings.",
+      "full_text_length": 6973,
+      "passed_date": "11-1-21",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-5.7.",
+      "title": "Section 1-5.7. - Storage of gasoline and other combustible fluids.",
+      "full_text_length": 380,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "99-1",
+      "title": "Sec. 1-5.8. - Fences, walls and entranceways and related structures.",
+      "full_text_length": 8572,
+      "passed_date": "4-19-00",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-5.9.",
+      "title": "Section 1-5.9. - Regulation of waterways, watercraft and marine related structures.",
+      "full_text_length": 1109,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "2019-04",
+      "title": "Section 1-5.10. - Principal Structure Setbacks.",
+      "full_text_length": 629,
+      "passed_date": "3-4-19",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-5.11.",
+      "title": "Section 1-5.11. - Regulation of obstructions to visibility.",
+      "full_text_length": 1432,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-5.12.",
+      "title": "Section 1-5.12. - Division of land.",
+      "full_text_length": 222,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": false,
+      "validation_reason": "Mostly navigation boilerplate"
+    },
+    {
+      "ordinance_number": "SEC-1-5.13.",
+      "title": "Section 1-5.13. - Moving of structures.",
+      "full_text_length": 2733,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-5.14.",
+      "title": "Section 1-5.14. - Structures to have access.",
+      "full_text_length": 633,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-5.15.",
+      "title": "Section 1-5.15. - Parking, storage or use of major recreational equipment.",
+      "full_text_length": 1584,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "92-8",
+      "title": "Section 1-5.16. - Parking, storage of vehicles.",
+      "full_text_length": 967,
+      "passed_date": "3-1-77",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-5.17.",
+      "title": "Section 1-5.17. - Proximity of dwelling units to railroad tracks.",
+      "full_text_length": 348,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": false,
+      "validation_reason": "Mostly navigation boilerplate"
+    },
+    {
+      "ordinance_number": "SEC-1-5.18.",
+      "title": "Section 1-5.18. - Standards for required on-site or off-site improvements.",
+      "full_text_length": 347,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": false,
+      "validation_reason": "Mostly navigation boilerplate"
+    },
+    {
+      "ordinance_number": "SEC-1-5.19.",
+      "title": "Section 1-5.19. - Keeping of animals.",
+      "full_text_length": 439,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "90-5",
+      "title": "Section 1-5.20. - Reserved.",
+      "full_text_length": 340,
+      "passed_date": "4-17-90",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": false,
+      "validation_reason": "Mostly navigation boilerplate"
+    },
+    {
+      "ordinance_number": "SEC-1-5.21.",
+      "title": "Section 1-5.21. - Mobile home on property used for churches or schools.",
+      "full_text_length": 421,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "91-1",
+      "title": "Section 1-5.22. - Standards for fill and erosion control.",
+      "full_text_length": 3870,
+      "passed_date": "3-19-91",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "2021-20",
+      "title": "Section 1-5.23. - Scope and exclusions.",
+      "full_text_length": 6700,
+      "passed_date": "9-27-21",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "SEC-1-5.24.",
+      "title": "Section 1-5.24. - Model homes.",
+      "full_text_length": 3902,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "2021-10",
+      "title": "Section 1-5.25. - Reserved.",
+      "full_text_length": 328,
+      "passed_date": null,
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": false,
+      "validation_reason": "Mostly navigation boilerplate"
+    },
+    {
+      "ordinance_number": "98-3",
+      "title": "Section 1-5.26. - Swimming pools.",
+      "full_text_length": 953,
+      "passed_date": "9-9-98",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "91-1",
+      "title": "Section 1-5.27. - Decorative water features and ponds.",
+      "full_text_length": 15942,
+      "passed_date": "3-19-91",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "06-01",
+      "title": "Sec. 1-5.28. - Site lighting.",
+      "full_text_length": 4137,
+      "passed_date": "1-12-06",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "07-02",
+      "title": "Sec. 1-5.29. - Design requirements for development within office institutional, commercial limited, commercial general and residential/limited commercial along arterial roadways.",
+      "full_text_length": 5881,
+      "passed_date": "4-2-07",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    },
+    {
+      "ordinance_number": "07-14",
+      "title": "Section 1-5.30. - Dog friendly dining.",
+      "full_text_length": 9919,
+      "passed_date": "10-15-07",
+      "source_url": "https://library.municode.com/fl/malabar/codes/code_of_ordinances?nodeId=LADECO_ARTVGEPR",
+      "validation_passed": true,
+      "validation_reason": "Real content"
+    }
+  ],
+  "method": "Apify Playwright + De-duplication"
+}
