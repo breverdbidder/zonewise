@@ -1,0 +1,160 @@
+# ZoneWise Modal Deployment
+# Deploys to Modal.com on push to main
+# Runs nightly pipeline at 11 PM EST
+
+name: ZoneWise Modal Pipeline
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'requirements.txt'
+      - '.github/workflows/modal-deploy.yml'
+  schedule:
+    # 11 PM EST = 4 AM UTC (next day)
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+    inputs:
+      county:
+        description: 'County to process (default: brevard)'
+        required: false
+        default: 'brevard'
+      full_pipeline:
+        description: 'Run full 10-stage pipeline'
+        type: boolean
+        default: false
+
+env:
+  MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+  MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+
+jobs:
+  # Deploy Modal app on code changes
+  deploy:
+    name: Deploy to Modal
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install Modal CLI
+        run: pip install modal
+      
+      - name: Deploy to Modal
+        run: modal deploy src/app.py
+      
+      - name: Notify Supabase
+        run: |
+          curl -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/pipeline_runs" \
+            -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "run_type": "deploy",
+              "status": "success",
+              "commit": "${{ github.sha }}",
+              "created_at": "'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"
+            }'
+
+  # Run nightly pipeline
+  nightly:
+    name: Nightly Pipeline
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install Modal CLI
+        run: pip install modal
+      
+      - name: Run Nightly Pipeline
+        run: modal run src/app.py
+      
+      - name: Log Results to Supabase
+        run: |
+          curl -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/pipeline_runs" \
+            -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "run_type": "nightly",
+              "status": "complete",
+              "created_at": "'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"
+            }'
+
+  # Manual full county pipeline
+  full-county:
+    name: Full County Pipeline
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.full_pipeline == 'true'
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install Modal CLI
+        run: pip install modal
+      
+      - name: Run Full County Pipeline
+        run: |
+          modal run src/app.py --county ${{ github.event.inputs.county }} --full
+      
+      - name: Log Results
+        run: |
+          curl -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/pipeline_runs" \
+            -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "run_type": "full_county",
+              "county": "${{ github.event.inputs.county }}",
+              "status": "complete",
+              "created_at": "'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"
+            }'
+
+  # Multi-county expansion (Q1 2026)
+  multi-county:
+    name: Multi-County Pipeline
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.county == 'all'
+    strategy:
+      matrix:
+        county: [brevard, orange, hillsborough, miami-dade, broward, palm-beach, duval, pinellas]
+      max-parallel: 5  # Rate-limit safe
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install Modal CLI
+        run: pip install modal
+      
+      - name: Process County
+        run: |
+          modal run src/app.py --county ${{ matrix.county }} --full
