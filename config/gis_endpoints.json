@@ -1,244 +1,422 @@
 {
   "metadata": {
-    "version": "2.0.1",
+    "version": "2.0.0",
     "created": "2026-01-23",
-    "last_updated": "2026-01-23T15:00:00Z",
     "description": "Verified municipal GIS zoning endpoints for Brevard County, Florida",
-    "maintainer": "BidDeed.AI / ZoneWise"
+    "maintainer": "ZoneWise.ai / BidDeed.AI"
   },
-  "endpoints": {
+  "brevard_endpoints": {
     "13": {
-      "jurisdiction": "Unincorporated Brevard County",
       "jurisdiction_id": 13,
+      "jurisdiction": "Unincorporated Brevard County",
       "status": "WORKING",
-      "data_source": "FEATURE_SERVICE",
       "parcels": 75350,
       "url": "https://gis.brevardfl.gov/gissrv/rest/services/Planning_Development/Zoning_WKID2881/MapServer/0",
       "zone_field": "ZONING",
       "geometry_type": "esriGeometryPolygon",
       "spatial_reference": 2881,
-      "rate_limit": {"requests_per_minute": 60, "max_records": 1000},
-      "fallback_strategy": null,
-      "last_verified": "2026-01-23T14:00:00Z",
-      "notes": "County-maintained, covers all unincorporated areas. Most reliable source."
+      "rate_limit": {
+        "requests_per_minute": 60,
+        "max_records": 1000
+      },
+      "fallback_strategy": "BCPAO_PARCEL_OVERLAY",
+      "notes": "County-maintained, covers all unincorporated areas. Most reliable source.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "5": {
-      "jurisdiction": "Cocoa",
       "jurisdiction_id": 5,
+      "jurisdiction": "Cocoa",
       "status": "WORKING",
-      "data_source": "FEATURE_SERVICE",
       "parcels": 29882,
       "url": "https://services1.arcgis.com/Tex1uhbqnOZPx6qT/arcgis/rest/services/Public_View_Cocoa_Zoning_with_Split_Lots_June_2023_view/FeatureServer/1",
       "zone_field": "Zoning",
       "geometry_type": "esriGeometryPolygon",
       "spatial_reference": 4326,
-      "rate_limit": {"requests_per_minute": 30, "max_records": 2000},
-      "fallback_strategy": null,
-      "last_verified": "2026-01-23T14:00:00Z",
-      "notes": "ArcGIS Online hosted, includes split lots. Stable endpoint."
+      "rate_limit": {
+        "requests_per_minute": 100,
+        "max_records": 2000
+      },
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "ArcGIS Online hosted, includes split lots. Updated June 2023.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "4": {
-      "jurisdiction": "Titusville",
       "jurisdiction_id": 4,
+      "jurisdiction": "Titusville",
       "status": "WORKING",
-      "data_source": "MAP_SERVICE",
       "parcels": 28118,
       "url": "https://gis.titusville.com/arcgis/rest/services/CommunityDevelopment/MapServer/15",
       "zone_field": "Zone_Code",
       "geometry_type": "esriGeometryPolygon",
       "spatial_reference": 2881,
-      "rate_limit": {"requests_per_minute": 30, "max_records": 1000},
-      "fallback_strategy": null,
-      "last_verified": "2026-01-23T14:00:00Z",
-      "notes": "City-maintained ArcGIS Server. Layer 15 = Zoning Districts."
+      "rate_limit": {
+        "requests_per_minute": 60,
+        "max_records": 1000
+      },
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "City-maintained ArcGIS Server. Zone_Code field verified.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "2": {
-      "jurisdiction": "Palm Bay",
       "jurisdiction_id": 2,
+      "jurisdiction": "Palm Bay",
       "status": "TEMPORARY_OUTAGE",
-      "data_source": "MAP_SERVICE",
       "parcels": 78697,
       "url": "https://gis.palmbayflorida.org/arcgis/rest/services/GrowthManagement/Zoning/MapServer/0",
       "zone_field": "ZONING",
       "geometry_type": "esriGeometryPolygon",
       "spatial_reference": 2881,
-      "rate_limit": {"requests_per_minute": 30, "max_records": 1000},
-      "fallback_strategy": "NONE_AVAILABLE",
-      "fallback_notes": "No viable fallback exists. Palm Bay uses polygon-based zoning (37+ districts) not parcel-list-based. County overlay would give wrong zones. No cached data available.",
-      "recovery_contact": {
-        "email": "landdevelopmentweb@palmbayfl.gov",
-        "phone": "(321) 733-3042",
-        "department": "Land Development Division"
+      "rate_limit": {
+        "requests_per_minute": 60,
+        "max_records": 1000
       },
-      "last_verified": "2026-01-23T14:50:00Z",
-      "outage_since": "2026-01-22",
-      "outage_type": "TLS/SSL connection failure at infrastructure level",
-      "notes": "Entire GIS server down (503). All GrowthManagement endpoints affected. Monitor for recovery."
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "City-maintained, returning 503 errors (temporary server issue). Endpoint is correct.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "14": {
-      "jurisdiction": "Malabar",
       "jurisdiction_id": 14,
+      "jurisdiction": "Town of Malabar",
       "status": "MANUAL_DATA",
-      "data_source": "ELAWS_EMBEDDED",
-      "parcels": 1430,
+      "parcels": 2249,
       "url": null,
       "zone_field": null,
-      "fallback_strategy": "SUPABASE_ZONING_DISTRICTS",
-      "last_verified": "2026-01-22T00:00:00Z",
-      "notes": "Zone data embedded in zoning_districts.description as PARCELS arrays. POC complete."
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
+      },
+      "fallback_strategy": "EMBEDDED_PARCEL_ARRAYS",
+      "notes": "POC Complete. Zone data extracted from Town ArcGIS and embedded in parcel_zones table. 100% coverage.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "1": {
-      "jurisdiction": "Melbourne",
       "jurisdiction_id": 1,
-      "status": "TILE_ONLY",
-      "data_source": "TILE_SERVICE",
-      "parcels": 45000,
+      "jurisdiction": "Melbourne",
+      "status": "NO_FEATURE_SERVICE",
+      "parcels": 0,
       "url": "https://tiles.arcgis.com/tiles/QNOUArW14R0lClPo/arcgis/rest/services/ped_atlas_zoning/MapServer",
-      "fallback_strategy": "DATA_REQUEST_REQUIRED",
-      "recovery_contact": {
-        "department": "Melbourne GIS Department"
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
       },
-      "last_verified": "2026-01-23T14:00:00Z",
-      "notes": "Only tile service available. No spatial queries possible without FOIA request."
+      "fallback_strategy": "CONTACT_CITY_GIS",
+      "notes": "Only tile service available (no spatial queries). Need to contact city for feature service access.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "8": {
-      "jurisdiction": "Rockledge",
       "jurisdiction_id": 8,
-      "status": "SERVER_DOWN",
-      "data_source": "MAP_SERVICE",
-      "parcels": 13500,
-      "url": "https://gis-rockledge.cityofrockledge.org/server/rest/services",
-      "fallback_strategy": "NONE_AVAILABLE",
-      "recovery_contact": {
-        "phone": "(321) 690-3978",
-        "department": "Building & Zoning"
+      "jurisdiction": "Rockledge",
+      "status": "UNVERIFIED",
+      "parcels": 0,
+      "url": "https://gis-rockledge.cityofrockledge.org/server/rest/services/Planning_Building_Public_to_create_a_Web_App/MapServer",
+      "zone_field": "Zoning",
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
       },
-      "last_verified": "2026-01-23T14:20:00Z",
-      "notes": "Server not responding. Timeout on all requests."
-    },
-    "9": {
-      "jurisdiction": "West Melbourne",
-      "jurisdiction_id": 9,
-      "status": "PDF_ONLY",
-      "data_source": "PDF_MAP",
-      "parcels": 10365,
-      "url": "https://www.westmelbourne.gov/557/Maps",
-      "fallback_strategy": "MANUAL_DIGITIZATION_REQUIRED",
-      "last_verified": "2026-01-23T14:25:00Z",
-      "notes": "Only PDF maps available. Would require georeferencing."
-    },
-    "10": {
-      "jurisdiction": "Cape Canaveral",
-      "jurisdiction_id": 10,
-      "status": "PDF_ONLY",
-      "data_source": "PDF_MAP",
-      "parcels": 7355,
-      "url": "https://cms3.revize.com/revize/capecanaveralfl/document_center/Documents/Community%20Development/cocc_zoning_map_website_2023.pdf",
-      "fallback_strategy": "MANUAL_DIGITIZATION_REQUIRED",
-      "last_verified": "2026-01-23T14:25:00Z",
-      "notes": "2023 PDF zoning map. Small jurisdiction - digitization feasible."
+      "fallback_strategy": "VERIFY_ACCESS",
+      "notes": "Server exists but returning errors. Need to verify access permissions.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "3": {
-      "jurisdiction": "Indian Harbour Beach",
       "jurisdiction_id": 3,
+      "jurisdiction": "Indian Harbour Beach",
       "status": "NOT_FOUND",
       "parcels": 4496,
-      "fallback_strategy": "DATA_REQUEST_REQUIRED",
-      "notes": "No public GIS found."
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
+      },
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "No public GIS found. May use eLaws like Malabar.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "6": {
-      "jurisdiction": "Satellite Beach",
       "jurisdiction_id": 6,
+      "jurisdiction": "Satellite Beach",
       "status": "NOT_FOUND",
-      "parcels": 5100,
-      "fallback_strategy": "DATA_REQUEST_REQUIRED",
-      "notes": "No public GIS. HOME jurisdiction - priority for data request."
+      "parcels": 3500,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
+      },
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "No public GIS found. Uses eLaws for ordinances.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "7": {
-      "jurisdiction": "Cocoa Beach",
       "jurisdiction_id": 7,
+      "jurisdiction": "Cocoa Beach",
       "status": "NOT_FOUND",
-      "parcels": 6800,
-      "fallback_strategy": "DATA_REQUEST_REQUIRED",
-      "notes": "No public GIS found."
+      "parcels": 5000,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
+      },
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "No public GIS found.",
+      "last_verified": "2026-01-23T14:00:00Z"
+    },
+    "9": {
+      "jurisdiction_id": 9,
+      "jurisdiction": "West Melbourne",
+      "status": "NOT_FOUND",
+      "parcels": 10365,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
+      },
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "Only PDF maps available on city website.",
+      "last_verified": "2026-01-23T14:00:00Z"
+    },
+    "10": {
+      "jurisdiction_id": 10,
+      "jurisdiction": "Cape Canaveral",
+      "status": "NOT_FOUND",
+      "parcels": 7355,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
+      },
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "No public GIS found.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "11": {
-      "jurisdiction": "Indialantic",
       "jurisdiction_id": 11,
+      "jurisdiction": "Indialantic",
       "status": "NOT_FOUND",
       "parcels": 5205,
-      "fallback_strategy": "DATA_REQUEST_REQUIRED",
-      "notes": "No public GIS found."
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
+      },
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "No public GIS found. Uses eLaws for ordinances.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "12": {
-      "jurisdiction": "Melbourne Beach",
       "jurisdiction_id": 12,
+      "jurisdiction": "Melbourne Beach",
       "status": "NOT_FOUND",
       "parcels": 7337,
-      "fallback_strategy": "DATA_REQUEST_REQUIRED",
-      "notes": "No public GIS found."
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
+      },
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "No public GIS found. Uses eLaws for ordinances.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "15": {
-      "jurisdiction": "Grant-Valkaria",
       "jurisdiction_id": 15,
+      "jurisdiction": "Grant-Valkaria",
       "status": "NOT_FOUND",
       "parcels": 3065,
-      "fallback_strategy": "VERIFY_COUNTY_ZONING",
-      "notes": "Rural community - may use county zoning. Verify incorporation status."
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
+      },
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "No public GIS found.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "16": {
-      "jurisdiction": "Palm Shores",
       "jurisdiction_id": 16,
+      "jurisdiction": "Palm Shores",
       "status": "NOT_FOUND",
       "parcels": 433,
-      "fallback_strategy": "VERIFY_COUNTY_ZONING",
-      "notes": "Very small town. May use county zoning."
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
+      },
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "Small town, no public GIS.",
+      "last_verified": "2026-01-23T14:00:00Z"
     },
     "17": {
-      "jurisdiction": "Melbourne Village",
       "jurisdiction_id": 17,
+      "jurisdiction": "Melbourne Village",
       "status": "NOT_FOUND",
-      "parcels": 280,
-      "fallback_strategy": "SINGLE_ZONE_LIKELY",
-      "notes": "Tiny village. Likely single residential zone."
+      "parcels": 200,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "rate_limit": {
+        "requests_per_minute": 0,
+        "max_records": 0
+      },
+      "fallback_strategy": "BCPAO_USE_CODE",
+      "notes": "Small town, no public GIS.",
+      "last_verified": "2026-01-23T14:00:00Z"
     }
   },
-  "fallback_strategies": {
-    "NONE_AVAILABLE": {
-      "viable": false,
-      "description": "No fallback exists. Must wait for primary source recovery or submit data request."
+  "bcpao": {
+    "name": "Brevard County Property Appraiser",
+    "base_url": "https://www.bcpao.us",
+    "api_version": "v1",
+    "endpoints": {
+      "search": "/api/v1/search",
+      "account": "/api/v1/account/{account}",
+      "parcel": "/api/v1/parcel/{parcel_id}"
     },
-    "SUPABASE_ZONING_DISTRICTS": {
-      "viable": true,
-      "description": "Pre-loaded zoning data from Malabar POC approach."
+    "gis": {
+      "base_url": "https://gis.brevardfl.gov/gissrv/rest/services",
+      "parcel_layer": "/Base_Map/Parcel_New_WKID2881/MapServer/5",
+      "zoning_layer": "/Planning_Development/Zoning_WKID2881/MapServer/0"
     },
-    "DATA_REQUEST_REQUIRED": {
-      "viable": false,
-      "description": "Must submit FOIA/public records request to municipality."
+    "photo_pattern": "https://www.bcpao.us/photos/{prefix}/{account}011.jpg",
+    "fields": {
+      "parcel": [
+        "PARCEL_ID",
+        "TAX_ACCT",
+        "OWNER_NAME1",
+        "OWNER_NAME2",
+        "STREET_NUMBER",
+        "STREET_NAME",
+        "CITY",
+        "ZIP",
+        "LAND_VALUE",
+        "BLDG_VALUE",
+        "TOTAL_VALUE",
+        "ACRES",
+        "USE_CODE",
+        "ZONING"
+      ],
+      "building": [
+        "YEAR_BUILT",
+        "ACTUAL_SQFT",
+        "LIVING_SQFT",
+        "BEDROOMS",
+        "BATHROOMS",
+        "STORIES",
+        "CONSTRUCTION_TYPE",
+        "ROOF_TYPE"
+      ],
+      "sales": [
+        "SALE_DATE",
+        "SALE_PRICE",
+        "DEED_TYPE",
+        "OR_BOOK",
+        "OR_PAGE",
+        "GRANTOR",
+        "GRANTEE"
+      ]
     },
-    "MANUAL_DIGITIZATION_REQUIRED": {
-      "viable": false,
-      "description": "Would require georeferencing PDF maps in QGIS."
-    },
-    "VERIFY_COUNTY_ZONING": {
-      "viable": "maybe",
-      "description": "Small jurisdiction may use county zoning. Needs verification."
-    },
-    "SINGLE_ZONE_LIKELY": {
-      "viable": "maybe",
-      "description": "Tiny jurisdiction likely has only one zone type."
+    "rate_limit": {
+      "requests_per_minute": 120,
+      "concurrent": 10
     }
   },
-  "summary": {
-    "api_accessible": {
-      "count": 3,
-      "parcels": 133350,
-      "jurisdictions": ["Unincorporated (13)", "Cocoa (5)", "Titusville (4)"]
+  "fl_counties": {
+    "brevard": {
+      "fips": "12009",
+      "appraiser_url": "https://www.bcpao.us",
+      "gis_base": "https://gis.brevardfl.gov/gissrv/rest/services",
+      "parcel_layer": "/Base_Map/Parcel_New_WKID2881/MapServer/5",
+      "zoning_layer": "/Planning_Development/Zoning_WKID2881/MapServer/0",
+      "status": "VERIFIED"
     },
-    "no_fallback_available": {
-      "count": 2,
-      "parcels": 92197,
-      "jurisdictions": ["Palm Bay (2) - OUTAGE", "Rockledge (8) - DOWN"]
+    "orange": {
+      "fips": "12095",
+      "appraiser_url": "https://www.ocpafl.org",
+      "gis_base": "https://maps.ocpafl.org/arcgis/rest/services",
+      "parcel_layer": "/Parcels/MapServer/0",
+      "zoning_layer": null,
+      "status": "UNVERIFIED"
+    },
+    "hillsborough": {
+      "fips": "12057",
+      "appraiser_url": "https://www.hcpafl.org",
+      "gis_base": "https://maps.hillsboroughcounty.org/arcgis/rest/services",
+      "parcel_layer": null,
+      "zoning_layer": null,
+      "status": "UNVERIFIED"
+    },
+    "miami-dade": {
+      "fips": "12086",
+      "appraiser_url": "https://www.miamidade.gov/pa",
+      "gis_base": "https://gisws.miamidade.gov/arcgis/rest/services",
+      "parcel_layer": null,
+      "zoning_layer": null,
+      "status": "UNVERIFIED"
+    },
+    "broward": {
+      "fips": "12011",
+      "appraiser_url": "https://www.bcpa.net",
+      "gis_base": "https://gis.broward.org/arcgis/rest/services",
+      "parcel_layer": null,
+      "zoning_layer": null,
+      "status": "UNVERIFIED"
+    },
+    "palm-beach": {
+      "fips": "12099",
+      "appraiser_url": "https://www.pbcgov.org/papa",
+      "gis_base": "https://maps.co.palm-beach.fl.us/arcgis/rest/services",
+      "parcel_layer": null,
+      "zoning_layer": null,
+      "status": "UNVERIFIED"
+    },
+    "duval": {
+      "fips": "12031",
+      "appraiser_url": "https://www.coj.net/departments/property-appraiser",
+      "gis_base": "https://maps.coj.net/arcgis/rest/services",
+      "parcel_layer": null,
+      "zoning_layer": null,
+      "status": "UNVERIFIED"
+    },
+    "pinellas": {
+      "fips": "12103",
+      "appraiser_url": "https://www.pcpao.org",
+      "gis_base": "https://egis.pinellascounty.org/arcgis/rest/services",
+      "parcel_layer": null,
+      "zoning_layer": null,
+      "status": "UNVERIFIED"
     }
   }
 }
