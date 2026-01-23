@@ -11,6 +11,7 @@ Uses Jina AI Reader for JavaScript rendering (FREE, no API key needed).
 Part of the ZoneWise / BidDeed.AI ecosystem.
 """
 
+import os
 import httpx
 import re
 import json
@@ -26,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 JINA_READER_BASE = "https://r.jina.ai/"
-SUPABASE_URL = "https://mocerqjnksmhcjzxrewo.supabase.co"
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://mocerqjnksmhcjzxrewo.supabase.co")
 REQUEST_TIMEOUT = 90
 
 # Brevard County Jurisdictions and their code publishing platforms
