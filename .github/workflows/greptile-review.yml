@@ -1,0 +1,128 @@
+# Greptile AI Code Review for ZoneWise
+# Auto-reviews all PRs with codebase context
+# Repo: breverdbidder/zonewise
+
+name: Greptile Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  greptile-review:
+    runs-on: ubuntu-latest
+    name: AI Code Review
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/*.py
+            **/*.js
+            **/*.ts
+            **/*.tsx
+            **/*.yml
+            **/*.yaml
+            **/*.json
+          files_ignore: |
+            **/*.test.*
+            **/*.spec.*
+            **/node_modules/**
+            **/__pycache__/**
+            
+      - name: Greptile AI Review
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          GREPTILE_API_KEY: ${{ secrets.GREPTILE_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          REPO="${{ github.repository }}"
+          
+          echo "🔍 Reviewing PR #${PR_NUMBER} with Greptile..."
+          
+          # ZoneWise specific - zoning data accuracy is critical
+          REVIEW_RESPONSE=$(curl -s -X POST "https://api.greptile.com/v2/query" \
+            -H "Authorization: Bearer ${GREPTILE_API_KEY}" \
+            -H "X-GitHub-Token: ${GITHUB_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "Review this pull request for ZoneWise zoning intelligence platform: 1) Zoning data accuracy (273 districts across 17 jurisdictions), 2) Municode scraping correctness, 3) MCP server protocol compliance, 4) Search/filter logic accuracy, 5) Data normalization consistency. CRITICAL: Any bug that returns wrong zoning info could cause permit denials - flag these as blockers."
+                }
+              ],
+              "repositories": [
+                {
+                  "remote": "github",
+                  "repository": "'"${REPO}"'",
+                  "branch": "main"
+                }
+              ],
+              "sessionId": "pr-review-'"${PR_NUMBER}"'"
+            }')
+          
+          REVIEW_MESSAGE=$(echo "$REVIEW_RESPONSE" | jq -r '.message // "No issues detected"')
+          
+          if [ -n "$REVIEW_MESSAGE" ] && [ "$REVIEW_MESSAGE" != "null" ]; then
+            COMMENT_BODY="## 🤖 Greptile AI Code Review\n\n${REVIEW_MESSAGE}\n\n---\n*Automated review by [Greptile](https://greptile.com) • ZoneWise Quality Gate*"
+            
+            curl -s -X POST \
+              -H "Authorization: token ${GITHUB_TOKEN}" \
+              -H "Content-Type: application/json" \
+              "https://api.github.com/repos/${REPO}/issues/${PR_NUMBER}/comments" \
+              -d "{\"body\": \"$(echo -e "$COMMENT_BODY" | sed 's/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g')\"}"
+            
+            echo "✅ Review posted to PR #${PR_NUMBER}"
+          fi
+          
+      - name: Zoning data accuracy check
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          GREPTILE_API_KEY: ${{ secrets.GREPTILE_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Critical check - wrong zoning data = permit denials = liability
+          ACCURACY_CHECK=$(curl -s -X POST "https://api.greptile.com/v2/query" \
+            -H "Authorization: Bearer ${GREPTILE_API_KEY}" \
+            -H "X-GitHub-Token: ${GITHUB_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "CRITICAL CHECK: Does this PR change any zoning lookup logic, district mappings, or setback/FAR calculations? If YES, verify the changes maintain data accuracy. Reply YES (with concern) or NO (safe to merge)."
+                }
+              ],
+              "repositories": [
+                {
+                  "remote": "github",
+                  "repository": "'"${{ github.repository }}"'",
+                  "branch": "main"
+                }
+              ]
+            }')
+          
+          RESULT=$(echo "$ACCURACY_CHECK" | jq -r '.message // "NO"')
+          
+          if echo "$RESULT" | grep -qi "^YES"; then
+            echo "⚠️ ZONING DATA CHANGES DETECTED - Manual review required"
+            echo "$RESULT"
+            # Don't fail, but flag for human review
+            echo "::warning::Zoning data logic modified - verify accuracy before merge"
+          else
+            echo "✅ No zoning data logic changes"
+          fi
