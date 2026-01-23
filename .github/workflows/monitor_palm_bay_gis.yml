@@ -1,0 +1,64 @@
+name: Monitor Palm Bay GIS Recovery
+
+on:
+  schedule:
+    # Run every 4 hours
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+
+jobs:
+  check-palm-bay:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Palm Bay GIS Endpoint
+        id: check
+        run: |
+          HTTP_CODE=$(curl -s -o response.txt -w "%{http_code}" \
+            "https://gis.palmbayflorida.org/arcgis/rest/services/GrowthManagement/Zoning/MapServer/0?f=json" \
+            --max-time 30 2>/dev/null || echo "000")
+          
+          echo "http_code=$HTTP_CODE" >> $GITHUB_OUTPUT
+          echo "timestamp=$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+          
+          if [ "$HTTP_CODE" = "200" ]; then
+            echo "status=RECOVERED" >> $GITHUB_OUTPUT
+            echo "✅ Palm Bay GIS is BACK ONLINE!"
+            # Extract layer info
+            python3 -c "
+          import json
+          with open('response.txt') as f:
+              data = json.load(f)
+              print(f\"Layer: {data.get('name')}\")" || true
+          elif [ "$HTTP_CODE" = "503" ]; then
+            echo "status=DOWN" >> $GITHUB_OUTPUT
+            echo "❌ Still returning 503"
+          else
+            echo "status=ERROR" >> $GITHUB_OUTPUT
+            echo "⚠️ Unexpected response: $HTTP_CODE"
+          fi
+
+      - name: Log to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          curl -s -X POST "$SUPABASE_URL/rest/v1/gis_endpoint_checks" \
+            -H "apikey: $SUPABASE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_KEY" \
+            -H "Content-Type: application/json" \
+            -H "Prefer: return=minimal" \
+            -d '{
+              "jurisdiction_id": 2,
+              "jurisdiction": "Palm Bay",
+              "endpoint": "https://gis.palmbayflorida.org/arcgis/rest/services/GrowthManagement/Zoning/MapServer/0",
+              "http_code": ${{ steps.check.outputs.http_code }},
+              "status": "${{ steps.check.outputs.status }}",
+              "checked_at": "${{ steps.check.outputs.timestamp }}"
+            }'
+
+      - name: Notify on Recovery
+        if: steps.check.outputs.status == 'RECOVERED'
+        run: |
+          echo "🎉 PALM BAY GIS RECOVERED!"
+          echo "Update gis_endpoints.json status from TEMPORARY_OUTAGE to WORKING"
+          # Could add Slack/email notification here
