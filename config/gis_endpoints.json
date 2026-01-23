@@ -1,0 +1,206 @@
+{
+  "metadata": {
+    "created": "2026-01-23",
+    "description": "Verified municipal GIS zoning endpoints for Brevard County, Florida",
+    "last_updated": "2026-01-23"
+  },
+  "endpoints": {
+    "13": {
+      "jurisdiction": "Unincorporated Brevard County",
+      "jurisdiction_id": 13,
+      "status": "WORKING",
+      "parcels": 75350,
+      "url": "https://gis.brevardfl.gov/gissrv/rest/services/Planning_Development/Zoning_WKID2881/MapServer/0",
+      "zone_field": "ZONING",
+      "geometry_type": "esriGeometryPolygon",
+      "spatial_reference": 2881,
+      "notes": "County-maintained, covers all unincorporated areas"
+    },
+    "5": {
+      "jurisdiction": "Cocoa",
+      "jurisdiction_id": 5,
+      "status": "WORKING",
+      "parcels": 29882,
+      "url": "https://services1.arcgis.com/Tex1uhbqnOZPx6qT/arcgis/rest/services/Public_View_Cocoa_Zoning_with_Split_Lots_June_2023_view/FeatureServer/1",
+      "zone_field": "Zoning",
+      "geometry_type": "esriGeometryPolygon",
+      "spatial_reference": 4326,
+      "notes": "ArcGIS Online hosted, includes split lots"
+    },
+    "4": {
+      "jurisdiction": "Titusville",
+      "jurisdiction_id": 4,
+      "status": "WORKING",
+      "parcels": 28118,
+      "url": "https://gis.titusville.com/arcgis/rest/services/CommunityDevelopment/MapServer/15",
+      "zone_field": "Zone_Code",
+      "geometry_type": "esriGeometryPolygon",
+      "spatial_reference": 2881,
+      "notes": "City-maintained ArcGIS Server"
+    },
+    "2": {
+      "jurisdiction": "Palm Bay",
+      "jurisdiction_id": 2,
+      "status": "TEMPORARY_OUTAGE",
+      "parcels": 78697,
+      "url": "https://gis.palmbayflorida.org/arcgis/rest/services/GrowthManagement/Zoning/MapServer/0",
+      "zone_field": "ZONING",
+      "geometry_type": "esriGeometryPolygon",
+      "spatial_reference": 2881,
+      "notes": "City-maintained, currently returning 503 errors (temporary)"
+    },
+    "14": {
+      "jurisdiction": "Malabar",
+      "jurisdiction_id": 14,
+      "status": "MANUAL_DATA",
+      "parcels": 1430,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "Zone data embedded in zoning_districts.description as PARCELS arrays"
+    },
+    "1": {
+      "jurisdiction": "Melbourne",
+      "jurisdiction_id": 1,
+      "status": "NO_FEATURE_SERVICE",
+      "parcels": 0,
+      "url": "https://tiles.arcgis.com/tiles/QNOUArW14R0lClPo/arcgis/rest/services/ped_atlas_zoning/MapServer",
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "Only tile service available (no spatial queries). Need to contact city for feature service."
+    },
+    "8": {
+      "jurisdiction": "Rockledge",
+      "jurisdiction_id": 8,
+      "status": "UNVERIFIED",
+      "parcels": 0,
+      "url": "https://gis-rockledge.cityofrockledge.org/server/rest/services/Planning_Building_Public_to_create_a_Web_App/MapServer",
+      "zone_field": "Zoning",
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "Server exists but returning errors. Need to verify access."
+    },
+    "3": {
+      "jurisdiction": "Indian Harbour Beach",
+      "jurisdiction_id": 3,
+      "status": "NOT_FOUND",
+      "parcels": 4496,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "No public GIS found. May use eLaws like Malabar."
+    },
+    "6": {
+      "jurisdiction": "Satellite Beach",
+      "jurisdiction_id": 6,
+      "status": "NOT_FOUND",
+      "parcels": 0,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "No public GIS found. Uses eLaws for ordinances."
+    },
+    "7": {
+      "jurisdiction": "Cocoa Beach",
+      "jurisdiction_id": 7,
+      "status": "NOT_FOUND",
+      "parcels": 0,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "No public GIS found."
+    },
+    "9": {
+      "jurisdiction": "West Melbourne",
+      "jurisdiction_id": 9,
+      "status": "NOT_FOUND",
+      "parcels": 10365,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "Only PDF maps available on city website."
+    },
+    "10": {
+      "jurisdiction": "Cape Canaveral",
+      "jurisdiction_id": 10,
+      "status": "NOT_FOUND",
+      "parcels": 7355,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "No public GIS found."
+    },
+    "11": {
+      "jurisdiction": "Indialantic",
+      "jurisdiction_id": 11,
+      "status": "NOT_FOUND",
+      "parcels": 5205,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "No public GIS found. Uses eLaws for ordinances."
+    },
+    "12": {
+      "jurisdiction": "Melbourne Beach",
+      "jurisdiction_id": 12,
+      "status": "NOT_FOUND",
+      "parcels": 7337,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "No public GIS found. Uses eLaws for ordinances."
+    },
+    "15": {
+      "jurisdiction": "Grant-Valkaria",
+      "jurisdiction_id": 15,
+      "status": "NOT_FOUND",
+      "parcels": 3065,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "No public GIS found."
+    },
+    "16": {
+      "jurisdiction": "Palm Shores",
+      "jurisdiction_id": 16,
+      "status": "NOT_FOUND",
+      "parcels": 433,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "Small town, no public GIS."
+    },
+    "17": {
+      "jurisdiction": "Melbourne Village",
+      "jurisdiction_id": 17,
+      "status": "NOT_FOUND",
+      "parcels": 0,
+      "url": null,
+      "zone_field": null,
+      "geometry_type": null,
+      "spatial_reference": null,
+      "notes": "Small village, no public GIS."
+    }
+  },
+  "summary": {
+    "working": ["13", "5", "4"],
+    "temporary_outage": ["2"],
+    "manual_data": ["14"],
+    "no_feature_service": ["1"],
+    "unverified": ["8"],
+    "not_found": ["3", "6", "7", "9", "10", "11", "12", "15", "16", "17"],
+    "total_working_parcels": 133350,
+    "total_known_parcels": 250428
+  }
+}
