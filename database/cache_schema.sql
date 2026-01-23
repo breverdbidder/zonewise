@@ -11,7 +11,7 @@
 -- Refresh: Monthly (zoning codes rarely change mid-year)
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS zonewise_jurisdiction_codes (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     jurisdiction_id VARCHAR(50) NOT NULL,
     jurisdiction_name VARCHAR(100) NOT NULL,
     
@@ -59,7 +59,7 @@ CREATE INDEX IF NOT EXISTS idx_jurisdiction_codes_expires ON zonewise_jurisdicti
 -- Refresh: 90 days or on-demand when user requests fresh data
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS zonewise_parcel_cache (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     parcel_id VARCHAR(50) NOT NULL,
     account_number VARCHAR(30),
     
@@ -120,7 +120,7 @@ CREATE INDEX IF NOT EXISTS idx_parcel_cache_account ON zonewise_parcel_cache(acc
 -- Retention: 365 days
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS zonewise_lookup_log (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     
     -- Request details
     lookup_type VARCHAR(20) NOT NULL CHECK (lookup_type IN ('parcel', 'jurisdiction', 'bulk', 'refresh')),
@@ -202,7 +202,7 @@ SELECT
 -- DAILY METRICS TABLE (for tracking over time)
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS zonewise_daily_metrics (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     metric_date DATE NOT NULL UNIQUE,
     
     -- Lookup counts
@@ -244,7 +244,7 @@ CREATE INDEX IF NOT EXISTS idx_daily_metrics_date ON zonewise_daily_metrics(metr
 -- Function to record cache hit and update stats
 CREATE OR REPLACE FUNCTION record_cache_hit(
     p_table_name TEXT,
-    p_record_id UUID
+    p_record_id BIGINT
 ) RETURNS VOID AS $$
 BEGIN
     IF p_table_name = 'jurisdiction' THEN
