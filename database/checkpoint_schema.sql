@@ -9,7 +9,7 @@
 
 -- Main checkpoint table
 CREATE TABLE IF NOT EXISTS zonewise_checkpoints (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id BIGSERIAL PRIMARY KEY,
     
     -- Session identification
     session_id TEXT NOT NULL,                    -- Claude conversation ID or custom ID
@@ -106,10 +106,10 @@ CREATE OR REPLACE FUNCTION create_zonewise_checkpoint(
     p_tags TEXT[] DEFAULT '{}',
     p_summary TEXT DEFAULT NULL
 )
-RETURNS UUID AS $$
+RETURNS BIGINT AS $$
 DECLARE
     v_checkpoint_number INTEGER;
-    v_new_id UUID;
+    v_new_id BIGINT;
 BEGIN
     -- Get next checkpoint number for this session
     SELECT COALESCE(MAX(checkpoint_number), 0) + 1 
