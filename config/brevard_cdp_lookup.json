@@ -1,0 +1,189 @@
+{
+  "metadata": {
+    "description": "Census Designated Places (CDPs) in Brevard County - all governed by Unincorporated Brevard County zoning",
+    "zoning_authority": "Unincorporated Brevard County",
+    "jurisdiction_id": 17,
+    "last_updated": "2026-01-25",
+    "version": "1.0.0",
+    "source": "US Census Bureau"
+  },
+  "cdps": [
+    {
+      "name": "Mims",
+      "aliases": ["Mims CDP", "East Mims"],
+      "zip_codes": ["32754"],
+      "population": 7336,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "Unincorporated CDP in north Brevard"
+    },
+    {
+      "name": "Merritt Island",
+      "aliases": ["Merritt Island CDP", "North Merritt Island"],
+      "zip_codes": ["32952", "32953", "32954"],
+      "population": 34743,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "Largest CDP in Brevard, between Indian River and Banana River"
+    },
+    {
+      "name": "Port St. John",
+      "aliases": ["Port Saint John", "PSJ"],
+      "zip_codes": ["32927"],
+      "population": 12112,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "North-central Brevard CDP"
+    },
+    {
+      "name": "Viera",
+      "aliases": ["Viera CDP"],
+      "zip_codes": ["32940", "32955"],
+      "population": 25148,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "Master-planned community, county government center"
+    },
+    {
+      "name": "Viera East",
+      "aliases": [],
+      "zip_codes": ["32940"],
+      "population": 12716,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "Eastern portion of Viera"
+    },
+    {
+      "name": "Viera West",
+      "aliases": [],
+      "zip_codes": ["32940"],
+      "population": 12432,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "Western portion of Viera"
+    },
+    {
+      "name": "Scottsmoor",
+      "aliases": [],
+      "zip_codes": ["32775"],
+      "population": 952,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "Northern Brevard agricultural area"
+    },
+    {
+      "name": "Sharpes",
+      "aliases": [],
+      "zip_codes": ["32959"],
+      "population": 3073,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "Central Brevard CDP"
+    },
+    {
+      "name": "Micco",
+      "aliases": [],
+      "zip_codes": ["32976"],
+      "population": 1894,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "Southern Brevard, borders Indian River County"
+    },
+    {
+      "name": "June Park",
+      "aliases": [],
+      "zip_codes": ["32935"],
+      "population": 4202,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "Near Cocoa"
+    },
+    {
+      "name": "South Patrick Shores",
+      "aliases": ["Patrick Shores"],
+      "zip_codes": ["32937"],
+      "population": 8028,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "Barrier island CDP near Patrick SFB"
+    },
+    {
+      "name": "Canaveral Groves",
+      "aliases": [],
+      "zip_codes": ["32926", "32927"],
+      "population": 3146,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "North Brevard rural community"
+    },
+    {
+      "name": "West Canaveral Groves",
+      "aliases": [],
+      "zip_codes": ["32926"],
+      "population": 209,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "Small rural CDP"
+    },
+    {
+      "name": "Barefoot Bay",
+      "aliases": [],
+      "zip_codes": ["32976"],
+      "population": 8794,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "55+ retirement community in south Brevard"
+    },
+    {
+      "name": "Palm Bay Heights",
+      "aliases": [],
+      "zip_codes": ["32905", "32907"],
+      "population": 2500,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "Near Palm Bay city limits"
+    },
+    {
+      "name": "Tropical Park",
+      "aliases": [],
+      "zip_codes": ["32905"],
+      "population": 1543,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "note": "South Brevard CDP"
+    }
+  ],
+  "special_areas": [
+    {
+      "name": "Kennedy Space Center",
+      "zip_codes": ["32899"],
+      "jurisdiction_id": null,
+      "zoning_authority": "Federal/NASA",
+      "note": "Federal property - no county zoning jurisdiction"
+    },
+    {
+      "name": "Patrick Space Force Base",
+      "zip_codes": ["32925"],
+      "jurisdiction_id": null,
+      "zoning_authority": "Federal/Military",
+      "note": "Federal property - no county zoning jurisdiction"
+    },
+    {
+      "name": "Cape Canaveral Space Force Station",
+      "zip_codes": ["32920"],
+      "jurisdiction_id": null,
+      "zoning_authority": "Federal/Military",
+      "note": "Federal property - no county zoning jurisdiction"
+    }
+  ],
+  "lookup_rules": {
+    "description": "Rules for resolving community names to zoning authority",
+    "rules": [
+      "1. Check if name matches an incorporated municipality (IDs 1-16) - use that jurisdiction",
+      "2. Check if name matches a CDP - return jurisdiction_id 17 (Unincorporated Brevard)",
+      "3. Check if name matches a special area - return null (no zoning jurisdiction)",
+      "4. If ZIP code provided, check CDP list for matching ZIP",
+      "5. Default: Use BCPAO parcel lookup to determine jurisdiction from parcel location"
+    ]
+  }
+}
