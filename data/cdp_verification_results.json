@@ -1,0 +1,162 @@
+{
+  "verification_date": "2026-01-25",
+  "total_parcels_verified": 80777,
+  "cdps_verified": 4,
+  "results": {
+    "Mims": {
+      "zip_codes": [
+        "32754"
+      ],
+      "parcel_count": 5783,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "samples": [
+        {
+          "parcel_id": "21 3426-00-18",
+          "address": "1679 ARCH",
+          "city": "MIMS                ",
+          "zip": "32754",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        },
+        {
+          "parcel_id": "21 3427-00-6",
+          "address": "5510 PACE'S LANDING",
+          "city": "MIMS                ",
+          "zip": "32754",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        },
+        {
+          "parcel_id": "21 3426-00-2",
+          "address": "1665 ARCH",
+          "city": "MIMS                ",
+          "zip": "32754",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        }
+      ]
+    },
+    "Merritt Island": {
+      "zip_codes": [
+        "32952",
+        "32953",
+        "32954"
+      ],
+      "parcel_count": 20332,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "samples": [
+        {
+          "parcel_id": "23 3626-00-788",
+          "address": "5334 JUDSON",
+          "city": "MERRITT ISLAND      ",
+          "zip": "32952",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        },
+        {
+          "parcel_id": "23 3622-00-792",
+          "address": "6152 COURTENAY",
+          "city": "MERRITT ISLAND      ",
+          "zip": "32952",
+          "use": "VACANT COMMERCIAL LAND                            "
+        },
+        {
+          "parcel_id": "24 3730-88-F-21",
+          "address": "580 BARRETT",
+          "city": "MERRITT ISLAND      ",
+          "zip": "32952",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        },
+        {
+          "parcel_id": "24 3603-28-*-2",
+          "address": "4200 TROPICAL",
+          "city": "MERRITT ISLAND      ",
+          "zip": "32953",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        },
+        {
+          "parcel_id": "24 3601-OK-*-8",
+          "address": "4220 SAVANNAHS",
+          "city": "MERRITT ISLAND      ",
+          "zip": "32953",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        }
+      ]
+    },
+    "Port St. John": {
+      "zip_codes": [
+        "32927"
+      ],
+      "parcel_count": 12335,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "samples": [
+        {
+          "parcel_id": "23 3515-JY-241-21",
+          "address": "7210 GRISSOM",
+          "city": "COCOA               ",
+          "zip": "32927",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        },
+        {
+          "parcel_id": "23 3515-JY-237-31",
+          "address": "5240 ANDOVER",
+          "city": "COCOA               ",
+          "zip": "32927",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        },
+        {
+          "parcel_id": "23 3514-JZ-285-7",
+          "address": "7180 BRIGGS",
+          "city": "COCOA               ",
+          "zip": "32927",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        }
+      ]
+    },
+    "Viera": {
+      "zip_codes": [
+        "32940",
+        "32955"
+      ],
+      "parcel_count": 42327,
+      "jurisdiction_id": 17,
+      "zoning_authority": "Unincorporated Brevard County",
+      "samples": [
+        {
+          "parcel_id": "25 3628-SW-C-18",
+          "address": "4580 CHARDONNAY",
+          "city": "MELBOURNE           ",
+          "zip": "32940",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        },
+        {
+          "parcel_id": "26 3610-02-A-7",
+          "address": "6742 FAWN RIDGE",
+          "city": "MELBOURNE           ",
+          "zip": "32940",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        },
+        {
+          "parcel_id": "26 3610-25-C-7",
+          "address": "1796 CRANE CREEK",
+          "city": "MELBOURNE           ",
+          "zip": "32940",
+          "use": "SINGLE FAMILY RESIDENCE                           "
+        },
+        {
+          "parcel_id": "25 3616-02-*-8",
+          "address": "816 POINCIANA",
+          "city": "ROCKLEDGE           ",
+          "zip": "32955",
+          "use": "HALF-DUPLEX USED AS SFR                           "
+        },
+        {
+          "parcel_id": "25 3616-02-*-49",
+          "address": "817 POINCIANA",
+          "city": "ROCKLEDGE           ",
+          "zip": "32955",
+          "use": "HALF-DUPLEX USED AS SFR                           "
+        }
+      ]
+    }
+  }
+}
