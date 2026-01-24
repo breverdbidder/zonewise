@@ -1,0 +1,60 @@
+name: CDP Parcel Import
+
+on:
+  workflow_dispatch:
+    inputs:
+      cdp:
+        description: 'CDP to import (all, Mims, Merritt Island, Port St. John, Viera)'
+        required: true
+        default: 'all'
+      max_parcels:
+        description: 'Max parcels per ZIP (0 for all)'
+        required: false
+        default: '0'
+  schedule:
+    # Run weekly on Sunday at 3 AM EST
+    - cron: '0 8 * * 0'
+
+env:
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+
+jobs:
+  import-cdp-parcels:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360  # 6 hours max
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install httpx supabase
+
+      - name: Run CDP Import
+        run: |
+          python scripts/cdp_full_import.py \
+            --cdp "${{ github.event.inputs.cdp || 'all' }}" \
+            --max-parcels "${{ github.event.inputs.max_parcels || '0' }}" \
+            --output data/cdp_parcels/
+
+      - name: Upload to Supabase
+        run: |
+          python scripts/upload_parcels_to_supabase.py \
+            --input data/cdp_parcels/ \
+            --table sample_properties \
+            --batch-size 500
+
+      - name: Commit Results
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add data/cdp_parcels/
+          git commit -m "CDP Import: $(date +%Y-%m-%d)" || true
+          git push
