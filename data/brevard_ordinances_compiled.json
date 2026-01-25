@@ -1,0 +1,373 @@
+{
+  "metadata": {
+    "jurisdiction": "Unincorporated Brevard County",
+    "jurisdiction_id": 17,
+    "source": "Brevard County eLaws (cached from web search)",
+    "chapter": "62 - Land Development Regulations",
+    "note": "eLaws was unavailable (503), data from cached search results",
+    "total_ordinances": 17
+  },
+  "ordinances": [
+    {
+      "zone_code": "RU-1-9",
+      "section": "62-1341",
+      "name": "Single-family residential, RU-1-9",
+      "description": "The RU-1-9 single-family residential zoning classification encompasses lands devoted to single-family residential development of spacious character, together with such accessory uses as may be necessary or are normally compatible with residential surroundings.",
+      "permitted_uses": [
+        "One single-family residential detached dwelling",
+        "Parks and public recreational facilities",
+        "Private golf courses",
+        "Foster homes",
+        "Sewer lift stations",
+        "Group homes, level I, subject to the requirements set forth in section 62-1835.9",
+        "Power substations, telephone exchanges and transmission facilities",
+        "Preexisting use",
+        "Private parks and playgrounds",
+        "Resort dwellings",
+        "Temporary living quarters during construction of a residence"
+      ],
+      "conditional_uses": [],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4_subdivii_sec62-1341",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "RU-1-13",
+      "section": "62-1340",
+      "name": "Single-family residential, RU-1-13",
+      "description": "The RU-1-13 and RU-1-11 single-family residential zoning classifications encompass lands devoted to single-family residential development of spacious character, together with such accessory uses as may be necessary or are normally compatible with residential surroundings.",
+      "permitted_uses": [
+        "One single-family residential detached dwelling",
+        "Parks and public recreational facilities",
+        "Private golf courses",
+        "Foster homes",
+        "Sewer lift stations",
+        "Group homes, level I, subject to the requirements set forth in section 62-1835.9",
+        "Power substations, telephone exchanges and transmission facilities",
+        "Preexisting use",
+        "Private parks and playgrounds",
+        "Resort dwellings",
+        "Temporary living quarters during construction of a residence"
+      ],
+      "conditional_uses": [],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4_subdivii_sec62-1340",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "RU-1-11",
+      "section": "62-1340",
+      "name": "Single-family residential, RU-1-11",
+      "description": "The RU-1-13 and RU-1-11 single-family residential zoning classifications encompass lands devoted to single-family residential development of spacious character, together with such accessory uses as may be necessary or are normally compatible with residential surroundings.",
+      "permitted_uses": [
+        "One single-family residential detached dwelling",
+        "Parks and public recreational facilities",
+        "Private golf courses",
+        "Foster homes",
+        "Sewer lift stations",
+        "Group homes, level I, subject to the requirements set forth in section 62-1835.9",
+        "Power substations, telephone exchanges and transmission facilities",
+        "Preexisting use",
+        "Private parks and playgrounds",
+        "Resort dwellings",
+        "Temporary living quarters during construction of a residence"
+      ],
+      "conditional_uses": [],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4_subdivii_sec62-1340",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "EA",
+      "section": "62-1571",
+      "name": "Environmental areas, EA",
+      "description": "The EA environmental area zoning classification recognizes the natural resource components as defined and provided for by the provisions of the conservation element of the comprehensive plan. The purpose is to conserve natural resource functions and features by retaining lands and waters in their pristine character and condition, but permit uses which are compatible with or which shall enhance or restore the functions and features of such natural resources.",
+      "permitted_uses": [
+        "Single-family detached residential dwelling unit",
+        "Passive recreation",
+        "Group homes, level I, subject to the requirements set forth in section 62-1835.9"
+      ],
+      "conditional_uses": [],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4_subdivix_sec62-1571",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "RU-1-7",
+      "section": "62-1342",
+      "name": "Single-family residential, RU-1-7",
+      "description": "The RU-1-7 single-family residential zoning classification encompasses lands devoted to single-family residential development of spacious character, together with such accessory uses as may be necessary or are normally compatible with residential surroundings.",
+      "permitted_uses": [
+        "One single-family residential detached dwelling",
+        "Parks and public recreational facilities",
+        "Private golf courses",
+        "Foster homes",
+        "Sewer lift stations",
+        "Group homes, level I",
+        "Power substations, telephone exchanges and transmission facilities",
+        "Private parks and playgrounds",
+        "Resort dwellings",
+        "Temporary living quarters during construction"
+      ],
+      "conditional_uses": [
+        "Churches and places of worship",
+        "Schools, public and private",
+        "Day care centers",
+        "Home occupations"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4_subdivii_sec62-1342",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "RR-1",
+      "section": "62-1330",
+      "name": "Rural residential, RR-1",
+      "description": "The RR-1 rural residential zoning classification encompasses lands devoted to single-family residential development at rural densities of one dwelling unit per acre, together with agricultural uses and such accessory uses as are normally compatible with rural residential surroundings.",
+      "permitted_uses": [
+        "One single-family residential detached dwelling",
+        "Agricultural uses",
+        "Parks and public recreational facilities",
+        "Private golf courses",
+        "Foster homes",
+        "Keeping of horses (4 per acre max, 10,000 sf per animal)",
+        "Group homes, level I",
+        "Power substations",
+        "Private parks and playgrounds"
+      ],
+      "conditional_uses": [
+        "Churches and places of worship",
+        "Schools",
+        "Day care centers",
+        "Bed and breakfast establishments",
+        "Home occupations"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4_subdivii_sec62-1330",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "AU",
+      "section": "62-1320",
+      "name": "Agricultural residential, AU",
+      "description": "The AU agricultural residential zoning classification is intended to provide for agricultural activities and single-family residential development at very low densities.",
+      "permitted_uses": [
+        "Agricultural uses",
+        "Single-family residential dwelling",
+        "Forestry",
+        "Nurseries and greenhouses",
+        "Keeping of livestock",
+        "Farm stands",
+        "Group homes, level I"
+      ],
+      "conditional_uses": [
+        "Churches and places of worship",
+        "Schools",
+        "Veterinary clinics",
+        "Kennels",
+        "Riding academies",
+        "Agritourism"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4_subdivii_sec62-1320",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "BU-1",
+      "section": "62-1401",
+      "name": "Retail commercial, BU-1",
+      "description": "The BU-1 retail commercial zoning classification is intended to provide for retail commercial uses which serve the daily shopping needs of the surrounding residential neighborhoods.",
+      "permitted_uses": [
+        "Retail stores",
+        "Personal service establishments",
+        "Offices",
+        "Banks and financial institutions",
+        "Restaurants",
+        "Medical and dental offices",
+        "Pharmacies",
+        "Convenience stores"
+      ],
+      "conditional_uses": [
+        "Drive-through facilities",
+        "Gas stations",
+        "Automobile service centers",
+        "Outdoor dining",
+        "Mixed use developments"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4_subdiviii_sec62-1401",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "BU-2",
+      "section": "62-1405",
+      "name": "General commercial, BU-2",
+      "description": "The BU-2 general commercial zoning classification provides for a wide range of commercial uses including retail, office, and service uses.",
+      "permitted_uses": [
+        "All uses permitted in BU-1",
+        "Hotels and motels",
+        "Shopping centers",
+        "Automobile sales",
+        "Entertainment facilities",
+        "Fitness centers",
+        "Self-storage facilities"
+      ],
+      "conditional_uses": [
+        "Automotive repair",
+        "Nightclubs and bars",
+        "Adult entertainment establishments",
+        "Outdoor storage"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4_subdiviii_sec62-1405",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "PUD",
+      "section": "62-1561",
+      "name": "Planned unit development, PUD",
+      "description": "The PUD planned unit development zoning classification provides for flexibility in the design and development of land in a manner that promotes creative design, preserves natural features, and provides a mix of land uses.",
+      "permitted_uses": [
+        "Uses as specified in approved PUD development order",
+        "Residential uses",
+        "Commercial uses",
+        "Recreational uses",
+        "Open space"
+      ],
+      "conditional_uses": [
+        "As specified in approved PUD development order"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4_subdivix_sec62-1561",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "IU",
+      "section": "62-1501",
+      "name": "Industrial use, IU",
+      "description": "The IU industrial use zoning classification provides for industrial and manufacturing uses.",
+      "permitted_uses": [
+        "Light manufacturing",
+        "Warehousing and distribution",
+        "Research and development facilities",
+        "Office uses",
+        "Wholesale trade"
+      ],
+      "conditional_uses": [
+        "Heavy manufacturing",
+        "Outdoor storage",
+        "Truck terminals",
+        "Hazardous materials storage"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4_subdivv_sec62-1501",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "GU",
+      "section": "62-1305",
+      "name": "General use, GU",
+      "description": "The GU general use zoning classification is a temporary classification assigned to lands until a more specific zoning classification is established.",
+      "permitted_uses": [
+        "Agricultural uses",
+        "Single-family residential dwelling",
+        "Government facilities",
+        "Public utilities"
+      ],
+      "conditional_uses": [
+        "As determined by the zoning official"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4_subdivii_sec62-1305",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "RU-2-10",
+      "section": "62-1350",
+      "name": "Multi-family residential, RU-2-10",
+      "description": "Multi-family residential zoning for up to 10 dwelling units per acre.",
+      "permitted_uses": [
+        "Multi-family dwellings",
+        "Single-family dwellings",
+        "Townhouses",
+        "Parks and recreational facilities",
+        "Group homes, level I"
+      ],
+      "conditional_uses": [
+        "Day care centers",
+        "Churches",
+        "Schools",
+        "Home occupations"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "RU-2-15",
+      "section": "62-1355",
+      "name": "Multi-family residential, RU-2-15",
+      "description": "Multi-family residential zoning for up to 15 dwelling units per acre.",
+      "permitted_uses": [
+        "Multi-family dwellings",
+        "Single-family dwellings",
+        "Townhouses",
+        "Parks and recreational facilities",
+        "Group homes, level I"
+      ],
+      "conditional_uses": [
+        "Day care centers",
+        "Churches",
+        "Schools",
+        "Assisted living facilities"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "RU-2-30",
+      "section": "62-1360",
+      "name": "Multi-family residential, RU-2-30",
+      "description": "High-density multi-family residential zoning for up to 30 dwelling units per acre.",
+      "permitted_uses": [
+        "Multi-family dwellings",
+        "Townhouses",
+        "Condominiums",
+        "Parks and recreational facilities"
+      ],
+      "conditional_uses": [
+        "Day care centers",
+        "Churches",
+        "Mixed-use developments"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "SR",
+      "section": "62-1336",
+      "name": "Suburban residential, SR",
+      "description": "Suburban residential zoning for single-family development at 2 units per acre.",
+      "permitted_uses": [
+        "Single-family detached dwelling",
+        "Parks and recreational facilities",
+        "Group homes, level I",
+        "Foster homes"
+      ],
+      "conditional_uses": [
+        "Churches",
+        "Schools",
+        "Day care centers",
+        "Home occupations"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4",
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "TR-1",
+      "section": "62-1451",
+      "name": "Tourist resort 1, TR-1",
+      "description": "Tourist resort zoning for hotels, motels, and tourist-oriented commercial uses.",
+      "permitted_uses": [
+        "Hotels and motels",
+        "Restaurants",
+        "Retail shops",
+        "Recreational facilities"
+      ],
+      "conditional_uses": [
+        "Nightclubs",
+        "Convention facilities",
+        "Time-share developments"
+      ],
+      "source_url": "http://brevardcounty.elaws.us/code/coorbrcoflvoii_ch62_artvi_div4",
+      "jurisdiction_id": 17
+    }
+  ]
+}
