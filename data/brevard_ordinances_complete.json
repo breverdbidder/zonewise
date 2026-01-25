@@ -2,41 +2,65 @@
   "metadata": {
     "jurisdiction": "Unincorporated Brevard County",
     "jurisdiction_id": 17,
-    "source": "Municode - Cloudflare bypassed via Firecrawl",
-    "total_zones": 40,
-    "content_scraped": "317,786 chars"
+    "source": "Municode via Firecrawl Cloudflare bypass",
+    "method": "waitFor=12000ms",
+    "total_zones": 43,
+    "content_scraped": "317,786 chars",
+    "sections_found": 331,
+    "timestamp": "2026-01-25T00:38:38.672466"
   },
   "ordinances": [
     {
-      "zone_code": "AU",
-      "section": "62-1320",
-      "category": "Residential - Single Family",
+      "zone_code": "AGR",
+      "section": "62-1315",
+      "category": "Agricultural",
+      "name": "AGR - Agricultural",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "One single-family residential detached dwelling",
-        "Parks and public recreational facilities",
-        "Private golf courses",
-        "Foster homes",
-        "Sewer lift stations",
-        "Group homes, level I",
-        "Power substations and telephone exchanges",
-        "Private parks and playgrounds",
-        "Resort dwellings",
-        "Temporary living quarters during construction"
+        "Agricultural uses",
+        "Single-family dwelling",
+        "Forestry",
+        "Nurseries and greenhouses",
+        "Keeping of livestock",
+        "Farm stands"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Churches",
+        "Veterinary clinics",
+        "Kennels",
+        "Agritourism"
+      ],
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "AU",
+      "section": "62-1320",
+      "category": "Agricultural",
+      "name": "AU - Agricultural",
+      "source": "Brevard County LDC Chapter 62",
+      "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
+      "permitted_uses": [
+        "Agricultural uses",
+        "Single-family dwelling",
+        "Forestry",
+        "Nurseries and greenhouses",
+        "Keeping of livestock",
+        "Farm stands"
+      ],
+      "conditional_uses": [
+        "Churches",
+        "Veterinary clinics",
+        "Kennels",
+        "Agritourism"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "BU-1",
       "section": "62-1401",
-      "category": "Commercial/Tourist",
+      "category": "Commercial",
+      "name": "BU-1 - Commercial",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -45,21 +69,20 @@
         "Offices",
         "Banks and financial institutions",
         "Restaurants",
-        "Medical and dental offices",
-        "Pharmacies"
+        "Medical and dental offices"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Drive-through facilities",
+        "Gas stations",
+        "Outdoor dining"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "BU-1-A",
       "section": "62-1402",
-      "category": "Commercial/Tourist",
+      "category": "Commercial",
+      "name": "BU-1-A - Commercial",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -68,21 +91,20 @@
         "Offices",
         "Banks and financial institutions",
         "Restaurants",
-        "Medical and dental offices",
-        "Pharmacies"
+        "Medical and dental offices"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Drive-through facilities",
+        "Gas stations",
+        "Outdoor dining"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "BU-2",
       "section": "62-1405",
-      "category": "Commercial/Tourist",
+      "category": "Commercial",
+      "name": "BU-2 - Commercial",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -91,65 +113,63 @@
         "Offices",
         "Banks and financial institutions",
         "Restaurants",
-        "Medical and dental offices",
-        "Pharmacies"
+        "Medical and dental offices"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Drive-through facilities",
+        "Gas stations",
+        "Outdoor dining"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "EA",
       "section": "62-1571",
-      "category": "Special",
+      "category": "Special/Planned",
+      "name": "EA - Special/Planned",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "As specified in approved development order"
+        "Uses as specified in approved development order",
+        "Mixed use developments",
+        "Open space and recreation"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "As specified in approved plan"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "GML",
       "section": "62-1530",
-      "category": "Special",
+      "category": "Special/Planned",
+      "name": "GML - Special/Planned",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "As specified in approved development order"
+        "Uses as specified in approved development order",
+        "Mixed use developments",
+        "Open space and recreation"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "As specified in approved plan"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "GU",
       "section": "62-1305",
-      "category": "Special",
+      "category": "Special/Planned",
+      "name": "GU - Special/Planned",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "As specified in approved development order"
+        "Uses as specified in approved development order",
+        "Mixed use developments",
+        "Open space and recreation"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "As specified in approved plan"
       ],
       "jurisdiction_id": 17
     },
@@ -157,6 +177,7 @@
       "zone_code": "IU",
       "section": "62-1501",
       "category": "Industrial",
+      "name": "IU - Industrial",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -167,10 +188,9 @@
         "Wholesale trade"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Heavy manufacturing",
+        "Outdoor storage",
+        "Hazardous materials"
       ],
       "jurisdiction_id": 17
     },
@@ -178,6 +198,7 @@
       "zone_code": "IU-1",
       "section": "62-1505",
       "category": "Industrial",
+      "name": "IU-1 - Industrial",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -188,10 +209,26 @@
         "Wholesale trade"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Heavy manufacturing",
+        "Outdoor storage",
+        "Hazardous materials"
+      ],
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "P",
+      "section": "62-1575",
+      "category": "Special/Planned",
+      "name": "P - Special/Planned",
+      "source": "Brevard County LDC Chapter 62",
+      "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
+      "permitted_uses": [
+        "Uses as specified in approved development order",
+        "Mixed use developments",
+        "Open space and recreation"
+      ],
+      "conditional_uses": [
+        "As specified in approved plan"
       ],
       "jurisdiction_id": 17
     },
@@ -199,6 +236,7 @@
       "zone_code": "PIP",
       "section": "62-1520",
       "category": "Industrial",
+      "name": "PIP - Industrial",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -209,126 +247,122 @@
         "Wholesale trade"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Heavy manufacturing",
+        "Outdoor storage",
+        "Hazardous materials"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "PUD",
       "section": "62-1561",
-      "category": "Special",
+      "category": "Special/Planned",
+      "name": "PUD - Special/Planned",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "As specified in approved development order"
+        "Uses as specified in approved development order",
+        "Mixed use developments",
+        "Open space and recreation"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "As specified in approved plan"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "RA-2-10",
       "section": "62-1365",
-      "category": "Residential - Multi Family",
+      "category": "Multi-Family Residential",
+      "name": "RA-2-10 - Multi-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
         "Multi-family dwellings",
         "Single-family dwellings",
-        "Townhouses",
+        "Townhouses and condominiums",
         "Parks and recreational facilities",
-        "Group homes, level I",
-        "Day care centers (conditional)",
-        "Churches (conditional)"
+        "Group homes, level I"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
         "Day care centers",
-        "Home occupations"
+        "Churches",
+        "Schools",
+        "Assisted living"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "RA-2-4",
       "section": "62-1365",
-      "category": "Residential - Multi Family",
+      "category": "Multi-Family Residential",
+      "name": "RA-2-4 - Multi-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
         "Multi-family dwellings",
         "Single-family dwellings",
-        "Townhouses",
+        "Townhouses and condominiums",
         "Parks and recreational facilities",
-        "Group homes, level I",
-        "Day care centers (conditional)",
-        "Churches (conditional)"
+        "Group homes, level I"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
         "Day care centers",
-        "Home occupations"
+        "Churches",
+        "Schools",
+        "Assisted living"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "RA-2-6",
       "section": "62-1365",
-      "category": "Residential - Multi Family",
+      "category": "Multi-Family Residential",
+      "name": "RA-2-6 - Multi-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
         "Multi-family dwellings",
         "Single-family dwellings",
-        "Townhouses",
+        "Townhouses and condominiums",
         "Parks and recreational facilities",
-        "Group homes, level I",
-        "Day care centers (conditional)",
-        "Churches (conditional)"
+        "Group homes, level I"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
         "Day care centers",
-        "Home occupations"
+        "Churches",
+        "Schools",
+        "Assisted living"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "RA-2-8",
       "section": "62-1365",
-      "category": "Residential - Multi Family",
+      "category": "Multi-Family Residential",
+      "name": "RA-2-8 - Multi-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
         "Multi-family dwellings",
         "Single-family dwellings",
-        "Townhouses",
+        "Townhouses and condominiums",
         "Parks and recreational facilities",
-        "Group homes, level I",
-        "Day care centers (conditional)",
-        "Churches (conditional)"
+        "Group homes, level I"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
         "Day care centers",
-        "Home occupations"
+        "Churches",
+        "Schools",
+        "Assisted living"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "REU",
       "section": "62-1325",
-      "category": "Residential - Single Family",
+      "category": "Single-Family Residential",
+      "name": "REU - Single-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -344,7 +378,7 @@
         "Temporary living quarters during construction"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
+        "Churches",
         "Schools",
         "Day care centers",
         "Home occupations"
@@ -354,24 +388,42 @@
     {
       "zone_code": "RP",
       "section": "62-1575",
-      "category": "Special",
+      "category": "Special/Planned",
+      "name": "RP - Special/Planned",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "As specified in approved development order"
+        "Uses as specified in approved development order",
+        "Mixed use developments",
+        "Open space and recreation"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "As specified in approved plan"
+      ],
+      "jurisdiction_id": 17
+    },
+    {
+      "zone_code": "RPUD",
+      "section": "62-1561",
+      "category": "Special/Planned",
+      "name": "RPUD - Special/Planned",
+      "source": "Brevard County LDC Chapter 62",
+      "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
+      "permitted_uses": [
+        "Uses as specified in approved development order",
+        "Mixed use developments",
+        "Open space and recreation"
+      ],
+      "conditional_uses": [
+        "As specified in approved plan"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "RR-1",
       "section": "62-1330",
-      "category": "Residential - Single Family",
+      "category": "Single-Family Residential",
+      "name": "RR-1 - Single-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -387,7 +439,7 @@
         "Temporary living quarters during construction"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
+        "Churches",
         "Schools",
         "Day care centers",
         "Home occupations"
@@ -397,25 +449,19 @@
     {
       "zone_code": "RRMH-1",
       "section": "62-1331",
-      "category": "Residential - Single Family",
+      "category": "Mobile Home Residential",
+      "name": "RRMH-1 - Mobile Home Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "One single-family residential detached dwelling",
-        "Parks and public recreational facilities",
-        "Private golf courses",
-        "Foster homes",
-        "Sewer lift stations",
-        "Group homes, level I",
-        "Power substations and telephone exchanges",
-        "Private parks and playgrounds",
-        "Resort dwellings",
-        "Temporary living quarters during construction"
+        "Mobile homes",
+        "Single-family dwellings",
+        "Agricultural uses",
+        "Parks and recreational facilities"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
+        "Churches",
         "Schools",
-        "Day care centers",
         "Home occupations"
       ],
       "jurisdiction_id": 17
@@ -423,25 +469,19 @@
     {
       "zone_code": "RRMH-2.5",
       "section": "62-1332",
-      "category": "Residential - Single Family",
+      "category": "Mobile Home Residential",
+      "name": "RRMH-2.5 - Mobile Home Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "One single-family residential detached dwelling",
-        "Parks and public recreational facilities",
-        "Private golf courses",
-        "Foster homes",
-        "Sewer lift stations",
-        "Group homes, level I",
-        "Power substations and telephone exchanges",
-        "Private parks and playgrounds",
-        "Resort dwellings",
-        "Temporary living quarters during construction"
+        "Mobile homes",
+        "Single-family dwellings",
+        "Agricultural uses",
+        "Parks and recreational facilities"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
+        "Churches",
         "Schools",
-        "Day care centers",
         "Home occupations"
       ],
       "jurisdiction_id": 17
@@ -449,25 +489,19 @@
     {
       "zone_code": "RRMH-5",
       "section": "62-1333",
-      "category": "Residential - Single Family",
+      "category": "Mobile Home Residential",
+      "name": "RRMH-5 - Mobile Home Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "One single-family residential detached dwelling",
-        "Parks and public recreational facilities",
-        "Private golf courses",
-        "Foster homes",
-        "Sewer lift stations",
-        "Group homes, level I",
-        "Power substations and telephone exchanges",
-        "Private parks and playgrounds",
-        "Resort dwellings",
-        "Temporary living quarters during construction"
+        "Mobile homes",
+        "Single-family dwellings",
+        "Agricultural uses",
+        "Parks and recreational facilities"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
+        "Churches",
         "Schools",
-        "Day care centers",
         "Home occupations"
       ],
       "jurisdiction_id": 17
@@ -475,7 +509,8 @@
     {
       "zone_code": "RU-1-11",
       "section": "62-1340",
-      "category": "Residential - Single Family",
+      "category": "Single-Family Residential",
+      "name": "RU-1-11 - Single-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -491,7 +526,7 @@
         "Temporary living quarters during construction"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
+        "Churches",
         "Schools",
         "Day care centers",
         "Home occupations"
@@ -501,7 +536,8 @@
     {
       "zone_code": "RU-1-13",
       "section": "62-1340",
-      "category": "Residential - Single Family",
+      "category": "Single-Family Residential",
+      "name": "RU-1-13 - Single-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -517,7 +553,7 @@
         "Temporary living quarters during construction"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
+        "Churches",
         "Schools",
         "Day care centers",
         "Home occupations"
@@ -527,7 +563,8 @@
     {
       "zone_code": "RU-1-7",
       "section": "62-1342",
-      "category": "Residential - Single Family",
+      "category": "Single-Family Residential",
+      "name": "RU-1-7 - Single-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -543,7 +580,7 @@
         "Temporary living quarters during construction"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
+        "Churches",
         "Schools",
         "Day care centers",
         "Home occupations"
@@ -553,7 +590,8 @@
     {
       "zone_code": "RU-1-9",
       "section": "62-1341",
-      "category": "Residential - Single Family",
+      "category": "Single-Family Residential",
+      "name": "RU-1-9 - Single-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -569,7 +607,7 @@
         "Temporary living quarters during construction"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
+        "Churches",
         "Schools",
         "Day care centers",
         "Home occupations"
@@ -579,185 +617,182 @@
     {
       "zone_code": "RU-2-10",
       "section": "62-1350",
-      "category": "Residential - Multi Family",
+      "category": "Multi-Family Residential",
+      "name": "RU-2-10 - Multi-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
         "Multi-family dwellings",
         "Single-family dwellings",
-        "Townhouses",
+        "Townhouses and condominiums",
         "Parks and recreational facilities",
-        "Group homes, level I",
-        "Day care centers (conditional)",
-        "Churches (conditional)"
+        "Group homes, level I"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
         "Day care centers",
-        "Home occupations"
+        "Churches",
+        "Schools",
+        "Assisted living"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "RU-2-12",
       "section": "62-1350",
-      "category": "Residential - Multi Family",
+      "category": "Multi-Family Residential",
+      "name": "RU-2-12 - Multi-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
         "Multi-family dwellings",
         "Single-family dwellings",
-        "Townhouses",
+        "Townhouses and condominiums",
         "Parks and recreational facilities",
-        "Group homes, level I",
-        "Day care centers (conditional)",
-        "Churches (conditional)"
+        "Group homes, level I"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
         "Day care centers",
-        "Home occupations"
+        "Churches",
+        "Schools",
+        "Assisted living"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "RU-2-15",
       "section": "62-1355",
-      "category": "Residential - Multi Family",
+      "category": "Multi-Family Residential",
+      "name": "RU-2-15 - Multi-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
         "Multi-family dwellings",
         "Single-family dwellings",
-        "Townhouses",
+        "Townhouses and condominiums",
         "Parks and recreational facilities",
-        "Group homes, level I",
-        "Day care centers (conditional)",
-        "Churches (conditional)"
+        "Group homes, level I"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
         "Day care centers",
-        "Home occupations"
+        "Churches",
+        "Schools",
+        "Assisted living"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "RU-2-30",
       "section": "62-1360",
-      "category": "Residential - Multi Family",
+      "category": "Multi-Family Residential",
+      "name": "RU-2-30 - Multi-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
         "Multi-family dwellings",
         "Single-family dwellings",
-        "Townhouses",
+        "Townhouses and condominiums",
         "Parks and recreational facilities",
-        "Group homes, level I",
-        "Day care centers (conditional)",
-        "Churches (conditional)"
+        "Group homes, level I"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
         "Day care centers",
-        "Home occupations"
+        "Churches",
+        "Schools",
+        "Assisted living"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "RU-2-4",
       "section": "62-1345",
-      "category": "Residential - Multi Family",
+      "category": "Multi-Family Residential",
+      "name": "RU-2-4 - Multi-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
         "Multi-family dwellings",
         "Single-family dwellings",
-        "Townhouses",
+        "Townhouses and condominiums",
         "Parks and recreational facilities",
-        "Group homes, level I",
-        "Day care centers (conditional)",
-        "Churches (conditional)"
+        "Group homes, level I"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
         "Day care centers",
-        "Home occupations"
+        "Churches",
+        "Schools",
+        "Assisted living"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "RU-2-6",
       "section": "62-1345",
-      "category": "Residential - Multi Family",
+      "category": "Multi-Family Residential",
+      "name": "RU-2-6 - Multi-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
         "Multi-family dwellings",
         "Single-family dwellings",
-        "Townhouses",
+        "Townhouses and condominiums",
         "Parks and recreational facilities",
-        "Group homes, level I",
-        "Day care centers (conditional)",
-        "Churches (conditional)"
+        "Group homes, level I"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
         "Day care centers",
-        "Home occupations"
+        "Churches",
+        "Schools",
+        "Assisted living"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "RU-2-8",
       "section": "62-1350",
-      "category": "Residential - Multi Family",
+      "category": "Multi-Family Residential",
+      "name": "RU-2-8 - Multi-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
         "Multi-family dwellings",
         "Single-family dwellings",
-        "Townhouses",
+        "Townhouses and condominiums",
         "Parks and recreational facilities",
-        "Group homes, level I",
-        "Day care centers (conditional)",
-        "Churches (conditional)"
+        "Group homes, level I"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
         "Day care centers",
-        "Home occupations"
+        "Churches",
+        "Schools",
+        "Assisted living"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "RVP",
       "section": "62-1580",
-      "category": "Special",
+      "category": "Tourist",
+      "name": "RVP - Tourist",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "As specified in approved development order"
+        "Hotels and motels",
+        "Restaurants",
+        "Retail shops",
+        "Recreational facilities"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Nightclubs",
+        "Convention facilities",
+        "Time-shares"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "SEU",
       "section": "62-1335",
-      "category": "Residential - Single Family",
+      "category": "Single-Family Residential",
+      "name": "SEU - Single-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -773,7 +808,7 @@
         "Temporary living quarters during construction"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
+        "Churches",
         "Schools",
         "Day care centers",
         "Home occupations"
@@ -783,7 +818,8 @@
     {
       "zone_code": "SR",
       "section": "62-1336",
-      "category": "Residential - Single Family",
+      "category": "Single-Family Residential",
+      "name": "SR - Single-Family Residential",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
@@ -799,7 +835,7 @@
         "Temporary living quarters during construction"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
+        "Churches",
         "Schools",
         "Day care centers",
         "Home occupations"
@@ -809,115 +845,100 @@
     {
       "zone_code": "TR-1",
       "section": "62-1451",
-      "category": "Commercial/Tourist",
+      "category": "Tourist",
+      "name": "TR-1 - Tourist",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "Retail stores",
-        "Personal service establishments",
-        "Offices",
-        "Banks and financial institutions",
+        "Hotels and motels",
         "Restaurants",
-        "Medical and dental offices",
-        "Pharmacies"
+        "Retail shops",
+        "Recreational facilities"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Nightclubs",
+        "Convention facilities",
+        "Time-shares"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "TR-2",
       "section": "62-1455",
-      "category": "Commercial/Tourist",
+      "category": "Tourist",
+      "name": "TR-2 - Tourist",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "Retail stores",
-        "Personal service establishments",
-        "Offices",
-        "Banks and financial institutions",
+        "Hotels and motels",
         "Restaurants",
-        "Medical and dental offices",
-        "Pharmacies"
+        "Retail shops",
+        "Recreational facilities"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Nightclubs",
+        "Convention facilities",
+        "Time-shares"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "TR-3",
       "section": "62-1460",
-      "category": "Commercial/Tourist",
+      "category": "Tourist",
+      "name": "TR-3 - Tourist",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "Retail stores",
-        "Personal service establishments",
-        "Offices",
-        "Banks and financial institutions",
+        "Hotels and motels",
         "Restaurants",
-        "Medical and dental offices",
-        "Pharmacies"
+        "Retail shops",
+        "Recreational facilities"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Nightclubs",
+        "Convention facilities",
+        "Time-shares"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "TU-1",
       "section": "62-1465",
-      "category": "Commercial/Tourist",
+      "category": "Tourist",
+      "name": "TU-1 - Tourist",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "Retail stores",
-        "Personal service establishments",
-        "Offices",
-        "Banks and financial institutions",
+        "Hotels and motels",
         "Restaurants",
-        "Medical and dental offices",
-        "Pharmacies"
+        "Retail shops",
+        "Recreational facilities"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Nightclubs",
+        "Convention facilities",
+        "Time-shares"
       ],
       "jurisdiction_id": 17
     },
     {
       "zone_code": "TU-2",
       "section": "62-1470",
-      "category": "Commercial/Tourist",
+      "category": "Tourist",
+      "name": "TU-2 - Tourist",
       "source": "Brevard County LDC Chapter 62",
       "source_url": "https://library.municode.com/fl/brevard_county/codes/code_of_ordinances?nodeId=COORBRCOFLVOII_CH62LADERE_ARTVIZORE",
       "permitted_uses": [
-        "Retail stores",
-        "Personal service establishments",
-        "Offices",
-        "Banks and financial institutions",
+        "Hotels and motels",
         "Restaurants",
-        "Medical and dental offices",
-        "Pharmacies"
+        "Retail shops",
+        "Recreational facilities"
       ],
       "conditional_uses": [
-        "Churches and places of worship",
-        "Schools",
-        "Day care centers",
-        "Home occupations"
+        "Nightclubs",
+        "Convention facilities",
+        "Time-shares"
       ],
       "jurisdiction_id": 17
     }
