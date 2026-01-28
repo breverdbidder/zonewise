@@ -309,7 +309,7 @@ zonewise_agents/
 
 ## License
 
-Proprietary - © 2026 ZoneWise / Ariel Shapira
+Proprietary - © 2026 ZoneWise / ZoneWise.AI
 
 ---
 
