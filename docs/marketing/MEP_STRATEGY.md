@@ -521,5 +521,5 @@ The market doesn't need another mediocre zoning tool. It needs one exceptional o
 
 ---
 
-*MEP Strategy by Claude AI Architect for Everest Capital USA.*
+*MEP Strategy by Claude AI Architect for ZoneWise.AI 2026.*
 *"Exceptional beats viable. Every time."*
