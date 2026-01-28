@@ -2,7 +2,7 @@
 
 **Date:** January 25, 2026  
 **Author:** Claude AI (AI Architect)  
-**Approved By:** Ariel Shapira (Solo Founder)  
+**Approved By:** ZoneWise.AI (Solo Founder)  
 **Status:** APPROVED
 
 ---
