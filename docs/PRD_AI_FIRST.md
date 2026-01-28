@@ -828,7 +828,7 @@ AI: "FAR stands for Floor Area Ratio. It's the ratio of a
 
 ## ✅ APPROVAL
 
-**Product Owner:** Ariel Shapira  
+**Product Owner:** ZoneWise.AI  
 **AI Architect:** Claude (Anthropic)  
 **Date:** January 12, 2026  
 **Status:** Approved for Development
