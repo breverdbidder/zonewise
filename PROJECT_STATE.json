@@ -81,7 +81,7 @@
       "date": "2026-01-21",
       "decision": "Selected zonewise.ai over zonewise.com",
       "rationale": "zonewise.com taken; .ai better for AI product branding",
-      "decided_by": "Ariel Shapira"
+      "decided_by": "ZoneWise.AI"
     },
     {
       "date": "2026-01-21",
@@ -102,7 +102,7 @@
   ],
   
   "team": {
-    "product_owner": "Ariel Shapira",
+    "product_owner": "ZoneWise.AI",
     "ai_architect": "Claude Opus 4.5",
     "development": "Claude Code"
   },
