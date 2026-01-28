@@ -297,10 +297,10 @@ See `docs/supabase_schema.sql` for complete schema.
 
 ## Team
 
-- **Ariel Shapira** - Product Owner (20 min/day oversight)
+- **ZoneWise.AI** - Product Owner (20 min/day oversight)
 - **Claude Opus 4.5** - AI Architect
 - **Claude Code** - Agentic Engineer (7hr sessions)
 
 ---
 
-Built by [Everest Capital USA](https://github.com/breverdbidder) | [ZoneWise.ai](https://zonewise.ai)
+Built by [ZoneWise.AI 2026](https://github.com/breverdbidder) | [ZoneWise.ai](https://zonewise.ai)
