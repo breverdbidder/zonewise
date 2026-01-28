@@ -8,7 +8,7 @@ Data sources:
 - Census ACS (median gross rent)
 - Brevard County market estimates
 
-© 2026 ZoneWise - Ariel Shapira
+© 2026 ZoneWise - ZoneWise.AI
 """
 
 import os
