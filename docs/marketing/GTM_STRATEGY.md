@@ -254,4 +254,4 @@ The value proposition is not "cheaper than a consultant" but **"what consultants
 
 ---
 
-*Prepared by Claude AI Architect for Everest Capital USA*
+*Prepared by Claude AI Architect for ZoneWise.AI 2026*
