@@ -338,6 +338,6 @@ This competitive intelligence system is successful when:
 
 **ZoneWise - Wise about zoning**  
 **Launching Q1 2026 | Brevard County, Florida**  
-**Everest Capital USA**
+**ZoneWise.AI 2026**
 
 *Never be surprised by competitor moves. Always be one step ahead.*
