@@ -12,7 +12,7 @@ Tables used:
 - kpi_definitions
 - property_kpi_scores
 
-© 2026 ZoneWise - Ariel Shapira
+© 2026 ZoneWise - ZoneWise.AI
 """
 
 import os
