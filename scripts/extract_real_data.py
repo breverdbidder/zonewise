@@ -12,7 +12,7 @@ Usage:
   python extract_real_data.py --jurisdiction melbourne
   python extract_real_data.py --all
   
-Author: Ariel Shapira / Claude AI Architect
+Author: ZoneWise.AI / Claude AI Architect
 Date: January 18, 2026
 """
 
