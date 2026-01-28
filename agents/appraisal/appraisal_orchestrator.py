@@ -10,7 +10,7 @@ Pipeline:
 5. Reconciliation →
 6. Final Report
 
-© 2026 ZoneWise - Ariel Shapira
+© 2026 ZoneWise - ZoneWise.AI
 """
 
 import asyncio
