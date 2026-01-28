@@ -1,7 +1,7 @@
 # ZoneWise Claude Code Configuration
 
 > Agentic AI Zoning Intelligence Platform
-> Created by Ariel Shapira, Solo Founder - Everest Capital USA
+> Created by ZoneWise.AI, Solo Founder - ZoneWise.AI 2026
 
 ## Build Commands
 
