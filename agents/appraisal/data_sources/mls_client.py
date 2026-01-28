@@ -6,7 +6,7 @@ Uses Apify actors:
 - Redfin Scraper: apify/redfin-scraper
 - Zillow Scraper: petr_cermak/zillow-api-scraper
 
-© 2026 ZoneWise - Ariel Shapira
+© 2026 ZoneWise - ZoneWise.AI
 """
 
 import os
