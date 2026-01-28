@@ -175,4 +175,4 @@ This agent is part of the broader ZoneWise MCP ecosystem:
 
 ---
 
-Built for BidDeed.AI / Everest Capital USA
+Built for BidDeed.AI / ZoneWise.AI 2026
