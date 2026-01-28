@@ -96,4 +96,4 @@ Add to your Claude Desktop config:
 
 ---
 
-Built by BidDeed.AI / Everest Capital USA
+Built by BidDeed.AI / ZoneWise.AI 2026
