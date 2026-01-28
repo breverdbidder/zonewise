@@ -1047,7 +1047,7 @@ Critical for Zoning Context:
    "Zoning data sourced from: Brevard County Property Appraiser, American Legal Publishing, Municode, municipal ordinances (public records)."
 
 2. Copyright
-   "© 2026 Everest Capital USA. ZoneWise™ is a trademark of Everest Capital USA."
+   "© 2026 ZoneWise.AI 2026. ZoneWise™ is a trademark of ZoneWise.AI 2026."
 
 3. User Content
    "Users retain ownership of uploaded data (e.g., CSV files). We have license to process for providing service."
@@ -1537,6 +1537,6 @@ async def fetch_live_gridics():
 
 **ZoneWise - Wise about zoning**  
 **Launching Q1 2026 | Brevard County, Florida**  
-**Everest Capital USA**
+**ZoneWise.AI 2026**
 
 *Complete competitive intelligence system operational. Ready to build and differentiate.*
