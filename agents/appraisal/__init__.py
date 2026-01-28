@@ -8,7 +8,7 @@ Agents:
 - IncomeApproachAgent: Income capitalization for investment properties
 - AppraisalOrchestrator: Coordinates all three and reconciles
 
-© 2026 ZoneWise - Ariel Shapira
+© 2026 ZoneWise - ZoneWise.AI
 """
 
 from .sales_comparison_agent import SalesComparisonAgent, SalesComparisonResult
