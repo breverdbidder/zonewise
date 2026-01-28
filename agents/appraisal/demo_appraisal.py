@@ -7,7 +7,7 @@ Usage:
     python demo_appraisal.py --parcel "26-37-35-77-00042.0"
     python demo_appraisal.py --address "200 Jason Ct, Satellite Beach, FL 32937"
 
-© 2026 ZoneWise - Ariel Shapira
+© 2026 ZoneWise - ZoneWise.AI
 """
 
 import asyncio
