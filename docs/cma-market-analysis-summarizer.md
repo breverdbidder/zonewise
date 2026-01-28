@@ -284,7 +284,7 @@ Your property at 456 Maple Avenue is exceptionally well-positioned in the curren
 
 ## License
 
-BidDeed.AI - Everest Capital USA
+BidDeed.AI - ZoneWise.AI 2026
 Internal Tool | Also powers ZoneWise valuations
 Contact: ariel@biddeed.ai
 
