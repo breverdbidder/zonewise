@@ -1,7 +1,7 @@
 # ZoneWise Organization Workflow
 ## Ultimate GitHub + Supabase Integration Guide
 
-**Company:** Everest Capital USA  
+**Company:** ZoneWise.AI 2026  
 **Product:** ZoneWise  
 **Created:** January 12, 2026
 
@@ -13,7 +13,7 @@
 
 **Repository Structure:**
 ```
-Everest Capital USA GitHub Organization
+ZoneWise.AI 2026 GitHub Organization
 ├── zonewise (THIS REPO)                  # Main ZoneWise product
 ├── brevard-bidder-scraper                # BidDeed.AI (existing)
 ├── spd-site-plan-dev                     # SPD Site Plan Development
@@ -846,4 +846,4 @@ User receives results
 
 **ZoneWise - Wise about zoning**  
 **Launching Q1 2026 | Brevard County, Florida**  
-**Everest Capital USA**
+**ZoneWise.AI 2026**
