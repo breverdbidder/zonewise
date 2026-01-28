@@ -15,7 +15,7 @@ Tools:
   - search_ordinance: Search ordinance text
   - get_permitted_uses: List permitted uses
 
-Author: Ariel Shapira / Claude AI Architect
+Author: ZoneWise.AI / Claude AI Architect
 Date: January 18, 2026
 """
 
