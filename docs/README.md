@@ -67,7 +67,7 @@ docs/
 
 | Role | Entity |
 |------|--------|
-| Product Owner | Ariel Shapira |
+| Product Owner | ZoneWise.AI |
 | AI Architect | Claude AI (Sonnet 4.5) |
 | Agentic Engineer | Claude Code |
 | Code Analyst | Greptile |
