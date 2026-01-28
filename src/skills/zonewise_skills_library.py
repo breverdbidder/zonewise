@@ -20,7 +20,7 @@ USE CASES:
 - Building permit search
 - Site plan approval status
 
-Author: Claude AI Architect + Ariel Shapira
+Author: Claude AI Architect + ZoneWise.AI
 Team: We are the team of Claude innovators!
 """
 
