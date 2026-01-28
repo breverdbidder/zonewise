@@ -698,4 +698,4 @@ For questions or bug reports, open an issue on GitHub with the `skill:zonewize` 
 
 **zonewize v1.0.0** - Part of the ZoneWise agentic AI ecosystem  
 **Created:** January 13, 2026  
-**Maintainer:** AI Architect (Claude) + Ariel Shapira
+**Maintainer:** AI Architect (Claude) + ZoneWise.AI
