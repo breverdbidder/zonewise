@@ -11,7 +11,7 @@ Data includes:
 - Owner information
 - Lot characteristics
 
-© 2026 ZoneWise - Ariel Shapira
+© 2026 ZoneWise - ZoneWise.AI
 """
 
 import httpx
