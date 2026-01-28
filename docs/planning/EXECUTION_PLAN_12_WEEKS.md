@@ -2,7 +2,7 @@
 
 **Version:** 1.0  
 **Date:** January 25, 2026  
-**Owner:** Ariel Shapira + Claude AI Team
+**Owner:** ZoneWise.AI + Claude AI Team
 
 ---
 
@@ -28,7 +28,7 @@ This plan takes ZoneWise from 6.8% Brevard coverage to **67-county Florida MVP**
 
 | Role | Entity | Weekly Hours | Responsibility |
 |------|--------|--------------|----------------|
-| Product Owner | Ariel Shapira | ~2.5 hrs (20 min/day) | Approve, unblock, strategic |
+| Product Owner | ZoneWise.AI | ~2.5 hrs (20 min/day) | Approve, unblock, strategic |
 | AI Architect | Claude AI (Sonnet 4.5) | ~10 hrs | Design, plan, review |
 | Agentic Engineer | Claude Code | ~21 hrs (3x 7-hr sessions) | Build, test, deploy |
 | Code Analyst | Greptile | ~1 hr | Pre-session gap analysis |
