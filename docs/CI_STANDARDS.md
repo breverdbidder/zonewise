@@ -82,6 +82,6 @@ Including this distinction is essential to maintaining integrity and building tr
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
-| 1.0.0 | 2026-01-19 | Ariel Shapira | Initial standard established |
+| 1.0.0 | 2026-01-19 | ZoneWise.AI | Initial standard established |
 
-**Classification:** INTERNAL STANDARD - Everest Capital USA / BidDeed.AI
+**Classification:** INTERNAL STANDARD - ZoneWise.AI 2026 / BidDeed.AI
