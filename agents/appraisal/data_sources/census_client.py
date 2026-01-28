@@ -10,7 +10,7 @@ Data includes:
 - Education levels
 - Rental market data
 
-© 2026 ZoneWise - Ariel Shapira
+© 2026 ZoneWise - ZoneWise.AI
 """
 
 import os
