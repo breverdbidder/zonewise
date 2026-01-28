@@ -2,7 +2,7 @@
 
 **Last Updated:** January 15, 2026  
 **AI Architect:** Claude AI (Opus 4.5)  
-**Product Owner:** Ariel Shapira
+**Product Owner:** ZoneWise.AI
 
 ---
 
