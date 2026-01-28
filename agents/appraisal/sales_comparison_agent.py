@@ -15,7 +15,7 @@ MAI Standards:
 - Similar size (±30%)
 - Proximity preference
 
-© 2026 ZoneWise - Ariel Shapira
+© 2026 ZoneWise - ZoneWise.AI
 """
 
 import asyncio
