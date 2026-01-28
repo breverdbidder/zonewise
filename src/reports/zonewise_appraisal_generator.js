@@ -1567,7 +1567,7 @@ if (require.main === module) {
 
   generateAppraisalReport(sampleData, {
     reportType: 'SNAPSHOT',
-    clientName: 'Everest Capital USA',
+    clientName: 'ZoneWise.AI 2026',
     effectiveDate: new Date().toISOString()
   }).then(doc => {
     Packer.toBuffer(doc).then(buffer => {
