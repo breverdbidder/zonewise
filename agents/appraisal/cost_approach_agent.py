@@ -12,7 +12,7 @@ Components:
    - Functional obsolescence
    - External obsolescence
 
-© 2026 ZoneWise - Ariel Shapira
+© 2026 ZoneWise - ZoneWise.AI
 """
 
 import logging
