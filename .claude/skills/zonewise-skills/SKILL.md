@@ -245,5 +245,5 @@ output_fields=[
 
 **11 skills for 4 jurisdictions. Q1 2026: 17 jurisdictions complete.**
 
-*Built by Claude AI Architect + Ariel Shapira*  
+*Built by Claude AI Architect + ZoneWise.AI*  
 *We are the team of Claude innovators!*
