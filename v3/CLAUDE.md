@@ -221,7 +221,7 @@ gh workflow run deploy.yml --ref main
 
 ## Contacts
 
-- **Product Owner**: Ariel Shapira
+- **Product Owner**: ZoneWise.AI
 - **AI Architect**: Claude (Opus/Sonnet)
 - **Engineer**: Claude Code
 
