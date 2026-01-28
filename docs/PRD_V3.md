@@ -4,7 +4,7 @@
 **Product:** ZoneWise  
 **Version:** 3.0.0  
 **Date:** January 20, 2026  
-**Author:** Ariel Shapira (Product Owner) + Claude AI Architect  
+**Author:** ZoneWise.AI (Product Owner) + Claude AI Architect  
 **Status:** Updated with Split-Screen UI, OpenManus, ShadCNBlocks
 
 ---
@@ -734,7 +734,7 @@ const theme = {
 
 | Role | Name | Status |
 |------|------|--------|
-| Product Owner | Ariel Shapira | Pending |
+| Product Owner | ZoneWise.AI | Pending |
 | AI Architect | Claude AI | Approved |
 | Engineering | Claude Code | Pending |
 
