@@ -467,4 +467,4 @@ print(f"Cost: ${result['cost_usd']:.4f}")
 
 **zonewize v1.0.0** - Built January 13, 2026  
 **ZoneWise** - Wise about zoning  
-**Everest Capital USA**
+**ZoneWise.AI 2026**
