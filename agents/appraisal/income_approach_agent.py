@@ -12,7 +12,7 @@ Best for:
 - Commercial
 - Single-family rentals
 
-© 2026 ZoneWise - Ariel Shapira
+© 2026 ZoneWise - ZoneWise.AI
 """
 
 import logging
