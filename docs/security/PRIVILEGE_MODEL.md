@@ -507,6 +507,6 @@ A: Must explicitly grant permissions and create RLS policies. Default is DENY AL
 ---
 
 **Last Updated**: January 13, 2026
-**Owner**: Ariel Shapira (BidDeed.AI Founder)
+**Owner**: ZoneWise.AI (BidDeed.AI Founder)
 **Reviewer**: Claude Sonnet 4.5 (AI Architect)
 **Status**: Week 1 Complete - Ready for Testing
