@@ -505,6 +505,6 @@ This differentiates from PropertyOnion and positions the "Agentic AI ecosystem" 
 
 ## Contact
 
-**Security Concerns**: File issue on GitHub or contact Ariel Shapira
+**Security Concerns**: File issue on GitHub or contact ZoneWise.AI
 **Architecture Questions**: See `AI_ARCHITECT_RULES.md` in repo root
 **Deployment**: See `DEPLOYMENT_GUIDE.md`
