@@ -370,4 +370,4 @@ def process_batch(requests: list[dict]) -> str:
 *Created: January 22, 2026*
 *AI Architect: Claude*
 *Project: ZoneWise*
-*Owner: Ariel Shapira / Everest Capital USA*
+*Owner: ZoneWise.AI 2026*
