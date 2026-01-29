@@ -1,6 +1,6 @@
 ---
-name: everest-github-deployment
-description: GitHub deployment operations for Everest Capital projects. Includes automated git operations, GitHub Actions workflow triggers, Cloudflare Pages deployment, and post-deploy verification. Repos include brevard-bidder-scraper, zonewise, life-os, spd-site-plan-dev. Uses REST API (not git clone). Triggers on: deploy, GitHub push, commit, workflow, CI/CD, Cloudflare, GitHub Actions.
+name: zonewise-github-deployment
+description: GitHub deployment operations for ZoneWise.AI projects. Includes automated git operations, GitHub Actions workflow triggers, Cloudflare Pages deployment, and post-deploy verification. Repos include brevard-bidder-scraper, zonewise, life-os, spd-site-plan-dev. Uses REST API (not git clone). Triggers on: deploy, GitHub push, commit, workflow, CI/CD, Cloudflare, GitHub Actions.
 ---
 
 # Everest GitHub Deployment
