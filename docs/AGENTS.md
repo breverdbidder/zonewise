@@ -311,7 +311,7 @@ valuation_agent = Agent(
     goal="""Calculate max bid using formula:
     (ARV × 70%) - Repairs - $10K - MIN($25K, 15% × ARV)""",
     backstory="""You calculate After Repair Value and estimate repairs.
-    You apply the Everest Capital max bid formula consistently.""",
+    You apply the ZoneWise.AI max bid formula consistently.""",
     tools=[arv_calculator, repair_estimator, max_bid_formula],
     llm="anthropic/claude-sonnet-4-5-20250929",  # BALANCED - financial calculations
     verbose=True
