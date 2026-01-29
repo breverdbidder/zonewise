@@ -1,6 +1,6 @@
 ---
-name: everest-supabase-operations
-description: Supabase database operations for Everest Capital projects (BidDeed.AI, ZoneWise, Life OS). Includes query building, checkpoint management, insights logging, and table schemas. Connection to mocerqjnksmhcjzxrewo.supabase.co. Handles RLS policies, migrations, and error recovery. Triggers on: Supabase query, database, checkpoint, save state, insights, table schema, RLS policy.
+name: zonewise-supabase-operations
+description: Supabase database operations for ZoneWise.AI projects (BidDeed.AI, ZoneWise, Life OS). Includes query building, checkpoint management, insights logging, and table schemas. Connection to mocerqjnksmhcjzxrewo.supabase.co. Handles RLS policies, migrations, and error recovery. Triggers on: Supabase query, database, checkpoint, save state, insights, table schema, RLS policy.
 ---
 
 # Everest Supabase Operations
