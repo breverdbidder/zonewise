@@ -1,0 +1,152 @@
+# ZoneWise.AI Agent Session Workflow
+# Runs the orchestrator agent on schedule or manual trigger
+
+name: Agent Session
+
+on:
+  # Daily at 11 PM EST (4 AM UTC next day)
+  schedule:
+    - cron: '0 4 * * *'
+  
+  # Manual trigger with optional parameters
+  workflow_dispatch:
+    inputs:
+      max_tasks:
+        description: 'Maximum tasks to process'
+        required: false
+        default: '10'
+        type: string
+      priority_filter:
+        description: 'Only process tasks with this priority or higher (1=critical, 4=low)'
+        required: false
+        default: '4'
+        type: string
+      dry_run:
+        description: 'Dry run (no actual changes)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  NODE_VERSION: '20'
+  
+jobs:
+  orchestrator-session:
+    name: Run Orchestrator Agent
+    runs-on: ubuntu-latest
+    timeout-minutes: 150  # 2.5 hours max
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+        
+      - name: Run Orchestrator Agent
+        id: orchestrator
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ARCADE_API_KEY: ${{ secrets.ARCADE_API_KEY }}
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          MAX_TASKS: ${{ inputs.max_tasks || '10' }}
+          PRIORITY_FILTER: ${{ inputs.priority_filter || '4' }}
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+        run: |
+          echo "🚀 Starting ZoneWise.AI Agent Session"
+          echo "Time: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          echo "Max Tasks: $MAX_TASKS"
+          echo "Priority Filter: $PRIORITY_FILTER"
+          echo "Dry Run: $DRY_RUN"
+          
+          npx ts-node agents/orchestrator/index.ts
+          
+      - name: Upload session logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: session-logs-${{ github.run_id }}
+          path: |
+            logs/
+            *.log
+          retention-days: 30
+          
+      - name: Post failure notification
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "channel": "#zonewise-ai-alerts",
+              "text": "⚠️ ZoneWise.AI Agent Session Failed\nRun: ${{ github.run_id }}\nTime: '"$(date -u +"%Y-%m-%dT%H:%M:%SZ")"'\nURL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }' \
+            https://slack.com/api/chat.postMessage
+
+  # Post-session analysis job
+  analyze-session:
+    name: Analyze Session Results
+    needs: orchestrator-session
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Download session logs
+        uses: actions/download-artifact@v4
+        with:
+          name: session-logs-${{ github.run_id }}
+          path: logs/
+          
+      - name: Calculate metrics
+        run: |
+          echo "📊 Session Metrics"
+          echo "=================="
+          
+          # Parse logs and calculate metrics
+          if [ -f logs/session.log ]; then
+            COMPLETED=$(grep -c "✅ Completed" logs/session.log || echo "0")
+            FAILED=$(grep -c "❌ Failed" logs/session.log || echo "0")
+            BLOCKED=$(grep -c "⚠️ Blocked" logs/session.log || echo "0")
+            
+            echo "Tasks Completed: $COMPLETED"
+            echo "Tasks Failed: $FAILED"
+            echo "Tasks Blocked: $BLOCKED"
+            echo "Total: $((COMPLETED + FAILED + BLOCKED))"
+          else
+            echo "No session log found"
+          fi
+          
+      - name: Update Supabase metrics
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          # Log session metrics to Supabase
+          curl -X POST \
+            "$SUPABASE_URL/rest/v1/zonewise_agent_metrics" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "run_id": "${{ github.run_id }}",
+              "status": "${{ needs.orchestrator-session.result }}",
+              "timestamp": "'"$(date -u +"%Y-%m-%dT%H:%M:%SZ")"'"
+            }' || echo "Failed to log metrics"
