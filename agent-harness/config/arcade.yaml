@@ -1,0 +1,191 @@
+# Arcade MCP Gateway Configuration for ZoneWise.AI
+# https://arcade.dev documentation
+
+arcade:
+  # API key stored in GitHub Secrets as ARCADE_API_KEY
+  api_key: ${ARCADE_API_KEY}
+  
+  # Base URL for Arcade gateway
+  base_url: https://api.arcade.dev/v1
+  
+  # Enable/disable toolkits
+  enabled_toolkits:
+    - linear
+    - github
+    - slack
+    - supabase  # If Arcade adds Supabase support
+  
+  # Tool allowlist per toolkit (reduces context window usage)
+  # Only include tools we actually need
+  tool_allowlist:
+    linear:
+      # Issue management
+      - linear_createIssue
+      - linear_updateIssue
+      - linear_getIssue
+      - linear_listIssues
+      - linear_searchIssues
+      # State transitions
+      - linear_updateIssueState
+      # Labels
+      - linear_addIssueLabel
+      - linear_removeIssueLabel
+      # Comments
+      - linear_createComment
+      # Cycles/Sprints
+      - linear_createCycle
+      - linear_addIssueToCycle
+    
+    github:
+      # Repository
+      - github_getRepository
+      - github_listBranches
+      # Branches
+      - github_createBranch
+      - github_deleteBranch
+      # Commits
+      - github_createCommit
+      - github_getCommit
+      # Pull Requests
+      - github_createPullRequest
+      - github_updatePullRequest
+      - github_mergePullRequest
+      - github_listPullRequests
+      # Files
+      - github_getFile
+      - github_createOrUpdateFile
+    
+    slack:
+      # Messaging
+      - slack_postMessage
+      - slack_updateMessage
+      - slack_deleteMessage
+      # Channels
+      - slack_listChannels
+      - slack_getChannel
+
+# Model configuration per agent type
+models:
+  orchestrator:
+    model: claude-sonnet-4-5-20250929
+    max_tokens: 4096
+    temperature: 0.3  # Lower for more consistent delegation
+  
+  coding:
+    model: claude-sonnet-4-5-20250929
+    max_tokens: 8192
+    temperature: 0.2  # Lower for code generation
+  
+  linear:
+    model: claude-haiku-4-5-20251001
+    max_tokens: 2048
+    temperature: 0.1  # Very low for API calls
+  
+  github:
+    model: claude-haiku-4-5-20251001
+    max_tokens: 2048
+    temperature: 0.1
+  
+  slack:
+    model: claude-haiku-4-5-20251001
+    max_tokens: 1024
+    temperature: 0.3  # Slightly higher for natural messages
+
+# Session configuration
+session:
+  # Maximum tokens per orchestrator session
+  max_context_tokens: 150000  # Leave buffer from 200K limit
+  
+  # Maximum tasks per session
+  max_tasks_per_session: 10
+  
+  # Session timeout in minutes
+  timeout_minutes: 120
+  
+  # Checkpoint frequency (every N tasks)
+  checkpoint_frequency: 3
+  
+  # Retry configuration
+  retry:
+    max_attempts: 3
+    backoff_seconds: [5, 15, 60]
+
+# Linear project configuration
+linear:
+  workspace_slug: zonewise
+  project_name: "ZoneWise.AI V2"
+  
+  # State mappings for automation
+  states:
+    backlog: "Backlog"
+    in_session: "In Session"
+    in_progress: "In Progress"
+    testing: "Testing"
+    done: "Done"
+    blocked: "Blocked"
+  
+  # Priority mappings
+  priorities:
+    critical: 1
+    high: 2
+    medium: 3
+    low: 4
+
+# Slack configuration
+slack:
+  # Channel for progress updates
+  updates_channel: "#zonewise-ai-updates"
+  
+  # Channel for blockers/alerts
+  alerts_channel: "#zonewise-ai-alerts"
+  
+  # Post frequency
+  update_frequency: "every_3_tasks"  # or "session_start", "session_end", "all_tasks"
+  
+  # Message templates
+  templates:
+    session_start: |
+      🚀 *ZoneWise.AI Agent Session Started*
+      📋 Tasks queued: {task_count}
+      ⏱️ Estimated duration: {estimated_minutes} min
+    
+    task_complete: |
+      ✅ *Task Completed*
+      {task_title}
+      🔗 Linear: {linear_url}
+    
+    session_end: |
+      📊 *ZoneWise.AI Session Summary*
+      ✅ Completed: {completed_count}
+      🔄 In Progress: {in_progress_count}
+      ⚠️ Blocked: {blocked_count}
+      ⏱️ Duration: {duration_minutes} min
+
+# GitHub configuration
+github:
+  owner: breverdbidder
+  repo: zonewise-v2
+  default_branch: main
+  
+  # PR configuration
+  pr:
+    base_branch: main
+    auto_merge: false  # Require human review
+    labels:
+      - "ai-generated"
+      - "needs-review"
+  
+  # Branch naming
+  branch_prefix: "ai/"
+
+# Supabase configuration (for logging/metrics)
+supabase:
+  url: https://mocerqjnksmhcjzxrewo.supabase.co
+  # Keys stored in GitHub Secrets
+  
+  # Tables for agent harness
+  tables:
+    sessions: zonewise_agent_sessions
+    tasks: zonewise_agent_tasks
+    metrics: zonewise_agent_metrics
+    errors: zonewise_agent_errors
