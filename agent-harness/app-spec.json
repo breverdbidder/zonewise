@@ -1,0 +1,451 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "project": {
+    "name": "ZoneWise.AI",
+    "description": "AI-powered zoning analysis and site planning platform for Brevard County",
+    "repo": "breverdbidder/zonewise-v2",
+    "deployment": {
+      "platform": "vercel",
+      "domain": "zonewise.ai"
+    },
+    "database": {
+      "provider": "supabase",
+      "project_ref": "mocerqjnksmhcjzxrewo"
+    },
+    "version": "2.0.0"
+  },
+  "stripe": {
+    "mode": "live",
+    "tiers": [
+      {
+        "id": "free",
+        "name": "Free",
+        "price_monthly": 0,
+        "limits": {
+          "analyses_per_month": 5,
+          "exports_per_month": 0,
+          "saved_projects": 1,
+          "api_calls": 0
+        },
+        "features": [
+          "Basic zoning lookup",
+          "Single parcel analysis",
+          "Community support"
+        ]
+      },
+      {
+        "id": "starter",
+        "name": "Starter",
+        "price_monthly": 49,
+        "stripe_price_id": "price_starter_monthly",
+        "limits": {
+          "analyses_per_month": 50,
+          "exports_per_month": 10,
+          "saved_projects": 10,
+          "api_calls": 100
+        },
+        "features": [
+          "All Free features",
+          "PDF export",
+          "Bulk parcel analysis",
+          "Email support"
+        ]
+      },
+      {
+        "id": "pro",
+        "name": "Professional",
+        "price_monthly": 199,
+        "stripe_price_id": "price_pro_monthly",
+        "limits": {
+          "analyses_per_month": 500,
+          "exports_per_month": 100,
+          "saved_projects": 100,
+          "api_calls": 1000
+        },
+        "features": [
+          "All Starter features",
+          "API access",
+          "Custom reports",
+          "Priority support",
+          "White-label exports"
+        ]
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "price_monthly": 999,
+        "stripe_price_id": "price_enterprise_monthly",
+        "limits": {
+          "analyses_per_month": -1,
+          "exports_per_month": -1,
+          "saved_projects": -1,
+          "api_calls": -1
+        },
+        "features": [
+          "All Pro features",
+          "Unlimited everything",
+          "Dedicated support",
+          "Custom integrations",
+          "SLA guarantee"
+        ]
+      }
+    ]
+  },
+  "data_sources": {
+    "gis": {
+      "zoning_polygons": {
+        "url": "https://gis.brevardfl.gov/gissrv/rest/services/Planning_Development/Zoning_WKID2881/MapServer/0",
+        "format": "ESRI REST",
+        "count": 10092,
+        "codes": 56
+      },
+      "parcels": {
+        "url": "https://gis.brevardfl.gov/gissrv/rest/services/Base_Map/Parcel_New_WKID2881/MapServer/5",
+        "format": "ESRI REST"
+      }
+    },
+    "mapbox": {
+      "token_env": "MAPBOX_PUBLIC_TOKEN",
+      "style": "mapbox://styles/mapbox/satellite-streets-v12"
+    }
+  },
+  "features": [
+    {
+      "id": "F001",
+      "name": "Interactive Zoning Map",
+      "description": "Display Brevard County zoning polygons on interactive Mapbox map",
+      "priority": "critical",
+      "dependencies": [],
+      "tier_required": "free",
+      "acceptance_criteria": [
+        "10,092 zoning polygons render on map",
+        "56 unique zoning codes in legend",
+        "Click polygon displays zoning details panel",
+        "Zoom to parcel on selection",
+        "Mobile responsive layout"
+      ]
+    },
+    {
+      "id": "F002",
+      "name": "Parcel Search",
+      "description": "Search parcels by address, owner name, or parcel ID",
+      "priority": "critical",
+      "dependencies": ["F001"],
+      "tier_required": "free",
+      "acceptance_criteria": [
+        "Search returns results in <500ms",
+        "Autocomplete suggestions after 3 characters",
+        "Map zooms to selected parcel",
+        "Parcel boundary highlighted on map",
+        "Recent searches saved locally"
+      ]
+    },
+    {
+      "id": "F003",
+      "name": "Zoning Analysis Report",
+      "description": "Generate comprehensive zoning analysis for selected parcel",
+      "priority": "high",
+      "dependencies": ["F001", "F002"],
+      "tier_required": "free",
+      "acceptance_criteria": [
+        "Display current zoning code and description",
+        "Show permitted uses list",
+        "Show conditional uses list",
+        "Display setback requirements",
+        "Show height restrictions",
+        "Display density/FAR limits"
+      ]
+    },
+    {
+      "id": "F004",
+      "name": "PDF Export",
+      "description": "Export zoning analysis as professional PDF report",
+      "priority": "high",
+      "dependencies": ["F003"],
+      "tier_required": "starter",
+      "acceptance_criteria": [
+        "PDF includes map screenshot",
+        "PDF includes all analysis data",
+        "Professional formatting with branding",
+        "Download within 5 seconds",
+        "Export count tracked per user"
+      ]
+    },
+    {
+      "id": "F005",
+      "name": "User Authentication",
+      "description": "Supabase Auth with email and Google OAuth",
+      "priority": "critical",
+      "dependencies": [],
+      "tier_required": "free",
+      "acceptance_criteria": [
+        "Email/password signup and login",
+        "Google OAuth option",
+        "Password reset flow",
+        "Session persistence",
+        "Protected routes for paid features"
+      ]
+    },
+    {
+      "id": "F006",
+      "name": "Stripe Subscription Management",
+      "description": "Handle subscription tiers with Stripe Checkout",
+      "priority": "critical",
+      "dependencies": ["F005"],
+      "tier_required": "starter",
+      "acceptance_criteria": [
+        "Stripe Checkout integration",
+        "Webhook handling for subscription events",
+        "Customer portal for plan changes",
+        "Usage tracking per tier limits",
+        "Upgrade/downgrade flows"
+      ]
+    },
+    {
+      "id": "F007",
+      "name": "Bulk Parcel Analysis",
+      "description": "Analyze multiple parcels at once",
+      "priority": "medium",
+      "dependencies": ["F003", "F006"],
+      "tier_required": "starter",
+      "acceptance_criteria": [
+        "Upload CSV of parcel IDs",
+        "Batch process up to 50 parcels",
+        "Progress indicator during processing",
+        "Combined report output",
+        "Error handling for invalid parcels"
+      ]
+    },
+    {
+      "id": "F008",
+      "name": "Saved Projects",
+      "description": "Save and manage analysis projects",
+      "priority": "medium",
+      "dependencies": ["F005", "F003"],
+      "tier_required": "free",
+      "acceptance_criteria": [
+        "Save current analysis as project",
+        "List saved projects",
+        "Load saved project",
+        "Delete projects",
+        "Project count enforced per tier"
+      ]
+    },
+    {
+      "id": "F009",
+      "name": "API Access",
+      "description": "REST API for programmatic access",
+      "priority": "low",
+      "dependencies": ["F003", "F006"],
+      "tier_required": "pro",
+      "acceptance_criteria": [
+        "API key generation",
+        "Rate limiting per tier",
+        "OpenAPI documentation",
+        "SDKs for Python and JavaScript",
+        "Usage dashboard"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T001",
+      "feature": "F001",
+      "title": "Setup Next.js 14 project with App Router",
+      "dependencies": [],
+      "estimated_hours": 1,
+      "tags": ["setup", "infrastructure"]
+    },
+    {
+      "id": "T002",
+      "feature": "F001",
+      "title": "Install and configure Mapbox GL JS",
+      "dependencies": ["T001"],
+      "estimated_hours": 2,
+      "tags": ["map", "integration"]
+    },
+    {
+      "id": "T003",
+      "feature": "F001",
+      "title": "Create zoning polygon fetch service",
+      "dependencies": ["T001"],
+      "estimated_hours": 3,
+      "tags": ["data", "gis"]
+    },
+    {
+      "id": "T004",
+      "feature": "F001",
+      "title": "Implement polygon rendering layer",
+      "dependencies": ["T002", "T003"],
+      "estimated_hours": 4,
+      "tags": ["map", "visualization"]
+    },
+    {
+      "id": "T005",
+      "feature": "F001",
+      "title": "Create zoning legend component",
+      "dependencies": ["T004"],
+      "estimated_hours": 2,
+      "tags": ["ui", "component"]
+    },
+    {
+      "id": "T006",
+      "feature": "F001",
+      "title": "Implement polygon click handler",
+      "dependencies": ["T004"],
+      "estimated_hours": 2,
+      "tags": ["interaction", "map"]
+    },
+    {
+      "id": "T007",
+      "feature": "F001",
+      "title": "Create zoning details panel",
+      "dependencies": ["T006"],
+      "estimated_hours": 3,
+      "tags": ["ui", "component"]
+    },
+    {
+      "id": "T008",
+      "feature": "F002",
+      "title": "Setup BCPAO parcel search API integration",
+      "dependencies": ["T001"],
+      "estimated_hours": 3,
+      "tags": ["data", "api"]
+    },
+    {
+      "id": "T009",
+      "feature": "F002",
+      "title": "Create search input with autocomplete",
+      "dependencies": ["T008"],
+      "estimated_hours": 3,
+      "tags": ["ui", "search"]
+    },
+    {
+      "id": "T010",
+      "feature": "F002",
+      "title": "Implement zoom-to-parcel functionality",
+      "dependencies": ["T002", "T009"],
+      "estimated_hours": 2,
+      "tags": ["map", "navigation"]
+    },
+    {
+      "id": "T011",
+      "feature": "F005",
+      "title": "Setup Supabase project and Auth",
+      "dependencies": ["T001"],
+      "estimated_hours": 2,
+      "tags": ["auth", "infrastructure"]
+    },
+    {
+      "id": "T012",
+      "feature": "F005",
+      "title": "Create auth UI components",
+      "dependencies": ["T011"],
+      "estimated_hours": 3,
+      "tags": ["auth", "ui"]
+    },
+    {
+      "id": "T013",
+      "feature": "F005",
+      "title": "Implement protected routes middleware",
+      "dependencies": ["T011"],
+      "estimated_hours": 2,
+      "tags": ["auth", "routing"]
+    },
+    {
+      "id": "T014",
+      "feature": "F006",
+      "title": "Setup Stripe products and prices",
+      "dependencies": [],
+      "estimated_hours": 1,
+      "tags": ["stripe", "setup"]
+    },
+    {
+      "id": "T015",
+      "feature": "F006",
+      "title": "Implement Stripe Checkout integration",
+      "dependencies": ["T011", "T014"],
+      "estimated_hours": 4,
+      "tags": ["stripe", "payments"]
+    },
+    {
+      "id": "T016",
+      "feature": "F006",
+      "title": "Create webhook handler for subscription events",
+      "dependencies": ["T015"],
+      "estimated_hours": 3,
+      "tags": ["stripe", "webhooks"]
+    },
+    {
+      "id": "T017",
+      "feature": "F003",
+      "title": "Create zoning code database schema",
+      "dependencies": ["T011"],
+      "estimated_hours": 2,
+      "tags": ["database", "schema"]
+    },
+    {
+      "id": "T018",
+      "feature": "F003",
+      "title": "Import Brevard County zoning regulations",
+      "dependencies": ["T017"],
+      "estimated_hours": 4,
+      "tags": ["data", "import"]
+    },
+    {
+      "id": "T019",
+      "feature": "F003",
+      "title": "Create analysis report component",
+      "dependencies": ["T007", "T018"],
+      "estimated_hours": 4,
+      "tags": ["ui", "report"]
+    },
+    {
+      "id": "T020",
+      "feature": "F004",
+      "title": "Setup PDF generation with react-pdf",
+      "dependencies": ["T019"],
+      "estimated_hours": 4,
+      "tags": ["export", "pdf"]
+    }
+  ],
+  "linear": {
+    "workspace": "zonewise",
+    "project_id": null,
+    "labels": [
+      {"name": "critical", "color": "#FF0000"},
+      {"name": "high", "color": "#FF8800"},
+      {"name": "medium", "color": "#FFCC00"},
+      {"name": "low", "color": "#00CC00"},
+      {"name": "agent:orchestrator", "color": "#8B5CF6"},
+      {"name": "agent:coding", "color": "#06B6D4"},
+      {"name": "blocked", "color": "#DC2626"}
+    ],
+    "states": [
+      {"name": "Backlog", "type": "backlog"},
+      {"name": "In Session", "type": "started"},
+      {"name": "In Progress", "type": "started"},
+      {"name": "Testing", "type": "started"},
+      {"name": "Done", "type": "completed"},
+      {"name": "Blocked", "type": "canceled"}
+    ]
+  },
+  "testing": {
+    "framework": "playwright",
+    "coverage_target": 80,
+    "e2e_scenarios": [
+      "User can view zoning map",
+      "User can search for parcel",
+      "User can view zoning analysis",
+      "User can sign up and log in",
+      "User can subscribe to paid plan",
+      "User can export PDF report"
+    ]
+  },
+  "metadata": {
+    "created": "2026-02-01",
+    "updated": "2026-02-01",
+    "version": "1.0.0",
+    "author": "Claude AI Architect"
+  }
+}
