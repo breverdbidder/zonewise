@@ -1,0 +1,184 @@
+{
+  "template_name": "ZoneWise 63 KPI Development Analysis",
+  "version": "2.0.0",
+  "description": "Comprehensive development analysis report with 63 KPIs across 10 categories",
+  "author": "ZoneWise.AI",
+  "last_updated": "2026-02-04",
+  
+  "categories": [
+    {
+      "id": 1,
+      "name": "Site & Parcel Metrics",
+      "kpi_count": 8,
+      "kpis": [
+        {"num": 1, "name": "Parcel ID", "source": "BCPAO", "type": "string"},
+        {"num": 2, "name": "Tax Account", "source": "BCPAO", "type": "string"},
+        {"num": 3, "name": "Lot Area (Acres)", "source": "BCPAO", "type": "decimal"},
+        {"num": 4, "name": "Lot Area (ft²)", "source": "Calculated", "formula": "acres * 43560", "type": "integer"},
+        {"num": 5, "name": "Lot Type", "source": "Plat", "type": "string"},
+        {"num": 6, "name": "Subdivision", "source": "BCPAO", "type": "string"},
+        {"num": 7, "name": "Vacant Status", "source": "BCPAO", "type": "boolean"},
+        {"num": 8, "name": "Legal Description", "source": "Deed", "type": "string"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Existing Building Metrics",
+      "kpi_count": 5,
+      "kpis": [
+        {"num": 9, "name": "Existing Building Area", "source": "BCPAO", "type": "integer"},
+        {"num": 10, "name": "Total Sub Area", "source": "BCPAO", "type": "integer"},
+        {"num": 11, "name": "Existing Building Use", "source": "BCPAO", "type": "string"},
+        {"num": 12, "name": "Year Built", "source": "BCPAO", "type": "year"},
+        {"num": 13, "name": "Current Land Use Code", "source": "BCPAO", "type": "string"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Zoning & Regulatory",
+      "kpi_count": 10,
+      "kpis": [
+        {"num": 14, "name": "Zoning Code Source", "source": "Municode", "type": "string"},
+        {"num": 15, "name": "Zoning District", "source": "Supabase", "type": "string"},
+        {"num": 16, "name": "Zoning Category", "source": "LDC", "type": "enum", "values": ["Residential", "Commercial", "Industrial", "Mixed-Use", "Other"]},
+        {"num": 17, "name": "Maximum Height", "source": "LDC", "type": "integer", "unit": "ft"},
+        {"num": 18, "name": "Maximum Stories", "source": "Calculated", "formula": "max_height / 12", "type": "integer"},
+        {"num": 19, "name": "Historic District", "source": "Historic Registry", "type": "boolean"},
+        {"num": 20, "name": "LEED Requirement", "source": "Local Ordinance", "type": "string"},
+        {"num": 21, "name": "Live Local Applicability", "source": "State Law", "type": "boolean"},
+        {"num": 22, "name": "TOD Status", "source": "Transit Map", "type": "string"},
+        {"num": 23, "name": "Ordinance Section", "source": "LDC", "type": "string"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Development Capacity",
+      "kpi_count": 9,
+      "kpis": [
+        {"num": 24, "name": "Floor Area Ratio (FAR)", "source": "LDC", "type": "decimal"},
+        {"num": 25, "name": "Maximum Building Area", "source": "Calculated", "formula": "lot_sqft * FAR", "type": "integer"},
+        {"num": 26, "name": "Maximum Lot Coverage", "source": "LDC", "type": "percent"},
+        {"num": 27, "name": "Maximum Building Footprint", "source": "Calculated", "formula": "lot_sqft * max_coverage", "type": "integer"},
+        {"num": 28, "name": "Minimum Open Space", "source": "LDC", "type": "percent"},
+        {"num": 29, "name": "Unused Development Rights", "source": "Calculated", "formula": "max_building_area - existing_area", "type": "integer"},
+        {"num": 30, "name": "Current FAR Utilization", "source": "Calculated", "formula": "existing_area / lot_sqft", "type": "decimal"},
+        {"num": 31, "name": "FAR Utilization Rate", "source": "Calculated", "formula": "(current_far / max_far) * 100", "type": "percent"},
+        {"num": 32, "name": "Expansion Potential", "source": "Calculated", "formula": "(unused_rights / existing_area) * 100", "type": "percent"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Residential Capacity",
+      "kpi_count": 4,
+      "kpis": [
+        {"num": 33, "name": "Residential Density", "source": "LDC", "type": "string"},
+        {"num": 34, "name": "Max Residential Area", "source": "LDC", "type": "integer"},
+        {"num": 35, "name": "Max Residential Units", "source": "LDC", "type": "integer"},
+        {"num": 36, "name": "Residential Allowed Uses", "source": "LDC", "type": "string"}
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Lodging Capacity",
+      "kpi_count": 4,
+      "kpis": [
+        {"num": 37, "name": "Lodging Density", "source": "LDC", "type": "string"},
+        {"num": 38, "name": "Max Lodging Area", "source": "Calculated", "type": "integer"},
+        {"num": 39, "name": "Max Lodging Rooms (est)", "source": "Estimated", "type": "integer"},
+        {"num": 40, "name": "Lodging Allowed Uses", "source": "LDC", "type": "string"}
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Commercial/Office Capacity",
+      "kpi_count": 5,
+      "kpis": [
+        {"num": 41, "name": "Max Office Area", "source": "Calculated", "type": "integer"},
+        {"num": 42, "name": "Max Commercial Area", "source": "Calculated", "type": "integer"},
+        {"num": 43, "name": "Office Expansion Potential", "source": "Calculated", "type": "integer"},
+        {"num": 44, "name": "Commercial Allowed Uses", "source": "LDC", "type": "string"},
+        {"num": 45, "name": "Office Allowed Uses", "source": "LDC", "type": "string"}
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Setback Requirements",
+      "kpi_count": 5,
+      "kpis": [
+        {"num": 46, "name": "Front Setback", "source": "LDC", "type": "integer", "unit": "ft"},
+        {"num": 47, "name": "Side Setback", "source": "LDC", "type": "integer", "unit": "ft"},
+        {"num": 48, "name": "Rear Setback", "source": "LDC", "type": "integer", "unit": "ft"},
+        {"num": 49, "name": "Min Lot Size", "source": "LDC", "type": "integer", "unit": "sqft"},
+        {"num": 50, "name": "Min Lot Width", "source": "LDC", "type": "integer", "unit": "ft"}
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Allowed Uses",
+      "kpi_count": 6,
+      "kpis": [
+        {"num": 51, "name": "Civic Uses (by Right)", "source": "LDC", "type": "string"},
+        {"num": 52, "name": "Civic Uses (by Warrant)", "source": "LDC", "type": "string"},
+        {"num": 53, "name": "Civic Uses (by Exception)", "source": "LDC", "type": "string"},
+        {"num": 54, "name": "Educational Uses", "source": "LDC", "type": "string"},
+        {"num": 55, "name": "Industrial Uses", "source": "LDC", "type": "string"},
+        {"num": 56, "name": "Infrastructure Uses", "source": "LDC", "type": "string"}
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Financial Opportunity",
+      "kpi_count": 7,
+      "kpis": [
+        {"num": 57, "name": "Current Market Value", "source": "BCPAO", "type": "currency"},
+        {"num": 58, "name": "Last Sale Price", "source": "BCPAO", "type": "currency"},
+        {"num": 59, "name": "Last Sale Date", "source": "BCPAO", "type": "date"},
+        {"num": 60, "name": "Value per Acre", "source": "Calculated", "formula": "market_value / acreage", "type": "currency"},
+        {"num": 61, "name": "Value per SF (Land)", "source": "Calculated", "formula": "market_value / lot_sqft", "type": "currency"},
+        {"num": 62, "name": "Untapped Dev Potential", "source": "Calculated", "type": "percent"},
+        {"num": 63, "name": "Additional Buildable SF", "source": "Calculated", "type": "integer"}
+      ]
+    }
+  ],
+  
+  "data_sources": {
+    "primary": [
+      {
+        "name": "Supabase",
+        "tables": ["parcel_zones", "zoning_districts", "dimensional_standards", "jurisdictions"],
+        "url": "https://mocerqjnksmhcjzxrewo.supabase.co"
+      },
+      {
+        "name": "BCPAO",
+        "endpoint": "https://www.bcpao.us/api/v1/search",
+        "fields": ["parcelId", "account", "acreage", "marketValue", "salePrice", "yearBuilt", "landUseCode"]
+      }
+    ],
+    "secondary": [
+      {"name": "Municode", "url": "https://library.municode.com"},
+      {"name": "GIS Portal", "url": "https://gis.brevardfl.gov"},
+      {"name": "FAA OE/AAA", "url": "https://oeaaa.faa.gov"},
+      {"name": "Historic Registry", "url": "https://www.nps.gov/subjects/nationalregister"}
+    ]
+  },
+  
+  "styling": {
+    "brand_colors": {
+      "navy": "#1E3A5F",
+      "green": "#E8F5E9",
+      "blue": "#E3F2FD",
+      "orange": "#FFF3E0",
+      "red": "#FFEBEE",
+      "purple": "#F3E5F5"
+    },
+    "font": "Arial",
+    "page_size": "US Letter",
+    "margins": "0.625 inches"
+  },
+  
+  "integrations": {
+    "supported_outputs": ["docx", "pdf", "json", "csv"],
+    "api_endpoint": "/api/reports/63kpi",
+    "webhook_support": true
+  }
+}
