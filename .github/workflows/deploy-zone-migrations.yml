@@ -1,0 +1,65 @@
+name: Deploy Zone Standards & Permitted Uses Migrations
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'migrations/005_zone_standards.sql'
+      - 'migrations/006_permitted_uses.sql'
+
+jobs:
+  deploy-migrations:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Deploy 005_zone_standards.sql
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+        run: |
+          echo "Deploying 005_zone_standards.sql..."
+          psql "postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres" \
+            -f migrations/005_zone_standards.sql
+          echo "zone_standards migration complete!"
+
+      - name: Deploy 006_permitted_uses.sql
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+        run: |
+          echo "Deploying 006_permitted_uses.sql..."
+          psql "postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres" \
+            -f migrations/006_permitted_uses.sql
+          echo "permitted_uses migration complete!"
+
+      - name: Verify Tables Created
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+        run: |
+          echo "Verifying tables..."
+          DB_URL="postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres"
+
+          echo "=== zone_standards ==="
+          psql "$DB_URL" -c "\d public.zone_standards" || echo "zone_standards not found"
+          psql "$DB_URL" -c "SELECT count(*) as zone_standards_rows FROM public.zone_standards;"
+
+          echo "=== permitted_uses ==="
+          psql "$DB_URL" -c "\d public.permitted_uses" || echo "permitted_uses not found"
+          psql "$DB_URL" -c "SELECT count(*) as permitted_uses_rows FROM public.permitted_uses;"
+
+          echo "=== permission_types ==="
+          psql "$DB_URL" -c "SELECT * FROM public.permission_types;"
+
+          echo "=== use_categories ==="
+          psql "$DB_URL" -c "SELECT count(*) as category_count FROM public.use_categories;"
+
+          echo "=== Constraints ==="
+          psql "$DB_URL" -c "SELECT conname, contype FROM pg_constraint WHERE conrelid = 'public.zone_standards'::regclass;"
+          psql "$DB_URL" -c "SELECT conname, contype FROM pg_constraint WHERE conrelid = 'public.permitted_uses'::regclass;"
+
+          echo "All verifications complete!"

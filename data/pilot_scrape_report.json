@@ -1,0 +1,32 @@
+{
+  "pilot_scrape_report": {
+    "timestamp": "2026-02-06T14:33:47.817637Z",
+    "jurisdiction": "Melbourne",
+    "jurisdiction_id": 1,
+    "existing_data": {
+      "jurisdictions": 1,
+      "districts": "0-9/28",
+      "dimensional_standards": "0-4/13",
+      "ordinances": "0-4/690"
+    },
+    "scrape_test": {
+      "success": true,
+      "content_size": 216370,
+      "text_size": 8908,
+      "ordinance_refs": 0,
+      "section_links": 53,
+      "method": "agentql+playwright"
+    },
+    "insert_test": {
+      "success": false,
+      "error": "{\"code\":\"23514\",\"details\":\"Failing row contains (6090, 1332, Single-family residential (pilot test), P, By-right use, no special approval needed, Pilot scrape test - Day 1-2, 2026-02-06 14:33:46.84426"
+    },
+    "status": "PARTIAL",
+    "next_steps": [
+      "Deploy zone_standards and permitted_uses migrations via GitHub Actions",
+      "Scale scraping to all 17 Brevard jurisdictions",
+      "Enable AgentQL Pro for intelligent data extraction",
+      "Set up overnight batch processing with Claude API"
+    ]
+  }
+}

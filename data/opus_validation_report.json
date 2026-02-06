@@ -1,0 +1,45 @@
+{
+  "validation_report": {
+    "timestamp": "2026-02-06T14:36:01.665162Z",
+    "model": "claude-sonnet-4-5-20250929",
+    "tests_passed": 4,
+    "tests_total": 4,
+    "results": [
+      {
+        "test": "basic_completion",
+        "success": true,
+        "elapsed_seconds": 5.36,
+        "input_tokens": 139,
+        "output_tokens": 264
+      },
+      {
+        "test": "streaming",
+        "success": true,
+        "time_to_first_chunk": 2.01,
+        "total_elapsed_seconds": 12.58,
+        "chunks": 179,
+        "input_tokens": 73,
+        "output_tokens": 710
+      },
+      {
+        "test": "extended_thinking",
+        "success": true,
+        "elapsed_seconds": 59.25,
+        "thinking_length": 937,
+        "response_length": 7955,
+        "input_tokens": 154,
+        "output_tokens": 2602
+      },
+      {
+        "test": "structured_extraction",
+        "success": true,
+        "json_valid": true,
+        "permitted_uses_count": 4,
+        "conditional_uses_count": 4,
+        "elapsed_seconds": 4.01,
+        "input_tokens": 422,
+        "output_tokens": 355
+      }
+    ]
+  }
+}
