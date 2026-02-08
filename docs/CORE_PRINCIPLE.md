@@ -2,7 +2,7 @@
 ## AI Chatbot/NLP as Foundation - Everything Else Supports It
 
 **Encoded for System Memory and Self-Learning**  
-**Date:** January 12, 2026  
+**Date:** February 8, 2026 (updated from January 12, 2026)  
 **Status:** FOUNDATIONAL PRINCIPLE
 
 ---
@@ -50,6 +50,7 @@ Everything else (data, database, reports, maps) **SUPPORTS THE CHATBOT**.
 
 The chatbot doesn't serve the database.
 The database serves the chatbot.
+The desktop app (ZoneWise Desktop v2.0.0) delivers the chatbot.
 
 ---
 
