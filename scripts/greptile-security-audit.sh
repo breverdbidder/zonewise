@@ -87,7 +87,7 @@ echo ""
 
 echo "🔍 Checking repo index status..."
 for repo in "breverdbidder/zonewise-desktop" "breverdbidder/zonewise-web"; do
-  encoded=$(echo "github:main:${repo}" | python3 -c "import sys, urllib.parse; print(urllib.parse.quote(sys.stdin.read().strip(), safe=''))")
+  encoded=$(echo "github:main:${repo}" | python -c "import sys, urllib.parse; print(urllib.parse.quote(sys.stdin.read().strip(), safe=''))")
   status=$(curl -s -X GET "${GREPTILE_BASE}/repositories/${encoded}" \
     -H "Authorization: Bearer ${GREPTILE_API_KEY}" \
     -H "X-Github-Token: ${GITHUB_TOKEN}" \
