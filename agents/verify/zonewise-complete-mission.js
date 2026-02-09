@@ -2,12 +2,13 @@
 /**
  * ZONEWISE COMPLETE MISSION
  * Autonomous 7-hour agent for 100% Brevard County zoning data completion
- * 
+ *
  * Run: node zonewise-complete-mission.js
- * 
+ *
  * NO HUMAN INTERVENTION REQUIRED
  */
 
+import 'dotenv/config';
 import { generateText } from 'ai';
 import { anthropic } from '@ai-sdk/anthropic';
 import Firecrawl from '@mendable/firecrawl-js';

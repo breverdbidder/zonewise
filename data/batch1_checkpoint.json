@@ -1,0 +1,1672 @@
+{
+  "jurisdictions": {
+    "631": {
+      "status": "failed",
+      "updated_at": "2026-02-06T12:44:51.034563",
+      "chars": 341,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "961": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T12:56:35.291890",
+      "chars": 366521,
+      "sections": 50,
+      "districts": 11,
+      "standards": 3,
+      "uses": 12,
+      "districts_inserted": 11,
+      "standards_inserted": 3,
+      "uses_inserted": 12
+    },
+    "867": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T13:13:07.060401",
+      "chars": 11257106,
+      "sections": 50,
+      "districts": 39,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 39,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "901": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T13:27:48.883283",
+      "chars": 4859337,
+      "sections": 50,
+      "districts": 16,
+      "standards": 13,
+      "uses": 16,
+      "districts_inserted": 16,
+      "standards_inserted": 13,
+      "uses_inserted": 16
+    },
+    "914": {
+      "status": "failed",
+      "updated_at": "2026-02-06T13:28:27.845491",
+      "chars": 167,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "815": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T13:32:52.375763",
+      "chars": 666636,
+      "sections": 13,
+      "districts": 16,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 16,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "929": {
+      "status": "failed",
+      "updated_at": "2026-02-06T13:43:06.617521",
+      "chars": 2588343,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "912": {
+      "status": "failed",
+      "updated_at": "2026-02-06T13:53:24.112536",
+      "chars": 1957369,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "630": {
+      "status": "failed",
+      "updated_at": "2026-02-06T13:53:57.095103",
+      "chars": 138,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "942": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T14:04:47.307880",
+      "chars": 2699630,
+      "sections": 50,
+      "districts": 3,
+      "standards": 0,
+      "uses": 6,
+      "districts_inserted": 3,
+      "standards_inserted": 0,
+      "uses_inserted": 6
+    },
+    "874": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T14:11:43.475003",
+      "chars": 49857,
+      "sections": 32,
+      "districts": 8,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 8,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "1001": {
+      "status": "failed",
+      "updated_at": "2026-02-06T14:21:31.484341",
+      "chars": 1631512,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "627": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T14:32:11.312474",
+      "chars": 5089727,
+      "sections": 50,
+      "districts": 11,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 11,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "945": {
+      "status": "failed",
+      "updated_at": "2026-02-06T14:42:21.294262",
+      "chars": 5089727,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "826": {
+      "status": "failed",
+      "updated_at": "2026-02-06T14:52:41.422462",
+      "chars": 6485994,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "934": {
+      "status": "failed",
+      "updated_at": "2026-02-06T15:03:10.538052",
+      "chars": 3469468,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "962": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T15:08:04.455119",
+      "chars": 912588,
+      "sections": 11,
+      "districts": 25,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 25,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "1073": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T15:10:21.596004",
+      "chars": 591341,
+      "sections": 5,
+      "districts": 7,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 7,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "1075": {
+      "status": "failed",
+      "updated_at": "2026-02-06T15:10:52.217767",
+      "chars": 88,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1074": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T15:21:44.964997",
+      "chars": 828074,
+      "sections": 50,
+      "districts": 3,
+      "standards": 1,
+      "uses": 0,
+      "districts_inserted": 3,
+      "standards_inserted": 1,
+      "uses_inserted": 0
+    },
+    "970": {
+      "status": "failed",
+      "updated_at": "2026-02-06T15:22:20.132625",
+      "chars": 154,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1076": {
+      "status": "failed",
+      "updated_at": "2026-02-06T15:22:53.029989",
+      "chars": 69,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "818": {
+      "status": "failed",
+      "updated_at": "2026-02-06T15:23:24.202947",
+      "chars": 148,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "625": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T15:34:13.096658",
+      "chars": 2397159,
+      "sections": 50,
+      "districts": 6,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 6,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "822": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T15:44:51.503281",
+      "chars": 133641,
+      "sections": 50,
+      "districts": 11,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 11,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "1077": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T15:56:16.430722",
+      "chars": 4102980,
+      "sections": 50,
+      "districts": 7,
+      "standards": 0,
+      "uses": 19,
+      "districts_inserted": 7,
+      "standards_inserted": 0,
+      "uses_inserted": 19
+    },
+    "848": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T16:07:24.652594",
+      "chars": 555577,
+      "sections": 50,
+      "districts": 5,
+      "standards": 1,
+      "uses": 12,
+      "districts_inserted": 5,
+      "standards_inserted": 1,
+      "uses_inserted": 12
+    },
+    "839": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T16:19:06.630028",
+      "chars": 19908176,
+      "sections": 50,
+      "districts": 1,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 1,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "870": {
+      "status": "failed",
+      "updated_at": "2026-02-06T16:21:48.032657",
+      "chars": 220004,
+      "sections": 10,
+      "error": "no_districts"
+    },
+    "830": {
+      "status": "failed",
+      "updated_at": "2026-02-06T16:24:41.445485",
+      "chars": 10138,
+      "sections": 7,
+      "error": "no_districts"
+    },
+    "1111": {
+      "status": "failed",
+      "updated_at": "2026-02-06T16:27:19.672487",
+      "chars": 196765,
+      "sections": 7,
+      "error": "no_districts"
+    },
+    "1117": {
+      "status": "failed",
+      "updated_at": "2026-02-06T16:29:53.617292",
+      "chars": 890902,
+      "sections": 9,
+      "error": "no_districts"
+    },
+    "1116": {
+      "status": "failed",
+      "updated_at": "2026-02-06T16:30:28.088350",
+      "chars": 148,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1112": {
+      "status": "failed",
+      "updated_at": "2026-02-06T16:30:57.293356",
+      "chars": 88,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1113": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T16:34:41.620938",
+      "chars": 1515372,
+      "sections": 14,
+      "districts": 3,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 3,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "924": {
+      "status": "failed",
+      "updated_at": "2026-02-06T16:35:12.054737",
+      "chars": 150,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1119": {
+      "status": "failed",
+      "updated_at": "2026-02-06T16:35:47.688799",
+      "chars": 5409,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1114": {
+      "status": "failed",
+      "updated_at": "2026-02-06T16:36:19.456691",
+      "chars": 3339,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1118": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T16:46:49.386210",
+      "chars": 4245730,
+      "sections": 49,
+      "districts": 15,
+      "standards": 11,
+      "uses": 2,
+      "districts_inserted": 15,
+      "standards_inserted": 11,
+      "uses_inserted": 2
+    },
+    "825": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T16:47:55.466477",
+      "chars": 85,
+      "sections": 1,
+      "districts": 15,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 15,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "889": {
+      "status": "failed",
+      "updated_at": "2026-02-06T16:48:26.288278",
+      "chars": 156,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1110": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T16:51:31.254390",
+      "chars": 669444,
+      "sections": 10,
+      "districts": 1,
+      "standards": 0,
+      "uses": 2,
+      "districts_inserted": 1,
+      "standards_inserted": 0,
+      "uses_inserted": 2
+    },
+    "1115": {
+      "status": "failed",
+      "updated_at": "2026-02-06T16:54:28.373619",
+      "chars": 204425,
+      "sections": 9,
+      "error": "no_districts"
+    },
+    "633": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T16:55:30.191718",
+      "chars": 242,
+      "sections": 1,
+      "districts": 14,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 14,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "977": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T17:08:38.314855",
+      "chars": 8262238,
+      "sections": 50,
+      "districts": 19,
+      "standards": 0,
+      "uses": 100,
+      "districts_inserted": 19,
+      "standards_inserted": 0,
+      "uses_inserted": 100
+    },
+    "629": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T17:16:01.517574",
+      "chars": 2567815,
+      "sections": 32,
+      "districts": 51,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 51,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "628": {
+      "status": "failed",
+      "updated_at": "2026-02-06T17:16:31.850206",
+      "chars": 182,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "634": {
+      "status": "failed",
+      "updated_at": "2026-02-06T17:17:01.258146",
+      "chars": 16,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "992": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T17:27:46.456140",
+      "chars": 9341776,
+      "sections": 50,
+      "districts": 2,
+      "standards": 1,
+      "uses": 13,
+      "districts_inserted": 2,
+      "standards_inserted": 1,
+      "uses_inserted": 13
+    },
+    "968": {
+      "status": "failed",
+      "updated_at": "2026-02-06T17:28:18.327053",
+      "chars": 157,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "951": {
+      "status": "failed",
+      "updated_at": "2026-02-06T17:28:50.097397",
+      "chars": 69,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "989": {
+      "status": "failed",
+      "updated_at": "2026-02-06T17:29:20.447194",
+      "chars": 156,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "913": {
+      "status": "failed",
+      "updated_at": "2026-02-06T17:29:52.980707",
+      "chars": 160,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "834": {
+      "status": "failed",
+      "updated_at": "2026-02-06T17:30:24.869899",
+      "chars": 5409,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "996": {
+      "status": "failed",
+      "updated_at": "2026-02-06T17:30:54.865987",
+      "chars": 161,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "990": {
+      "status": "failed",
+      "updated_at": "2026-02-06T17:31:25.152302",
+      "chars": 163,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "993": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T17:38:07.264826",
+      "chars": 5153102,
+      "sections": 27,
+      "districts": 8,
+      "standards": 6,
+      "uses": 17,
+      "districts_inserted": 8,
+      "standards_inserted": 6,
+      "uses_inserted": 17
+    },
+    "837": {
+      "status": "failed",
+      "updated_at": "2026-02-06T17:38:40.423699",
+      "chars": 154,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "995": {
+      "status": "failed",
+      "updated_at": "2026-02-06T17:39:11.349108",
+      "chars": 1035,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "994": {
+      "status": "uploaded",
+      "updated_at": "2026-02-06T17:50:04.217525",
+      "chars": 7198944,
+      "sections": 50,
+      "districts": 3,
+      "standards": 2,
+      "uses": 15,
+      "districts_inserted": 3,
+      "standards_inserted": 2,
+      "uses_inserted": 15
+    },
+    "930": {
+      "status": "failed",
+      "updated_at": "2026-02-06T17:50:41.406276",
+      "chars": 5409,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "878": {
+      "status": "failed",
+      "updated_at": "2026-02-06T18:01:03.886465",
+      "chars": 6165836,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "903": {
+      "status": "failed",
+      "updated_at": "2026-02-06T18:01:37.260144",
+      "chars": 5409,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "852": {
+      "status": "failed",
+      "updated_at": "2026-02-06T18:11:55.374967",
+      "chars": 4890365,
+      "sections": 49,
+      "error": "no_districts"
+    },
+    "991": {
+      "status": "failed",
+      "updated_at": "2026-02-06T18:12:27.189654",
+      "chars": 143,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "821": {
+      "status": "failed",
+      "updated_at": "2026-02-06T18:13:03.428488",
+      "chars": 5409,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "864": {
+      "status": "failed",
+      "updated_at": "2026-02-07T13:40:39.903291",
+      "chars": 39169,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "965": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T13:44:07.402124",
+      "chars": 130966,
+      "sections": 6,
+      "districts": 1,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 1,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "880": {
+      "status": "failed",
+      "updated_at": "2026-02-07T13:44:41.247127",
+      "chars": 159,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1081": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T13:55:04.877072",
+      "chars": 1969637,
+      "sections": 50,
+      "districts": 16,
+      "standards": 2,
+      "uses": 6,
+      "districts_inserted": 16,
+      "standards_inserted": 2,
+      "uses_inserted": 6
+    },
+    "1087": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T14:05:28.650645",
+      "chars": 595659,
+      "sections": 50,
+      "districts": 21,
+      "standards": 2,
+      "uses": 12,
+      "districts_inserted": 21,
+      "standards_inserted": 2,
+      "uses_inserted": 12
+    },
+    "937": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T14:15:49.464268",
+      "chars": 1267011,
+      "sections": 50,
+      "districts": 2,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 2,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "1084": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T14:28:42.273543",
+      "chars": 10878145,
+      "sections": 50,
+      "districts": 3,
+      "standards": 1,
+      "uses": 23,
+      "districts_inserted": 3,
+      "standards_inserted": 1,
+      "uses_inserted": 23
+    },
+    "947": {
+      "status": "failed",
+      "updated_at": "2026-02-07T14:38:39.820875",
+      "chars": 10749868,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "1083": {
+      "status": "failed",
+      "updated_at": "2026-02-07T14:40:40.552279",
+      "chars": 2402564,
+      "sections": 7,
+      "error": "no_districts"
+    },
+    "1088": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T14:42:24.663951",
+      "chars": 261022,
+      "sections": 1,
+      "districts": 4,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 4,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "1085": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T14:48:44.095644",
+      "chars": 4502233,
+      "sections": 26,
+      "districts": 2,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 2,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "1079": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T14:58:43.821149",
+      "chars": 1931328,
+      "sections": 50,
+      "districts": 1,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 1,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "624": {
+      "status": "failed",
+      "updated_at": "2026-02-07T14:59:12.532327",
+      "chars": 74,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "954": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T15:10:25.666641",
+      "chars": 10250728,
+      "sections": 50,
+      "districts": 25,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 25,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "1082": {
+      "status": "failed",
+      "updated_at": "2026-02-07T15:10:55.316368",
+      "chars": 89,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1078": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T15:21:31.870889",
+      "chars": 401135,
+      "sections": 50,
+      "districts": 8,
+      "standards": 0,
+      "uses": 9,
+      "districts_inserted": 8,
+      "standards_inserted": 0,
+      "uses_inserted": 9
+    },
+    "1080": {
+      "status": "failed",
+      "updated_at": "2026-02-07T15:27:03.372278",
+      "chars": 13371413,
+      "sections": 25,
+      "error": "no_districts"
+    },
+    "1089": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T15:37:17.508215",
+      "chars": 1298758,
+      "sections": 50,
+      "districts": 3,
+      "standards": 0,
+      "uses": 19,
+      "districts_inserted": 3,
+      "standards_inserted": 0,
+      "uses_inserted": 19
+    },
+    "1086": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T15:48:42.376760",
+      "chars": 3379137,
+      "sections": 50,
+      "districts": 10,
+      "standards": 9,
+      "uses": 38,
+      "districts_inserted": 10,
+      "standards_inserted": 9,
+      "uses_inserted": 38
+    },
+    "838": {
+      "status": "failed",
+      "updated_at": "2026-02-07T15:49:14.022125",
+      "chars": 156,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "820": {
+      "status": "failed",
+      "updated_at": "2026-02-07T15:51:13.294431",
+      "chars": 586492,
+      "sections": 6,
+      "error": "no_districts"
+    },
+    "902": {
+      "status": "failed",
+      "updated_at": "2026-02-07T15:53:13.887304",
+      "chars": 153248,
+      "sections": 5,
+      "error": "no_districts"
+    },
+    "964": {
+      "status": "failed",
+      "updated_at": "2026-02-07T15:53:43.512765",
+      "chars": 216,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "963": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T16:03:56.020327",
+      "chars": 2381770,
+      "sections": 50,
+      "districts": 9,
+      "standards": 5,
+      "uses": 0,
+      "districts_inserted": 9,
+      "standards_inserted": 5,
+      "uses_inserted": 0
+    },
+    "851": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T16:14:28.004258",
+      "chars": 1568881,
+      "sections": 50,
+      "districts": 5,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 5,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "935": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T16:25:18.524301",
+      "chars": 774338,
+      "sections": 50,
+      "districts": 9,
+      "standards": 2,
+      "uses": 0,
+      "districts_inserted": 9,
+      "standards_inserted": 2,
+      "uses_inserted": 0
+    },
+    "1060": {
+      "status": "failed",
+      "updated_at": "2026-02-07T16:27:24.274455",
+      "chars": 75609,
+      "sections": 6,
+      "error": "no_districts"
+    },
+    "827": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T16:36:31.384555",
+      "chars": 100179,
+      "sections": 43,
+      "districts": 15,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 15,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "1053": {
+      "status": "failed",
+      "updated_at": "2026-02-07T16:46:05.637940",
+      "chars": 2907073,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "855": {
+      "status": "failed",
+      "updated_at": "2026-02-07T16:46:37.186821",
+      "chars": 239,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "960": {
+      "status": "failed",
+      "updated_at": "2026-02-07T16:47:09.500350",
+      "chars": 270,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1056": {
+      "status": "failed",
+      "updated_at": "2026-02-07T16:56:57.654748",
+      "chars": 2625038,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "1057": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T17:07:07.710256",
+      "chars": 890259,
+      "sections": 50,
+      "districts": 4,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 4,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "1061": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T17:12:55.627398",
+      "chars": 38010,
+      "sections": 23,
+      "districts": 7,
+      "standards": 0,
+      "uses": 14,
+      "districts_inserted": 7,
+      "standards_inserted": 0,
+      "uses_inserted": 14
+    },
+    "626": {
+      "status": "failed",
+      "updated_at": "2026-02-07T17:13:26.489118",
+      "chars": 5409,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "849": {
+      "status": "failed",
+      "updated_at": "2026-02-07T17:15:20.090507",
+      "chars": 149033,
+      "sections": 5,
+      "error": "no_districts"
+    },
+    "1054": {
+      "status": "failed",
+      "updated_at": "2026-02-07T17:27:50.149473",
+      "chars": 13119769,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "1058": {
+      "status": "failed",
+      "updated_at": "2026-02-07T17:28:21.511601",
+      "chars": 5409,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "976": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T17:31:56.500170",
+      "chars": 186994,
+      "sections": 10,
+      "districts": 3,
+      "standards": 0,
+      "uses": 0,
+      "districts_inserted": 3,
+      "standards_inserted": 0,
+      "uses_inserted": 0
+    },
+    "1062": {
+      "status": "failed",
+      "updated_at": "2026-02-07T17:32:30.004188",
+      "chars": 151,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1055": {
+      "status": "failed",
+      "updated_at": "2026-02-07T17:34:09.184482",
+      "chars": 26840,
+      "sections": 3,
+      "error": "no_districts"
+    },
+    "1059": {
+      "status": "failed",
+      "updated_at": "2026-02-07T17:37:00.938558",
+      "chars": 697955,
+      "sections": 12,
+      "error": "no_districts"
+    },
+    "1102": {
+      "status": "uploaded",
+      "updated_at": "2026-02-07T17:47:41.431123",
+      "chars": 2497526,
+      "sections": 50,
+      "districts": 3,
+      "standards": 0,
+      "uses": 15,
+      "districts_inserted": 3,
+      "standards_inserted": 0,
+      "uses_inserted": 15
+    },
+    "1103": {
+      "status": "failed",
+      "updated_at": "2026-02-07T17:57:32.293598",
+      "chars": 1594082,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "1104": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:01:56.743681",
+      "chars": 51168,
+      "sections": 20,
+      "error": "no_districts"
+    },
+    "1105": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:02:35.590946",
+      "chars": 830,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "856": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:03:13.883961",
+      "chars": 165,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "860": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:05:27.349980",
+      "chars": 123220,
+      "sections": 7,
+      "error": "no_districts"
+    },
+    "1099": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:06:05.580247",
+      "chars": 712,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1094": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:15:57.135701",
+      "chars": 1079382,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "1106": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:26:01.505758",
+      "chars": 2464838,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "1100": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:35:40.929552",
+      "chars": 254573,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "859": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:36:18.539955",
+      "chars": 139,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1095": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:36:56.076941",
+      "chars": 85,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1107": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:47:07.207420",
+      "chars": 2304931,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "635": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:57:12.774094",
+      "chars": 2336696,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "898": {
+      "status": "failed",
+      "updated_at": "2026-02-07T18:57:51.144547",
+      "chars": 155,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1108": {
+      "status": "failed",
+      "updated_at": "2026-02-07T19:01:43.955692",
+      "chars": 558893,
+      "sections": 18,
+      "error": "no_districts"
+    },
+    "1109": {
+      "status": "failed",
+      "updated_at": "2026-02-07T19:06:08.738979",
+      "chars": 56865,
+      "sections": 19,
+      "error": "no_districts"
+    },
+    "959": {
+      "status": "failed",
+      "updated_at": "2026-02-07T19:06:46.807587",
+      "chars": 155,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1093": {
+      "status": "failed",
+      "updated_at": "2026-02-07T19:16:39.305322",
+      "chars": 228996,
+      "sections": 50,
+      "error": "no_districts"
+    },
+    "1101": {
+      "status": "failed",
+      "updated_at": "2026-02-07T19:17:21.245605",
+      "chars": 5409,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "1097": {
+      "status": "failed",
+      "updated_at": "2026-02-07T19:17:59.800698",
+      "chars": 5409,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "814": {
+      "status": "failed",
+      "updated_at": "2026-02-07T19:18:37.167984",
+      "chars": 5409,
+      "sections": 1,
+      "error": "no_districts"
+    },
+    "896": {
+      "status": "failed",
+      "updated_at": "2026-02-07T19:22:36.648680",
+      "chars": 1074405,
+      "sections": 17,
+      "error": "no_districts"
+    },
+    "1096": {
+      "status": "failed",
+      "updated_at": "2026-02-07T19:26:14.818853",
+      "chars": 3851593,
+      "sections": 11,
+      "error": "no_districts"
+    }
+  },
+  "stats": {
+    "Hillsborough": {
+      "jurisdictions_total": 4,
+      "jurisdictions_scraped": 3,
+      "districts": 66,
+      "standards": 16,
+      "uses": 28,
+      "completed_at": "2026-02-06T13:27:48.887161"
+    },
+    "Lee": {
+      "jurisdictions_total": 6,
+      "jurisdictions_scraped": 2,
+      "districts": 19,
+      "standards": 0,
+      "uses": 6,
+      "completed_at": "2026-02-06T14:04:47.308921"
+    },
+    "Duval": {
+      "jurisdictions_total": 6,
+      "jurisdictions_scraped": 2,
+      "districts": 19,
+      "standards": 0,
+      "uses": 0,
+      "completed_at": "2026-02-06T15:03:10.543974"
+    },
+    "Orange": {
+      "jurisdictions_total": 12,
+      "jurisdictions_scraped": 8,
+      "districts": 65,
+      "standards": 2,
+      "uses": 31,
+      "completed_at": "2026-02-06T16:19:06.634017"
+    },
+    "Polk": {
+      "jurisdictions_total": 17,
+      "jurisdictions_scraped": 6,
+      "districts": 67,
+      "standards": 11,
+      "uses": 104,
+      "completed_at": "2026-02-06T17:08:38.318235"
+    },
+    "Brevard": {
+      "jurisdictions_total": 1,
+      "jurisdictions_scraped": 1,
+      "districts": 51,
+      "standards": 0,
+      "uses": 0,
+      "completed_at": "2026-02-06T17:16:01.519868"
+    },
+    "Broward": {
+      "jurisdictions_total": 20,
+      "jurisdictions_scraped": 3,
+      "districts": 13,
+      "standards": 9,
+      "uses": 45,
+      "completed_at": "2026-02-06T18:13:03.431867"
+    },
+    "Palm Beach": {
+      "jurisdictions_total": 21,
+      "jurisdictions_scraped": 12,
+      "districts": 96,
+      "standards": 14,
+      "uses": 107,
+      "completed_at": "2026-02-07T15:51:13.299591"
+    },
+    "Miami-Dade": {
+      "jurisdictions_total": 21,
+      "jurisdictions_scraped": 7,
+      "districts": 52,
+      "standards": 7,
+      "uses": 14,
+      "completed_at": "2026-02-07T17:37:00.944512"
+    },
+    "Pinellas": {
+      "jurisdictions_total": 24,
+      "jurisdictions_scraped": 1,
+      "districts": 3,
+      "standards": 0,
+      "uses": 15,
+      "completed_at": "2026-02-07T19:26:14.824016"
+    }
+  },
+  "errors": [
+    {
+      "jurisdiction_id": 631,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T12:44:51.035215"
+    },
+    {
+      "jurisdiction_id": 914,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T13:28:27.846153"
+    },
+    {
+      "jurisdiction_id": 929,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T13:43:06.619107"
+    },
+    {
+      "jurisdiction_id": 912,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T13:53:24.113610"
+    },
+    {
+      "jurisdiction_id": 630,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T13:53:57.096050"
+    },
+    {
+      "jurisdiction_id": 1001,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T14:21:31.485716"
+    },
+    {
+      "jurisdiction_id": 945,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T14:42:21.295277"
+    },
+    {
+      "jurisdiction_id": 826,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T14:52:41.423578"
+    },
+    {
+      "jurisdiction_id": 934,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T15:03:10.543959"
+    },
+    {
+      "jurisdiction_id": 1075,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T15:10:52.219225"
+    },
+    {
+      "jurisdiction_id": 970,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T15:22:20.134009"
+    },
+    {
+      "jurisdiction_id": 1076,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T15:22:53.039958"
+    },
+    {
+      "jurisdiction_id": 818,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T15:23:24.204473"
+    },
+    {
+      "jurisdiction_id": 870,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T16:21:48.034163"
+    },
+    {
+      "jurisdiction_id": 830,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T16:24:41.461774"
+    },
+    {
+      "jurisdiction_id": 1111,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T16:27:19.674158"
+    },
+    {
+      "jurisdiction_id": 1117,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T16:29:53.619181"
+    },
+    {
+      "jurisdiction_id": 1116,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T16:30:28.090250"
+    },
+    {
+      "jurisdiction_id": 1112,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T16:30:57.297015"
+    },
+    {
+      "jurisdiction_id": 924,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T16:35:12.058685"
+    },
+    {
+      "jurisdiction_id": 1119,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T16:35:47.690736"
+    },
+    {
+      "jurisdiction_id": 1114,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T16:36:19.458672"
+    },
+    {
+      "jurisdiction_id": 889,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T16:48:26.290718"
+    },
+    {
+      "jurisdiction_id": 1115,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T16:54:28.375861"
+    },
+    {
+      "jurisdiction_id": 628,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T17:16:31.852885"
+    },
+    {
+      "jurisdiction_id": 634,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T17:17:01.260694"
+    },
+    {
+      "jurisdiction_id": 968,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T17:28:18.329437"
+    },
+    {
+      "jurisdiction_id": 951,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T17:28:50.099888"
+    },
+    {
+      "jurisdiction_id": 989,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T17:29:20.452914"
+    },
+    {
+      "jurisdiction_id": 913,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T17:29:52.983490"
+    },
+    {
+      "jurisdiction_id": 834,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T17:30:24.872776"
+    },
+    {
+      "jurisdiction_id": 996,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T17:30:54.869230"
+    },
+    {
+      "jurisdiction_id": 990,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T17:31:25.155051"
+    },
+    {
+      "jurisdiction_id": 837,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T17:38:40.426778"
+    },
+    {
+      "jurisdiction_id": 995,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T17:39:11.353893"
+    },
+    {
+      "jurisdiction_id": 930,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T17:50:41.410398"
+    },
+    {
+      "jurisdiction_id": 878,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T18:01:03.889580"
+    },
+    {
+      "jurisdiction_id": 903,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T18:01:37.263243"
+    },
+    {
+      "jurisdiction_id": 852,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T18:11:55.378194"
+    },
+    {
+      "jurisdiction_id": 991,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T18:12:27.194200"
+    },
+    {
+      "jurisdiction_id": 821,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-06T18:13:03.431842"
+    },
+    {
+      "jurisdiction_id": 864,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T13:40:39.924837"
+    },
+    {
+      "jurisdiction_id": 880,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T13:44:41.253295"
+    },
+    {
+      "jurisdiction_id": 947,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T14:38:39.824118"
+    },
+    {
+      "jurisdiction_id": 1083,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T14:40:40.555794"
+    },
+    {
+      "jurisdiction_id": 624,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T14:59:12.537369"
+    },
+    {
+      "jurisdiction_id": 1082,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T15:10:55.789049"
+    },
+    {
+      "jurisdiction_id": 1080,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T15:27:03.375715"
+    },
+    {
+      "jurisdiction_id": 838,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T15:49:14.025948"
+    },
+    {
+      "jurisdiction_id": 820,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T15:51:13.299575"
+    },
+    {
+      "jurisdiction_id": 902,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T15:53:13.891214"
+    },
+    {
+      "jurisdiction_id": 964,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T15:53:43.517424"
+    },
+    {
+      "jurisdiction_id": 1060,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T16:27:24.278393"
+    },
+    {
+      "jurisdiction_id": 1053,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T16:46:05.642047"
+    },
+    {
+      "jurisdiction_id": 855,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T16:46:37.190932"
+    },
+    {
+      "jurisdiction_id": 960,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T16:47:09.504220"
+    },
+    {
+      "jurisdiction_id": 1056,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T16:56:57.659884"
+    },
+    {
+      "jurisdiction_id": 626,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T17:13:26.493494"
+    },
+    {
+      "jurisdiction_id": 849,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T17:15:20.095212"
+    },
+    {
+      "jurisdiction_id": 1054,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T17:27:50.153920"
+    },
+    {
+      "jurisdiction_id": 1058,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T17:28:21.516475"
+    },
+    {
+      "jurisdiction_id": 1062,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T17:32:30.008488"
+    },
+    {
+      "jurisdiction_id": 1055,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T17:34:09.189092"
+    },
+    {
+      "jurisdiction_id": 1059,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T17:37:00.944494"
+    },
+    {
+      "jurisdiction_id": 1103,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T17:57:32.298845"
+    },
+    {
+      "jurisdiction_id": 1104,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:01:56.752766"
+    },
+    {
+      "jurisdiction_id": 1105,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:02:35.597020"
+    },
+    {
+      "jurisdiction_id": 856,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:03:13.888846"
+    },
+    {
+      "jurisdiction_id": 860,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:05:27.354692"
+    },
+    {
+      "jurisdiction_id": 1099,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:06:05.585465"
+    },
+    {
+      "jurisdiction_id": 1094,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:15:57.140579"
+    },
+    {
+      "jurisdiction_id": 1106,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:26:01.510777"
+    },
+    {
+      "jurisdiction_id": 1100,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:35:40.935123"
+    },
+    {
+      "jurisdiction_id": 859,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:36:18.545268"
+    },
+    {
+      "jurisdiction_id": 1095,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:36:56.083310"
+    },
+    {
+      "jurisdiction_id": 1107,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:47:07.541126"
+    },
+    {
+      "jurisdiction_id": 635,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:57:12.779310"
+    },
+    {
+      "jurisdiction_id": 898,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T18:57:51.152471"
+    },
+    {
+      "jurisdiction_id": 1108,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T19:01:43.960869"
+    },
+    {
+      "jurisdiction_id": 1109,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T19:06:08.744184"
+    },
+    {
+      "jurisdiction_id": 959,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T19:06:46.813235"
+    },
+    {
+      "jurisdiction_id": 1093,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T19:16:39.310907"
+    },
+    {
+      "jurisdiction_id": 1101,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T19:17:21.251540"
+    },
+    {
+      "jurisdiction_id": 1097,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T19:17:59.806091"
+    },
+    {
+      "jurisdiction_id": 814,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T19:18:37.173268"
+    },
+    {
+      "jurisdiction_id": 896,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T19:22:36.654384"
+    },
+    {
+      "jurisdiction_id": 1096,
+      "error": "No districts extracted by Claude",
+      "timestamp": "2026-02-07T19:26:14.824001"
+    }
+  ]
+}

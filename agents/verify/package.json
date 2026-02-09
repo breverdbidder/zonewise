@@ -11,10 +11,11 @@
     "test": "node verify-rockledge.js"
   },
   "dependencies": {
-    "ai": "^3.4.0",
     "@ai-sdk/anthropic": "^0.0.50",
     "@mendable/firecrawl-js": "^1.4.0",
-    "@supabase/supabase-js": "^2.45.0"
+    "@supabase/supabase-js": "^2.45.0",
+    "ai": "^3.4.0",
+    "dotenv": "^17.2.3"
   },
   "engines": {
     "node": ">=18.0.0"

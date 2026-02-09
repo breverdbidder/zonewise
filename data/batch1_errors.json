@@ -1,0 +1,437 @@
+[
+  {
+    "jurisdiction_id": 631,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T12:44:51.035215"
+  },
+  {
+    "jurisdiction_id": 914,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T13:28:27.846153"
+  },
+  {
+    "jurisdiction_id": 929,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T13:43:06.619107"
+  },
+  {
+    "jurisdiction_id": 912,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T13:53:24.113610"
+  },
+  {
+    "jurisdiction_id": 630,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T13:53:57.096050"
+  },
+  {
+    "jurisdiction_id": 1001,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T14:21:31.485716"
+  },
+  {
+    "jurisdiction_id": 945,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T14:42:21.295277"
+  },
+  {
+    "jurisdiction_id": 826,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T14:52:41.423578"
+  },
+  {
+    "jurisdiction_id": 934,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T15:03:10.543959"
+  },
+  {
+    "jurisdiction_id": 1075,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T15:10:52.219225"
+  },
+  {
+    "jurisdiction_id": 970,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T15:22:20.134009"
+  },
+  {
+    "jurisdiction_id": 1076,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T15:22:53.039958"
+  },
+  {
+    "jurisdiction_id": 818,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T15:23:24.204473"
+  },
+  {
+    "jurisdiction_id": 870,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T16:21:48.034163"
+  },
+  {
+    "jurisdiction_id": 830,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T16:24:41.461774"
+  },
+  {
+    "jurisdiction_id": 1111,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T16:27:19.674158"
+  },
+  {
+    "jurisdiction_id": 1117,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T16:29:53.619181"
+  },
+  {
+    "jurisdiction_id": 1116,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T16:30:28.090250"
+  },
+  {
+    "jurisdiction_id": 1112,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T16:30:57.297015"
+  },
+  {
+    "jurisdiction_id": 924,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T16:35:12.058685"
+  },
+  {
+    "jurisdiction_id": 1119,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T16:35:47.690736"
+  },
+  {
+    "jurisdiction_id": 1114,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T16:36:19.458672"
+  },
+  {
+    "jurisdiction_id": 889,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T16:48:26.290718"
+  },
+  {
+    "jurisdiction_id": 1115,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T16:54:28.375861"
+  },
+  {
+    "jurisdiction_id": 628,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T17:16:31.852885"
+  },
+  {
+    "jurisdiction_id": 634,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T17:17:01.260694"
+  },
+  {
+    "jurisdiction_id": 968,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T17:28:18.329437"
+  },
+  {
+    "jurisdiction_id": 951,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T17:28:50.099888"
+  },
+  {
+    "jurisdiction_id": 989,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T17:29:20.452914"
+  },
+  {
+    "jurisdiction_id": 913,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T17:29:52.983490"
+  },
+  {
+    "jurisdiction_id": 834,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T17:30:24.872776"
+  },
+  {
+    "jurisdiction_id": 996,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T17:30:54.869230"
+  },
+  {
+    "jurisdiction_id": 990,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T17:31:25.155051"
+  },
+  {
+    "jurisdiction_id": 837,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T17:38:40.426778"
+  },
+  {
+    "jurisdiction_id": 995,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T17:39:11.353893"
+  },
+  {
+    "jurisdiction_id": 930,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T17:50:41.410398"
+  },
+  {
+    "jurisdiction_id": 878,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T18:01:03.889580"
+  },
+  {
+    "jurisdiction_id": 903,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T18:01:37.263243"
+  },
+  {
+    "jurisdiction_id": 852,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T18:11:55.378194"
+  },
+  {
+    "jurisdiction_id": 991,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T18:12:27.194200"
+  },
+  {
+    "jurisdiction_id": 821,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-06T18:13:03.431842"
+  },
+  {
+    "jurisdiction_id": 864,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T13:40:39.924837"
+  },
+  {
+    "jurisdiction_id": 880,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T13:44:41.253295"
+  },
+  {
+    "jurisdiction_id": 947,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T14:38:39.824118"
+  },
+  {
+    "jurisdiction_id": 1083,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T14:40:40.555794"
+  },
+  {
+    "jurisdiction_id": 624,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T14:59:12.537369"
+  },
+  {
+    "jurisdiction_id": 1082,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T15:10:55.789049"
+  },
+  {
+    "jurisdiction_id": 1080,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T15:27:03.375715"
+  },
+  {
+    "jurisdiction_id": 838,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T15:49:14.025948"
+  },
+  {
+    "jurisdiction_id": 820,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T15:51:13.299575"
+  },
+  {
+    "jurisdiction_id": 902,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T15:53:13.891214"
+  },
+  {
+    "jurisdiction_id": 964,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T15:53:43.517424"
+  },
+  {
+    "jurisdiction_id": 1060,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T16:27:24.278393"
+  },
+  {
+    "jurisdiction_id": 1053,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T16:46:05.642047"
+  },
+  {
+    "jurisdiction_id": 855,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T16:46:37.190932"
+  },
+  {
+    "jurisdiction_id": 960,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T16:47:09.504220"
+  },
+  {
+    "jurisdiction_id": 1056,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T16:56:57.659884"
+  },
+  {
+    "jurisdiction_id": 626,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T17:13:26.493494"
+  },
+  {
+    "jurisdiction_id": 849,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T17:15:20.095212"
+  },
+  {
+    "jurisdiction_id": 1054,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T17:27:50.153920"
+  },
+  {
+    "jurisdiction_id": 1058,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T17:28:21.516475"
+  },
+  {
+    "jurisdiction_id": 1062,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T17:32:30.008488"
+  },
+  {
+    "jurisdiction_id": 1055,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T17:34:09.189092"
+  },
+  {
+    "jurisdiction_id": 1059,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T17:37:00.944494"
+  },
+  {
+    "jurisdiction_id": 1103,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T17:57:32.298845"
+  },
+  {
+    "jurisdiction_id": 1104,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:01:56.752766"
+  },
+  {
+    "jurisdiction_id": 1105,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:02:35.597020"
+  },
+  {
+    "jurisdiction_id": 856,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:03:13.888846"
+  },
+  {
+    "jurisdiction_id": 860,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:05:27.354692"
+  },
+  {
+    "jurisdiction_id": 1099,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:06:05.585465"
+  },
+  {
+    "jurisdiction_id": 1094,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:15:57.140579"
+  },
+  {
+    "jurisdiction_id": 1106,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:26:01.510777"
+  },
+  {
+    "jurisdiction_id": 1100,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:35:40.935123"
+  },
+  {
+    "jurisdiction_id": 859,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:36:18.545268"
+  },
+  {
+    "jurisdiction_id": 1095,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:36:56.083310"
+  },
+  {
+    "jurisdiction_id": 1107,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:47:07.541126"
+  },
+  {
+    "jurisdiction_id": 635,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:57:12.779310"
+  },
+  {
+    "jurisdiction_id": 898,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T18:57:51.152471"
+  },
+  {
+    "jurisdiction_id": 1108,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T19:01:43.960869"
+  },
+  {
+    "jurisdiction_id": 1109,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T19:06:08.744184"
+  },
+  {
+    "jurisdiction_id": 959,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T19:06:46.813235"
+  },
+  {
+    "jurisdiction_id": 1093,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T19:16:39.310907"
+  },
+  {
+    "jurisdiction_id": 1101,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T19:17:21.251540"
+  },
+  {
+    "jurisdiction_id": 1097,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T19:17:59.806091"
+  },
+  {
+    "jurisdiction_id": 814,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T19:18:37.173268"
+  },
+  {
+    "jurisdiction_id": 896,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T19:22:36.654384"
+  },
+  {
+    "jurisdiction_id": 1096,
+    "error": "No districts extracted by Claude",
+    "timestamp": "2026-02-07T19:26:14.824001"
+  }
+]
