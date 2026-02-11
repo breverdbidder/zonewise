@@ -1,0 +1,21 @@
+name: Deploy FL Parcels Migration
+on:
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy migration 005
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+        run: |
+          echo "Deploying migration 005_fl_parcels.sql..."
+          [ -n "$PGPASSWORD" ] && echo "DB password is set" || echo "ERROR: DB password NOT set"
+          psql -h aws-0-us-east-1.pooler.supabase.com                -p 5432                -U "postgres.mocerqjnksmhcjzxrewo"                -d postgres                -v ON_ERROR_STOP=1                -f migrations/005_fl_parcels.sql
+          echo "Migration 005 deployed successfully!"
+      - name: Verify schema
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+        run: |
+          psql -h aws-0-us-east-1.pooler.supabase.com                -p 5432                -U "postgres.mocerqjnksmhcjzxrewo"                -d postgres                -c "SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'fl_parcels' ORDER BY ordinal_position;"
