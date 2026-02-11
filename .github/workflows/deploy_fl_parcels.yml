@@ -11,11 +11,37 @@ jobs:
           PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
         run: |
           echo "Deploying migration 005_fl_parcels.sql..."
-          [ -n "$PGPASSWORD" ] && echo "DB password is set" || echo "ERROR: DB password NOT set"
-          psql -h aws-0-us-east-1.pooler.supabase.com                -p 5432                -U "postgres.mocerqjnksmhcjzxrewo"                -d postgres                -v ON_ERROR_STOP=1                -f migrations/005_fl_parcels.sql
-          echo "Migration 005 deployed successfully!"
+          [ -n "$PGPASSWORD" ] && echo "DB password is set" || { echo "ERROR: DB password NOT set"; exit 1; }
+
+          # Try direct connection first (IPv4 only)
+          echo "Attempt 1: Direct connection..."
+          if psql "postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres?sslmode=require"             -v ON_ERROR_STOP=1             -f migrations/005_fl_parcels.sql 2>/tmp/psql_err1.log; then
+            echo "Migration deployed via direct connection!"
+            exit 0
+          fi
+          echo "Direct failed: $(cat /tmp/psql_err1.log | tail -3)"
+
+          # Try Supavisor session mode (port 5432)
+          echo "Attempt 2: Supavisor session mode (port 5432)..."
+          if PGPASSWORD="$PGPASSWORD" psql             -h aws-0-us-east-1.pooler.supabase.com             -p 5432             -U "postgres.mocerqjnksmhcjzxrewo"             -d postgres             -v ON_ERROR_STOP=1             -f migrations/005_fl_parcels.sql 2>/tmp/psql_err2.log; then
+            echo "Migration deployed via Supavisor session mode!"
+            exit 0
+          fi
+          echo "Session mode failed: $(cat /tmp/psql_err2.log | tail -3)"
+
+          # Try Supavisor transaction mode (port 6543)
+          echo "Attempt 3: Supavisor transaction mode (port 6543)..."
+          if PGPASSWORD="$PGPASSWORD" psql             -h aws-0-us-east-1.pooler.supabase.com             -p 6543             -U "postgres.mocerqjnksmhcjzxrewo"             -d postgres             -v ON_ERROR_STOP=1             -f migrations/005_fl_parcels.sql 2>/tmp/psql_err3.log; then
+            echo "Migration deployed via Supavisor transaction mode!"
+            exit 0
+          fi
+          echo "Transaction mode failed: $(cat /tmp/psql_err3.log | tail -3)"
+
+          echo "All connection methods failed."
+          exit 1
+
       - name: Verify schema
         env:
           PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
         run: |
-          psql -h aws-0-us-east-1.pooler.supabase.com                -p 5432                -U "postgres.mocerqjnksmhcjzxrewo"                -d postgres                -c "SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'fl_parcels' ORDER BY ordinal_position;"
+          psql "postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres?sslmode=require"             -c "SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'fl_parcels' ORDER BY ordinal_position;" 2>/dev/null ||           PGPASSWORD="$PGPASSWORD" psql             -h aws-0-us-east-1.pooler.supabase.com -p 6543             -U "postgres.mocerqjnksmhcjzxrewo" -d postgres             -c "SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'fl_parcels' ORDER BY ordinal_position;" 2>/dev/null ||           echo "Could not verify schema"
