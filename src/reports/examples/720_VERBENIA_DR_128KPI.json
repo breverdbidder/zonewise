@@ -1,0 +1,718 @@
+{
+  "_meta": {
+    "version": "2.0.0",
+    "generated": "2026-02-17T23:56:30.259Z",
+    "source": "BidDeed.AI / ZoneWise 128-KPI Engine",
+    "parcel_id": "27 3702-88-A-3",
+    "county": "Brevard"
+  },
+  "property_identification": {
+    "KPI_001": {
+      "name": "Parcel ID",
+      "value": "27 3702-88-A-3",
+      "source": "FDOR"
+    },
+    "KPI_002": {
+      "name": "County",
+      "value": "Brevard",
+      "source": "FDOR"
+    },
+    "KPI_003": {
+      "name": "Full Address",
+      "value": "720 VERBENIA DR, SATELLITE BEACH, FL 32937",
+      "source": "FDOR"
+    },
+    "KPI_004": {
+      "name": "Street Number",
+      "value": "720",
+      "source": "Parsed"
+    },
+    "KPI_005": {
+      "name": "Street Name",
+      "value": "VERBENIA DR",
+      "source": "Parsed"
+    },
+    "KPI_006": {
+      "name": "City",
+      "value": "SATELLITE BEACH",
+      "source": "FDOR"
+    },
+    "KPI_007": {
+      "name": "State",
+      "value": "FL",
+      "source": "FDOR"
+    },
+    "KPI_008": {
+      "name": "ZIP Code",
+      "value": "32937",
+      "source": "FDOR"
+    },
+    "KPI_009": {
+      "name": "Owner Name",
+      "value": "Johnston Alicia",
+      "source": "FDOR"
+    },
+    "KPI_010": {
+      "name": "Owner Address",
+      "value": "720 Verbenia DR, Satellite Beach, FL 32937",
+      "source": "FDOR"
+    },
+    "KPI_011": {
+      "name": "Property Type",
+      "value": "Single Family",
+      "source": "FDOR DOR_UC"
+    },
+    "KPI_012": {
+      "name": "PA Use Code",
+      "value": "10",
+      "source": "FDOR PA_UC"
+    }
+  },
+  "physical_characteristics": {
+    "KPI_013": {
+      "name": "Total Living Area",
+      "value": 2540,
+      "unit": "sq ft",
+      "source": "FDOR"
+    },
+    "KPI_014": {
+      "name": "Lot Size",
+      "value": 8276,
+      "unit": "sq ft",
+      "source": "FDOR"
+    },
+    "KPI_015": {
+      "name": "Lot Size (Acres)",
+      "value": "0.19",
+      "unit": "acres",
+      "source": "Calculated"
+    },
+    "KPI_016": {
+      "name": "Year Built (Actual)",
+      "value": 1977,
+      "source": "FDOR"
+    },
+    "KPI_017": {
+      "name": "Year Built (Effective)",
+      "value": 2000,
+      "source": "FDOR"
+    },
+    "KPI_018": {
+      "name": "Building Age",
+      "value": 26,
+      "unit": "years",
+      "source": "Calculated"
+    },
+    "KPI_019": {
+      "name": "Number of Buildings",
+      "value": 1,
+      "source": "FDOR"
+    },
+    "KPI_020": {
+      "name": "Residential Units",
+      "value": 1,
+      "source": "FDOR"
+    },
+    "KPI_021": {
+      "name": "Construction Class",
+      "value": "Good/Frame",
+      "source": "FDOR"
+    },
+    "KPI_022": {
+      "name": "Improvement Quality",
+      "value": "Good",
+      "source": "FDOR"
+    },
+    "KPI_023": {
+      "name": "Special Features Value",
+      "value": 9800,
+      "unit": "$",
+      "source": "FDOR"
+    },
+    "KPI_024": {
+      "name": "Land Units",
+      "value": 1,
+      "source": "FDOR"
+    },
+    "KPI_025": {
+      "name": "Aerial Photo",
+      "value": "Available",
+      "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=-80.5918337,28.1598462,-80.5902337,28.1610462&bboxSR=4326&imageSR=4326&size=800,600&format=jpg&f=image",
+      "source": "Esri"
+    }
+  },
+  "financial_valuation": {
+    "KPI_026": {
+      "name": "Just (Market) Value",
+      "value": 448910,
+      "unit": "$",
+      "source": "FDOR"
+    },
+    "KPI_027": {
+      "name": "Land Value",
+      "value": 225000,
+      "unit": "$",
+      "source": "FDOR"
+    },
+    "KPI_028": {
+      "name": "Building Value",
+      "value": 223910,
+      "unit": "$",
+      "source": "Calculated"
+    },
+    "KPI_029": {
+      "name": "Assessed Value (Homestead)",
+      "value": 184690,
+      "unit": "$",
+      "source": "FDOR"
+    },
+    "KPI_030": {
+      "name": "Assessed Value (Non-Hmstd)",
+      "value": 0,
+      "unit": "$",
+      "source": "FDOR"
+    },
+    "KPI_031": {
+      "name": "Assessed Value (School)",
+      "value": 184690,
+      "unit": "$",
+      "source": "FDOR"
+    },
+    "KPI_032": {
+      "name": "Assessed Value (Non-School)",
+      "value": 184690,
+      "unit": "$",
+      "source": "FDOR"
+    },
+    "KPI_033": {
+      "name": "Taxable Value (School)",
+      "value": 159690,
+      "unit": "$",
+      "source": "FDOR"
+    },
+    "KPI_034": {
+      "name": "Taxable Value (Non-School)",
+      "value": 133968,
+      "unit": "$",
+      "source": "FDOR"
+    },
+    "KPI_035": {
+      "name": "Price Per Sq Ft",
+      "value": 177,
+      "unit": "$/sqft",
+      "source": "Calculated"
+    },
+    "KPI_036": {
+      "name": "Land Price Per Sq Ft",
+      "value": 27.19,
+      "unit": "$/sqft",
+      "source": "Calculated"
+    },
+    "KPI_037": {
+      "name": "Improvement Ratio",
+      "value": "49.9",
+      "unit": "%",
+      "source": "Calculated"
+    },
+    "KPI_038": {
+      "name": "Homestead Exemption",
+      "value": "Yes",
+      "source": "FDOR"
+    },
+    "KPI_039": {
+      "name": "Special Features Value",
+      "value": 9800,
+      "unit": "$",
+      "source": "FDOR"
+    },
+    "KPI_040": {
+      "name": "Last Sale Price",
+      "value": 0,
+      "unit": "$",
+      "source": "FDOR"
+    },
+    "KPI_041": {
+      "name": "Last Sale Year",
+      "value": "N/A",
+      "source": "FDOR"
+    },
+    "KPI_042": {
+      "name": "Last Sale Month",
+      "value": "N/A",
+      "source": "FDOR"
+    },
+    "KPI_043": {
+      "name": "Appreciation Since Sale",
+      "value": "N/A",
+      "source": "Calculated"
+    },
+    "KPI_044": {
+      "name": "Annual Tax Estimate",
+      "value": 8134,
+      "unit": "$",
+      "source": "Calculated"
+    },
+    "KPI_045": {
+      "name": "Insurance Estimate",
+      "value": 3175,
+      "unit": "$/yr",
+      "source": "Calculated"
+    }
+  },
+  "market_analysis": {
+    "KPI_046": {
+      "name": "Area Median Value",
+      "value": 448290,
+      "unit": "$",
+      "source": "fl_parcels aggregate"
+    },
+    "KPI_047": {
+      "name": "Area Avg $/SqFt",
+      "value": 183,
+      "unit": "$/sqft",
+      "source": "fl_parcels aggregate"
+    },
+    "KPI_048": {
+      "name": "Value vs Area Median",
+      "value": "0.1%",
+      "source": "Calculated"
+    },
+    "KPI_049": {
+      "name": "Properties in ZIP",
+      "value": 200,
+      "source": "fl_parcels count"
+    },
+    "KPI_050": {
+      "name": "Recent Sales (2023+)",
+      "value": 25,
+      "source": "fl_parcels filter"
+    },
+    "KPI_051": {
+      "name": "Median Recent Sale Price",
+      "value": 100,
+      "unit": "$",
+      "source": "Calculated"
+    },
+    "KPI_052": {
+      "name": "Area Residential Count",
+      "value": 200,
+      "source": "fl_parcels"
+    },
+    "KPI_053": {
+      "name": "ZIP Code",
+      "value": "32937",
+      "source": "FDOR"
+    },
+    "KPI_054": {
+      "name": "Neighborhood",
+      "value": "SATELLITE BEACH",
+      "source": "FDOR"
+    },
+    "KPI_055": {
+      "name": "County",
+      "value": "Brevard",
+      "source": "FDOR"
+    },
+    "KPI_056": {
+      "name": "Latitude",
+      "value": 28.1604461527068,
+      "source": "FDOR Cadastral"
+    },
+    "KPI_057": {
+      "name": "Longitude",
+      "value": -80.5910336849714,
+      "source": "FDOR Cadastral"
+    },
+    "KPI_058": {
+      "name": "Price Percentile (ZIP)",
+      "value": 51,
+      "unit": "%ile",
+      "source": "Calculated"
+    },
+    "KPI_059": {
+      "name": "Value Tier",
+      "value": "Mid-Range",
+      "source": "Calculated"
+    },
+    "KPI_060": {
+      "name": "Building-to-Land Ratio",
+      "value": "1.00",
+      "source": "Calculated"
+    },
+    "KPI_061": {
+      "name": "Effective Age Score",
+      "value": 48,
+      "unit": "/100",
+      "source": "Calculated"
+    },
+    "KPI_062": {
+      "name": "Property Size Class",
+      "value": "Medium",
+      "source": "Calculated"
+    },
+    "KPI_063": {
+      "name": "Lot Size Class",
+      "value": "Standard",
+      "source": "Calculated"
+    }
+  },
+  "zoning_regulatory": {
+    "KPI_064": {
+      "name": "Zone Code",
+      "value": "R-1",
+      "source": "parcel_zones"
+    },
+    "KPI_065": {
+      "name": "Zone Name",
+      "value": "Single-Family Residential",
+      "source": "zoning_districts"
+    },
+    "KPI_066": {
+      "name": "Zone Category",
+      "value": "residential",
+      "source": "zoning_districts"
+    },
+    "KPI_067": {
+      "name": "Max Height",
+      "value": 35,
+      "unit": "ft",
+      "source": "DIMS/Standards"
+    },
+    "KPI_068": {
+      "name": "Max Stories",
+      "value": 2,
+      "source": "DIMS/Standards"
+    },
+    "KPI_069": {
+      "name": "Max Lot Coverage",
+      "value": "40%",
+      "source": "DIMS/Standards"
+    },
+    "KPI_070": {
+      "name": "Front Setback",
+      "value": 25,
+      "unit": "ft",
+      "source": "DIMS/Standards"
+    },
+    "KPI_071": {
+      "name": "Side Setback",
+      "value": 7,
+      "unit": "ft",
+      "source": "DIMS/Standards"
+    },
+    "KPI_072": {
+      "name": "Rear Setback",
+      "value": 20,
+      "unit": "ft",
+      "source": "DIMS/Standards"
+    },
+    "KPI_073": {
+      "name": "Corner Setback",
+      "value": 15,
+      "unit": "ft",
+      "source": "DIMS/Standards"
+    },
+    "KPI_074": {
+      "name": "Floor Area Ratio (FAR)",
+      "value": "N/A",
+      "source": "DIMS/Standards"
+    },
+    "KPI_075": {
+      "name": "Max Density (DU/acre)",
+      "value": 7,
+      "source": "DIMS/Standards"
+    },
+    "KPI_076": {
+      "name": "Min Lot Size",
+      "value": 6000,
+      "unit": "sq ft",
+      "source": "DIMS/Standards"
+    },
+    "KPI_077": {
+      "name": "Min Lot Width",
+      "value": 60,
+      "unit": "ft",
+      "source": "DIMS/Standards"
+    },
+    "KPI_078": {
+      "name": "Parking Required",
+      "value": 2,
+      "source": "DIMS/Standards"
+    },
+    "KPI_079": {
+      "name": "Max Building Area",
+      "value": null,
+      "unit": "sq ft",
+      "source": "Calculated"
+    },
+    "KPI_080": {
+      "name": "Unused Dev Rights",
+      "value": null,
+      "unit": "sq ft",
+      "source": "Calculated"
+    },
+    "KPI_081": {
+      "name": "FAR Utilization",
+      "value": "N/A",
+      "source": "Calculated"
+    },
+    "KPI_082": {
+      "name": "Expansion Potential",
+      "value": "N/A",
+      "source": "Calculated"
+    },
+    "KPI_083": {
+      "name": "Jurisdiction",
+      "value": "SATELLITE BEACH",
+      "source": "parcel_zones"
+    }
+  },
+  "permitted_uses": {
+    "KPI_084": {
+      "name": "Permitted Uses Count",
+      "value": 1,
+      "source": "permitted_uses"
+    },
+    "KPI_085": {
+      "name": "Top Permitted Uses",
+      "value": "Single-family dwellings",
+      "source": "permitted_uses"
+    },
+    "KPI_086": {
+      "name": "Conditional Uses Count",
+      "value": 0,
+      "source": "permitted_uses"
+    },
+    "KPI_087": {
+      "name": "Short-Term Rental",
+      "value": "Not Listed",
+      "source": "permitted_uses"
+    },
+    "KPI_088": {
+      "name": "ADU Allowed",
+      "value": "Not Listed",
+      "source": "permitted_uses"
+    },
+    "KPI_089": {
+      "name": "Mixed Use Allowed",
+      "value": "Not Listed",
+      "source": "permitted_uses"
+    },
+    "KPI_090": {
+      "name": "Live Local Act Eligible",
+      "value": "Check Required",
+      "source": "State Law"
+    },
+    "KPI_091": {
+      "name": "Ordinance Source",
+      "value": "https://ecode360.com/SA1374",
+      "source": "DIMS/Standards"
+    }
+  },
+  "investment_metrics": {
+    "KPI_092": {
+      "name": "Monthly Rent Estimate",
+      "value": 2921,
+      "unit": "$",
+      "source": "Calculated"
+    },
+    "KPI_093": {
+      "name": "Annual Rent Estimate",
+      "value": 35052,
+      "unit": "$",
+      "source": "Calculated"
+    },
+    "KPI_094": {
+      "name": "Gross Rent Multiplier",
+      "value": "12.8",
+      "source": "Calculated"
+    },
+    "KPI_095": {
+      "name": "Cap Rate Estimate",
+      "value": "5.3%",
+      "source": "Calculated"
+    },
+    "KPI_096": {
+      "name": "Price-to-Rent Ratio",
+      "value": "12.8",
+      "source": "Calculated"
+    },
+    "KPI_097": {
+      "name": "NOI Estimate",
+      "value": 23743,
+      "unit": "$/yr",
+      "source": "Calculated"
+    },
+    "KPI_098": {
+      "name": "Cash-on-Cash (25% down)",
+      "value": "1.7%",
+      "source": "Calculated"
+    },
+    "KPI_099": {
+      "name": "Annual Tax",
+      "value": 8134,
+      "unit": "$",
+      "source": "Calculated"
+    },
+    "KPI_100": {
+      "name": "Annual Insurance",
+      "value": 3175,
+      "unit": "$",
+      "source": "Calculated"
+    },
+    "KPI_101": {
+      "name": "Annual Expenses",
+      "value": 11309,
+      "unit": "$",
+      "source": "Calculated"
+    },
+    "KPI_102": {
+      "name": "Expense Ratio",
+      "value": "32.3%",
+      "source": "Calculated"
+    },
+    "KPI_103": {
+      "name": "Break-Even Rent",
+      "value": 2766,
+      "unit": "$/mo",
+      "source": "Calculated"
+    }
+  },
+  "risk_assessment": {
+    "KPI_104": {
+      "name": "Risk Score",
+      "value": 50,
+      "unit": "/100",
+      "source": "Calculated"
+    },
+    "KPI_105": {
+      "name": "Risk Level",
+      "value": "MODERATE",
+      "source": "Calculated"
+    },
+    "KPI_106": {
+      "name": "Building Age Risk",
+      "value": "Acceptable",
+      "source": "Calculated"
+    },
+    "KPI_107": {
+      "name": "Construction Quality Risk",
+      "value": "Acceptable",
+      "source": "FDOR"
+    },
+    "KPI_108": {
+      "name": "Improvement Quality Risk",
+      "value": "Acceptable",
+      "source": "FDOR"
+    },
+    "KPI_109": {
+      "name": "Over-Valued vs Area",
+      "value": "Within Range",
+      "source": "Calculated"
+    },
+    "KPI_110": {
+      "name": "Land > Building",
+      "value": "No",
+      "source": "Calculated"
+    },
+    "KPI_111": {
+      "name": "Homestead Protected",
+      "value": "Yes (owner-occupied)",
+      "source": "FDOR"
+    },
+    "KPI_112": {
+      "name": "Flood Zone",
+      "value": "Check FEMA Map",
+      "source": "External"
+    },
+    "KPI_113": {
+      "name": "Hurricane Zone",
+      "value": "Brevard (Zone A/B)",
+      "source": "FEMA"
+    },
+    "KPI_114": {
+      "name": "Environmental Risk",
+      "value": "Standard FL Coastal",
+      "source": "General"
+    },
+    "KPI_115": {
+      "name": "Sinkhole Risk",
+      "value": "Low (Brevard)",
+      "source": "FL Geological"
+    },
+    "KPI_116": {
+      "name": "Insurance Difficulty",
+      "value": "Moderate (FL Coastal)",
+      "source": "Market"
+    }
+  },
+  "biddeed_scoring": {
+    "KPI_117": {
+      "name": "Opportunity Score",
+      "value": 45,
+      "unit": "/100",
+      "source": "BidDeed.AI"
+    },
+    "KPI_118": {
+      "name": "Investment Grade",
+      "value": "C",
+      "source": "BidDeed.AI"
+    },
+    "KPI_119": {
+      "name": "Recommendation",
+      "value": "PASS",
+      "source": "BidDeed.AI"
+    },
+    "KPI_120": {
+      "name": "Estimated ARV",
+      "value": 470705,
+      "unit": "$",
+      "source": "BidDeed.AI"
+    },
+    "KPI_121": {
+      "name": "Max Bid (Shapira Formula)",
+      "value": 278803,
+      "unit": "$",
+      "source": "Shapira Formula"
+    },
+    "KPI_122": {
+      "name": "Estimated Repair Cost",
+      "value": 25400,
+      "unit": "$",
+      "source": "BidDeed.AI"
+    },
+    "KPI_123": {
+      "name": "Estimated Profit",
+      "value": null,
+      "unit": "$",
+      "note": "Requires auction data",
+      "source": "BidDeed.AI"
+    },
+    "KPI_124": {
+      "name": "Estimated ROI",
+      "value": null,
+      "note": "Requires auction data",
+      "source": "BidDeed.AI"
+    },
+    "KPI_125": {
+      "name": "Exit Strategy",
+      "value": "Rent (strong cashflow)",
+      "source": "BidDeed.AI"
+    },
+    "KPI_126": {
+      "name": "Time to Exit",
+      "value": "Hold (rental)",
+      "source": "BidDeed.AI"
+    },
+    "KPI_127": {
+      "name": "Deal Quality Flags",
+      "value": "Modern construction",
+      "source": "BidDeed.AI"
+    },
+    "KPI_128": {
+      "name": "Data Confidence",
+      "value": "HIGH",
+      "source": "BidDeed.AI"
+    }
+  }
+}
