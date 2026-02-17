@@ -47,11 +47,14 @@ export function MapPanel({ selectedParcel, onParcelClick }: MapPanelProps) {
 
       map.on('load', () => {
         setMapLoaded(true);
-        
+
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+        const emptyGeoJSON: GeoJSON.FeatureCollection = { type: 'FeatureCollection', features: [] };
+
         // Add zoning districts layer (choropleth)
         map.addSource('zoning-districts', {
           type: 'geojson',
-          data: '/api/geojson/zoning',
+          data: apiUrl ? `${apiUrl}/api/geojson/zoning` : emptyGeoJSON,
         });
 
         map.addLayer({
@@ -86,7 +89,7 @@ export function MapPanel({ selectedParcel, onParcelClick }: MapPanelProps) {
         // Add parcels layer
         map.addSource('parcels', {
           type: 'geojson',
-          data: '/api/geojson/parcels',
+          data: apiUrl ? `${apiUrl}/api/geojson/parcels` : emptyGeoJSON,
         });
 
         map.addLayer({
@@ -155,7 +158,8 @@ export function MapPanel({ selectedParcel, onParcelClick }: MapPanelProps) {
 
     const fetchAndFlyTo = async () => {
       try {
-        const response = await fetch(`/api/parcels/${selectedParcel}`);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+        const response = await fetch(`${apiUrl}/api/parcels/${selectedParcel}`);
         const parcel = await response.json();
         
         if (parcel.geometry?.coordinates) {

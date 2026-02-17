@@ -4,7 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-export function ThinkingDisplay({ thinking, tokens, duration, isStreaming = false }) {
+interface ThinkingDisplayProps {
+    thinking: string | null;
+    tokens?: number;
+    duration?: number;
+    isStreaming?: boolean;
+}
+
+export function ThinkingDisplay({ thinking, tokens, duration, isStreaming = false }: ThinkingDisplayProps) {
     const [isExpanded, setIsExpanded] = useState(false);
 
     // Don't render if no thinking content
@@ -15,7 +22,7 @@ export function ThinkingDisplay({ thinking, tokens, duration, isStreaming = fals
     const countLabel = tokens ? `${tokens} tokens` : `${displayCount} chars`;
 
     // Format duration (milliseconds to seconds)
-    const formatDuration = (ms) => {
+    const formatDuration = (ms: number) => {
         if (!ms) return null;
         const seconds = (ms / 1000).toFixed(1);
         return `${seconds}s`;
@@ -25,7 +32,7 @@ export function ThinkingDisplay({ thinking, tokens, duration, isStreaming = fals
         setIsExpanded(!isExpanded);
     };
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             handleToggle();

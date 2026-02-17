@@ -31,6 +31,7 @@ export default function ResearchPage() {
       <div className="w-3/5 relative">
         {showArtifact && artifact ? (
           <ArtifactPanel
+            isOpen={showArtifact}
             artifact={artifact}
             onClose={() => setShowArtifact(false)}
           />

@@ -2,10 +2,31 @@ import React, { useState } from 'react';
 import { ExternalLink, Calendar, TrendingUp, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+export interface Source {
+    id?: string | number;
+    url: string;
+    title: string;
+    source?: string;
+    content?: string;
+    domain?: string;
+    logo?: string;
+    publishedDate?: string;
+    score?: number;
+}
+
+interface CitationDisplayProps {
+    sources: Source[];
+    searchQuery?: string;
+}
+
+interface SourceCardProps {
+    source: Source;
+}
+
 /**
  * Enhanced Citation Display with publisher logos
  */
-export function CitationDisplay({ sources, searchQuery }) {
+export function CitationDisplay({ sources, searchQuery }: CitationDisplayProps) {
     const [isExpanded, setIsExpanded] = useState(false);
 
     if (!sources || sources.length === 0) return null;
@@ -56,7 +77,7 @@ export function CitationDisplay({ sources, searchQuery }) {
     );
 }
 
-function SourceCard({ source }) {
+function SourceCard({ source }: SourceCardProps) {
     const [imageError, setImageError] = useState(false);
 
     return (

@@ -8,17 +8,32 @@ import rehypeRaw from 'rehype-raw';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-export function ArtifactPanel({ isOpen, onClose, artifact }) {
+interface Artifact {
+    type: string;
+    title: string;
+    language: string;
+    content: string;
+}
+
+interface ArtifactPanelProps {
+    isOpen: boolean;
+    onClose: () => void;
+    artifact: Artifact | null;
+}
+
+export function ArtifactPanel({ isOpen, onClose, artifact }: ArtifactPanelProps) {
     const [view, setView] = useState('preview'); // 'preview' or 'code'
     const [copied, setCopied] = useState(false);
-    const iframeRef = useRef(null);
+    const iframeRef = useRef<HTMLIFrameElement>(null);
 
     useEffect(() => {
         if (artifact && artifact.type === 'html' && view === 'preview' && iframeRef.current) {
             const doc = iframeRef.current.contentDocument;
-            doc.open();
-            doc.write(artifact.content);
-            doc.close();
+            if (doc) {
+                doc.open();
+                doc.write(artifact.content);
+                doc.close();
+            }
         }
     }, [artifact, view]);
 

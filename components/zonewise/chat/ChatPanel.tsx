@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, Loader2, MapPin, FileText, Brain } from 'lucide-react';
 import { ThinkingDisplay } from '../ThinkingDisplay';
-import { CitationDisplay } from '../CitationDisplay';
+import { CitationDisplay, Source } from '../CitationDisplay';
 
 interface Message {
   id: string;
@@ -11,14 +11,8 @@ interface Message {
   content: string;
   intent?: string;
   thinking?: string[];
-  citations?: Citation[];
+  citations?: Source[];
   parcelId?: string;
-}
-
-interface Citation {
-  source: string;
-  url: string;
-  title: string;
 }
 
 interface ChatPanelProps {
@@ -67,7 +61,8 @@ export function ChatPanel({ sessionId, onParcelSelect, onArtifact }: ChatPanelPr
     setCurrentThinking([]);
 
     try {
-      const response = await fetch('/api/chat', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+      const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -160,7 +155,7 @@ export function ChatPanel({ sessionId, onParcelSelect, onArtifact }: ChatPanelPr
 
       {/* Thinking Display */}
       {currentThinking.length > 0 && (
-        <ThinkingDisplay steps={currentThinking} isLoading={isLoading} />
+        <ThinkingDisplay thinking={currentThinking.join('\n')} isStreaming={isLoading} />
       )}
 
       {/* Messages */}
@@ -216,7 +211,7 @@ export function ChatPanel({ sessionId, onParcelSelect, onArtifact }: ChatPanelPr
 
               {/* Citations */}
               {message.citations && message.citations.length > 0 && (
-                <CitationDisplay citations={message.citations} />
+                <CitationDisplay sources={message.citations} />
               )}
             </div>
           </div>
