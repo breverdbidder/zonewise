@@ -1,28 +1,47 @@
 # Dependencies
 node_modules/
-
-# Python
 __pycache__/
 *.pyc
+.venv/
+venv/
+dist/
+build/
 
-# Environment variables (sensitive)
+# Environment
 .env
 .env.local
-.env.*
+.env.*.local
+.env.production
+.env.staging
 
-# Logs
-*.log
-
-# Supabase CLI
-supabase/.temp/
-
-# OS files
+# OS
 .DS_Store
-Thumbs.db
+*.pem
 
-# Next.js build output
+# IDE
+.vscode/
+.idea/
+
+# Testing
+coverage/
+.coverage
+*.log
+htmlcov/
+
+# AI session artifacts (NEVER commit these)
+CLAUDE_CODE_MISSION*.md
+CLAUDE_CODE_PROMPT*.md
+PASTE_INTO_CLAUDE_CODE.md
+OPUS_*_MISSION.md
+V3_*_MISSION.md
+V3_*_DEPLOY*.md
+AUTONOMOUS_*_SCRAPER*.py
+PHASE*_REMAINING_*.py
+PHASE*_COMPLETE_*.py
+BACKFILL_*.py
+
+# Build artifacts
 .next/
 out/
-
-# Lock files (per-agent, not repo-level)
-agents/*/package-lock.json
+*.tsbuildinfo
+next-env.d.ts
