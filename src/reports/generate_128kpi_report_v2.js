@@ -113,6 +113,73 @@ function supaFetch(path) {
 }
 
 // =============================================================================
+// FEMA NFHL FLOOD ZONE API (Free, no key required)
+// =============================================================================
+const FEMA_NFHL_URL = 'https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer';
+
+function fetchFemaFloodZone(lat, lng) {
+  try {
+    // Layer 28 = Flood Hazard Zones (S_Fld_Haz_Ar)
+    const floodUrl = `${FEMA_NFHL_URL}/28/query?geometry=${lng},${lat}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=FLD_ZONE,ZONE_SUBTY,SFHA_TF,STATIC_BFE,DEPTH,VELOCITY,SOURCE_CIT,DFIRM_ID&returnGeometry=false&f=json`;
+    const floodResult = execSync(`curl -s '${floodUrl}'`, { timeout: 15000 });
+    const floodData = JSON.parse(floodResult.toString());
+    const flood = floodData?.features?.[0]?.attributes || null;
+
+    // Layer 3 = FIRM Panels
+    const firmUrl = `${FEMA_NFHL_URL}/3/query?geometry=${lng},${lat}&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=FIRM_PAN,EFF_DATE,PANEL_TYP,DFIRM_ID&returnGeometry=false&f=json`;
+    const firmResult = execSync(`curl -s '${firmUrl}'`, { timeout: 15000 });
+    const firmData = JSON.parse(firmResult.toString());
+    const firm = firmData?.features?.[0]?.attributes || null;
+
+    if (!flood) return null;
+
+    // Parse FEMA zone into risk tier
+    const zone = flood.FLD_ZONE || 'Unknown';
+    const sfha = flood.SFHA_TF === 'T';
+    const bfe = flood.STATIC_BFE > -9000 ? flood.STATIC_BFE : null;
+    const depth = flood.DEPTH > -9000 ? flood.DEPTH : null;
+    const velocity = flood.VELOCITY > -9000 ? flood.VELOCITY : null;
+
+    let riskTier, insuranceReq;
+    if (['VE', 'V', 'V1-V30'].some(z => zone.startsWith(z))) {
+      riskTier = 'EXTREME';
+      insuranceReq = 'MANDATORY (Coastal High Velocity)';
+    } else if (['AE', 'A', 'AH', 'AO', 'AR', 'A99'].some(z => zone.startsWith(z))) {
+      riskTier = 'HIGH';
+      insuranceReq = 'MANDATORY (100-Year Floodplain)';
+    } else if (flood.ZONE_SUBTY?.includes('0.2 PCT')) {
+      riskTier = 'MODERATE';
+      insuranceReq = 'Recommended (500-Year Floodplain)';
+    } else if (zone === 'X' || zone === 'C' || zone === 'B') {
+      riskTier = 'LOW';
+      insuranceReq = 'Optional (Minimal Flood Hazard)';
+    } else if (zone === 'D') {
+      riskTier = 'UNDETERMINED';
+      insuranceReq = 'Recommended (Undetermined Risk)';
+    } else {
+      riskTier = 'UNKNOWN';
+      insuranceReq = 'Check with insurer';
+    }
+
+    // Parse FIRM effective date
+    let firmEffDate = null;
+    if (firm?.EFF_DATE) {
+      firmEffDate = new Date(firm.EFF_DATE).toISOString().split('T')[0];
+    }
+
+    return {
+      zone, subtype: flood.ZONE_SUBTY || '', sfha, bfe, depth, velocity,
+      riskTier, insuranceReq, dfirmId: flood.DFIRM_ID,
+      firmPanel: firm?.FIRM_PAN || null, firmEffDate,
+      sourceCitation: flood.SOURCE_CIT,
+    };
+  } catch (e) {
+    console.error(`  FEMA API error: ${e.message?.substring(0, 100)}`);
+    return null;
+  }
+}
+
+// =============================================================================
 // DATA FETCHERS
 // =============================================================================
 function fetchParcel(parcelId) {
@@ -240,7 +307,7 @@ function parseDimsJson(description) {
 // =============================================================================
 // 128 KPI COMPUTATION ENGINE
 // =============================================================================
-function compute128KPIs(parcel, zoning, standards, dims, uses, areaStats) {
+function compute128KPIs(parcel, zoning, standards, dims, uses, areaStats, fema) {
   const p = parcel;
   const z = zoning?.zoning_districts || {};
   const s = standards || {};
@@ -288,6 +355,13 @@ function compute128KPIs(parcel, zoning, standards, dims, uses, areaStats) {
   if ((p.imp_qual || 0) >= 5) riskScore += 10;
   if (p.jv > areaMedianValue * 1.5) riskScore += 5;
   if (buildingValue < p.lnd_val * 0.3) riskScore += 5; // land > building = aging structure
+  // FEMA flood risk adjustments
+  if (fema) {
+    if (fema.riskTier === 'EXTREME') riskScore += 20;
+    else if (fema.riskTier === 'HIGH') riskScore += 15;
+    else if (fema.riskTier === 'MODERATE') riskScore += 5;
+    else if (fema.riskTier === 'LOW') riskScore -= 5;
+  }
   riskScore = Math.min(100, Math.max(0, riskScore));
 
   // Opportunity scoring
@@ -461,11 +535,11 @@ function compute128KPIs(parcel, zoning, standards, dims, uses, areaStats) {
       KPI_109: { name: 'Over-Valued vs Area', value: p.jv > areaMedianValue * 1.5 ? 'Significantly Above Median' : 'Within Range', source: 'Calculated' },
       KPI_110: { name: 'Land > Building', value: buildingValue < p.lnd_val * 0.3 ? 'Yes (teardown candidate)' : 'No', source: 'Calculated' },
       KPI_111: { name: 'Homestead Protected', value: p.av_hmstd > 0 ? 'Yes (owner-occupied)' : 'No', source: 'FDOR' },
-      KPI_112: { name: 'Flood Zone', value: 'Check FEMA Map', source: 'External' },
-      KPI_113: { name: 'Hurricane Zone', value: 'Brevard (Zone A/B)', source: 'FEMA' },
-      KPI_114: { name: 'Environmental Risk', value: 'Standard FL Coastal', source: 'General' },
-      KPI_115: { name: 'Sinkhole Risk', value: 'Low (Brevard)', source: 'FL Geological' },
-      KPI_116: { name: 'Insurance Difficulty', value: 'Moderate (FL Coastal)', source: 'Market' },
+      KPI_112: { name: 'FEMA Flood Zone', value: fema ? fema.zone : 'Not queried', source: 'FEMA NFHL' },
+      KPI_113: { name: 'Flood Zone Description', value: fema?.subtype || 'N/A', source: 'FEMA NFHL' },
+      KPI_114: { name: 'Special Flood Hazard Area', value: fema ? (fema.sfha ? 'YES (SFHA)' : 'No') : 'N/A', source: 'FEMA NFHL' },
+      KPI_115: { name: 'Base Flood Elevation', value: fema?.bfe ? `${fema.bfe} ft` : 'N/A', source: 'FEMA NFHL' },
+      KPI_116: { name: 'Flood Insurance Required', value: fema?.insuranceReq || 'Check with insurer', source: 'FEMA NFHL' },
     },
 
     // ── SECTION 9: BIDDEED.AI SCORING (12 KPIs) ──────────────────────────
@@ -698,13 +772,30 @@ async function main() {
   console.log(`  Standards: ${standards ? 'YES' : 'NO'} | Uses: ${uses.length}`);
 
   // 4. Fetch area stats
-  console.log('[4/5] Fetching area market stats...');
+  console.log('[4/6] Fetching area market stats...');
   const areaStats = fetchAreaStats(parcel.co_no, parcel.phy_zipcd);
   console.log(`  Area comparables: ${areaStats.length} properties in ZIP ${parcel.phy_zipcd}`);
 
-  // 5. Compute 128 KPIs
-  console.log('[5/5] Computing 128 KPIs...');
-  const kpis = compute128KPIs(parcel, zoning, standards, dims, uses, areaStats);
+  // 5. Fetch FEMA flood zone data
+  console.log('[5/6] Querying FEMA NFHL flood zone...');
+  let fema = null;
+  if (parcel.centroid_lat && parcel.centroid_lng) {
+    fema = fetchFemaFloodZone(parcel.centroid_lat, parcel.centroid_lng);
+    if (fema) {
+      console.log(`  Zone: ${fema.zone} | ${fema.subtype}`);
+      console.log(`  SFHA: ${fema.sfha ? 'YES' : 'No'} | Risk: ${fema.riskTier} | BFE: ${fema.bfe || 'N/A'} ft`);
+      console.log(`  FIRM Panel: ${fema.firmPanel || 'N/A'} | Effective: ${fema.firmEffDate || 'N/A'}`);
+      console.log(`  Insurance: ${fema.insuranceReq}`);
+    } else {
+      console.log('  FEMA data not available for this location');
+    }
+  } else {
+    console.log('  No coordinates available — skipping FEMA lookup');
+  }
+
+  // 6. Compute 128 KPIs
+  console.log('[6/6] Computing 128 KPIs...');
+  const kpis = compute128KPIs(parcel, zoning, standards, dims, uses, areaStats, fema);
 
   // Count populated KPIs
   let populated = 0, total = 0;
