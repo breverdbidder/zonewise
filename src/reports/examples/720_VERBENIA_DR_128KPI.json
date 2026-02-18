@@ -1,7 +1,7 @@
 {
   "_meta": {
     "version": "2.0.0",
-    "generated": "2026-02-17T23:56:30.259Z",
+    "generated": "2026-02-18T00:31:45.073Z",
     "source": "BidDeed.AI / ZoneWise 128-KPI Engine",
     "parcel_id": "27 3702-88-A-3",
     "county": "Brevard"
@@ -294,24 +294,25 @@
       "source": "Calculated"
     },
     "KPI_052": {
-      "name": "Area Residential Count",
-      "value": 200,
-      "source": "fl_parcels"
+      "name": "Walkability Score",
+      "value": 9,
+      "unit": "/100",
+      "source": "Census ACS"
     },
     "KPI_053": {
-      "name": "ZIP Code",
-      "value": "32937",
-      "source": "FDOR"
+      "name": "Walk Commute %",
+      "value": "1.4%",
+      "source": "Census ACS"
     },
     "KPI_054": {
-      "name": "Neighborhood",
-      "value": "SATELLITE BEACH",
-      "source": "FDOR"
+      "name": "Transit Commute %",
+      "value": "0.1%",
+      "source": "Census ACS"
     },
     "KPI_055": {
-      "name": "County",
-      "value": "Brevard",
-      "source": "FDOR"
+      "name": "Bike Commute %",
+      "value": "1.1%",
+      "source": "Census ACS"
     },
     "KPI_056": {
       "name": "Latitude",
@@ -330,30 +331,33 @@
       "source": "Calculated"
     },
     "KPI_059": {
-      "name": "Value Tier",
-      "value": "Mid-Range",
-      "source": "Calculated"
+      "name": "Median HH Income (ZIP)",
+      "value": 90344,
+      "unit": "$",
+      "source": "Census ACS"
     },
     "KPI_060": {
-      "name": "Building-to-Land Ratio",
-      "value": "1.00",
-      "source": "Calculated"
+      "name": "Median Gross Rent (ZIP)",
+      "value": 1611,
+      "unit": "$/mo",
+      "source": "Census ACS"
     },
     "KPI_061": {
-      "name": "Effective Age Score",
-      "value": 48,
+      "name": "Education Score",
+      "value": 98,
       "unit": "/100",
-      "source": "Calculated"
+      "source": "Census ACS"
     },
     "KPI_062": {
-      "name": "Property Size Class",
-      "value": "Medium",
-      "source": "Calculated"
+      "name": "Safety Score",
+      "value": 75,
+      "unit": "/100",
+      "source": "Census ACS"
     },
     "KPI_063": {
-      "name": "Lot Size Class",
-      "value": "Standard",
-      "source": "Calculated"
+      "name": "Poverty Rate (ZIP)",
+      "value": "8.3%",
+      "source": "Census ACS"
     }
   },
   "zoning_regulatory": {
@@ -581,7 +585,7 @@
   "risk_assessment": {
     "KPI_104": {
       "name": "Risk Score",
-      "value": 50,
+      "value": 55,
       "unit": "/100",
       "source": "Calculated"
     },
@@ -621,29 +625,29 @@
       "source": "FDOR"
     },
     "KPI_112": {
-      "name": "Flood Zone",
-      "value": "Check FEMA Map",
-      "source": "External"
+      "name": "FEMA Flood Zone",
+      "value": "X",
+      "source": "FEMA NFHL"
     },
     "KPI_113": {
-      "name": "Hurricane Zone",
-      "value": "Brevard (Zone A/B)",
-      "source": "FEMA"
+      "name": "Flood Zone Description",
+      "value": "0.2 PCT ANNUAL CHANCE FLOOD HAZARD IN COASTAL ZONE",
+      "source": "FEMA NFHL"
     },
     "KPI_114": {
-      "name": "Environmental Risk",
-      "value": "Standard FL Coastal",
-      "source": "General"
+      "name": "Special Flood Hazard Area",
+      "value": "No",
+      "source": "FEMA NFHL"
     },
     "KPI_115": {
-      "name": "Sinkhole Risk",
-      "value": "Low (Brevard)",
-      "source": "FL Geological"
+      "name": "Base Flood Elevation",
+      "value": "N/A",
+      "source": "FEMA NFHL"
     },
     "KPI_116": {
-      "name": "Insurance Difficulty",
-      "value": "Moderate (FL Coastal)",
-      "source": "Market"
+      "name": "Flood Insurance Required",
+      "value": "Recommended (500-Year Floodplain)",
+      "source": "FEMA NFHL"
     }
   },
   "biddeed_scoring": {
