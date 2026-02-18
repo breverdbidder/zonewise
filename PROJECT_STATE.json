@@ -1,115 +1,73 @@
 {
-  "project": "ZoneWise.ai",
+  "project": "ZoneWise.AI",
   "version": "0.1.0",
-  "status": "INITIALIZATION",
-  "last_updated": "2026-01-21T14:57:53Z",
-  "updated_by": "Claude Opus 4.5",
-  
+  "status": "ACTIVE",
+  "last_updated": "2026-02-18T00:00:00Z",
+  "updated_by": "Claude Sonnet 4.6 (AI Architect)",
+
   "domain": {
     "primary": "zonewise.ai",
     "registrar": "Cloudflare",
     "created": "2026-01-21",
-    "expires": "2028-01-21",
     "nameservers": ["pablo.ns.cloudflare.com", "vita.ns.cloudflare.com"],
     "status": "active"
   },
-  
-  "infrastructure": {
-    "github_repo": "breverdbidder/zonewise",
-    "supabase_project": null,
-    "cloudflare_pages": null,
-    "stripe_account": null
+
+  "repos": {
+    "monorepo": "breverdbidder/zonewise",
+    "web": "breverdbidder/zonewise-web",
+    "modal": "breverdbidder/zonewise-modal",
+    "desktop": "breverdbidder/zonewise-desktop",
+    "agents": "breverdbidder/zonewise-agents"
   },
-  
+
   "data": {
-    "jurisdictions": 17,
-    "zoning_districts": 273,
-    "source": "Municode",
-    "verified": true
+    "counties": 67,
+    "jurisdictions": 1100,
+    "zoning_districts": 5321,
+    "dimensional_standards": 1179,
+    "permitted_uses": 7505,
+    "gis_polygons": 10092,
+    "parcels_fdot": "10.8M",
+    "last_full_run": "2026-02-08",
+    "last_run_cost_usd": 3.47,
+    "last_run_duration_minutes": 29.9
   },
-  
+
+  "infrastructure": {
+    "supabase": "mocerqjnksmhcjzxrewo.supabase.co",
+    "web_hosting": "Vercel → zonewise.ai",
+    "api_hosting": "Render.com → zonewise-agents.onrender.com",
+    "scraper_hosting": "Modal.com",
+    "desktop_hosting": "Vercel → zonewise.app",
+    "ci_cd": "GitHub Actions"
+  },
+
   "stack": {
     "frontend": "Next.js 14",
-    "database": "Supabase",
-    "ai": "Claude Sonnet 4.5",
-    "auth": "Makerkit Pro",
+    "backend": "FastAPI (Python 3.11)",
+    "database": "Supabase (PostgreSQL)",
+    "ai": "Claude Sonnet 4.5 / Opus 4.6",
+    "scraper": "AgentQL + Modal.com",
+    "orchestration": "LangGraph",
     "payments": "Stripe",
-    "hosting": "Cloudflare Pages"
+    "maps": "Mapbox GL JS"
   },
-  
+
+  "current_sprint": {
+    "focus": "Phase 1 Deep Scraper",
+    "target": "237 jurisdictions from <75% → 75%+ completeness",
+    "file": "ZONEWISE_DEEP_SCRAPER_V4.py",
+    "blocked_by": null
+  },
+
   "milestones": [
-    {
-      "name": "Domain Acquisition",
-      "status": "COMPLETED",
-      "date": "2026-01-21",
-      "notes": "zonewise.ai purchased via Cloudflare for $70/year"
-    },
-    {
-      "name": "GitHub Repo Setup",
-      "status": "IN_PROGRESS",
-      "date": "2026-01-21",
-      "notes": "Creating initial structure"
-    },
-    {
-      "name": "Makerkit Pro Purchase",
-      "status": "APPROVED",
-      "date": null,
-      "notes": "$299 - awaiting purchase"
-    },
-    {
-      "name": "Supabase Project Setup",
-      "status": "PENDING",
-      "date": null,
-      "notes": null
-    },
-    {
-      "name": "MVP Development",
-      "status": "PENDING",
-      "date": null,
-      "notes": "Claude Code 7hr session"
-    },
-    {
-      "name": "GTM Launch",
-      "status": "PENDING",
-      "date": null,
-      "notes": "Target Q1 2026"
-    }
-  ],
-  
-  "recent_decisions": [
-    {
-      "date": "2026-01-21",
-      "decision": "Selected zonewise.ai over zonewise.com",
-      "rationale": "zonewise.com taken; .ai better for AI product branding",
-      "decided_by": "ZoneWise.AI"
-    },
-    {
-      "date": "2026-01-21",
-      "decision": "Cloudflare as registrar",
-      "rationale": "At-cost pricing, existing stack integration, best DNS",
-      "decided_by": "Claude Opus 4.5"
-    }
-  ],
-  
-  "blockers": [],
-  
-  "next_actions": [
-    "Create GitHub repository breverdbidder/zonewise",
-    "Purchase Makerkit Pro ($299)",
-    "Create Supabase project",
-    "Initialize Next.js with Makerkit template",
-    "Import zoning district data"
-  ],
-  
-  "team": {
-    "product_owner": "ZoneWise.AI",
-    "ai_architect": "Claude Opus 4.5",
-    "development": "Claude Code"
-  },
-  
-  "contacts": {
-    "owner_email": "brevardbidderai@gmail.com",
-    "owner_phone": "+1-561-809-0929",
-    "location": "Satellite Beach, FL 32937"
-  }
+    {"name": "Domain Acquisition", "status": "COMPLETED", "date": "2026-01-21"},
+    {"name": "Brevard County Pilot", "status": "COMPLETED", "date": "2026-02-06"},
+    {"name": "67-County Full Run (V3.1)", "status": "COMPLETED", "date": "2026-02-08"},
+    {"name": "Web App Launch", "status": "COMPLETED", "date": "2026-01-27"},
+    {"name": "Phase 1 Deep Scraper", "status": "IN_PROGRESS", "date": null},
+    {"name": "Multi-County Web Expansion", "status": "PENDING", "date": null},
+    {"name": "67-County GA Launch", "status": "PENDING", "date": "2026-Q2"}
+  ]
 }
