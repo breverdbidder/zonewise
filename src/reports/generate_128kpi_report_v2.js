@@ -180,6 +180,76 @@ function fetchFemaFloodZone(lat, lng) {
 }
 
 // =============================================================================
+// CENSUS ACS 5-YEAR API (Free, no key required)
+// =============================================================================
+const CENSUS_ACS_VARS = [
+  'B08301_001E','B08301_003E','B08301_010E','B08301_018E','B08301_019E',
+  'B25044_003E',
+  'B15003_001E','B15003_022E','B15003_023E','B15003_025E',
+  'B19013_001E',
+  'B17001_001E','B17001_002E',
+  'B25002_001E','B25002_002E','B25002_003E',
+  'B25003_002E','B25003_003E',
+  'B25064_001E',
+  'B01003_001E','B01002_001E',
+].join(',');
+
+function fetchCensusData(zipCode) {
+  try {
+    const url = `https://api.census.gov/data/2022/acs/acs5?get=${CENSUS_ACS_VARS}&for=zip%20code%20tabulation%20area:${zipCode}`;
+    const result = execSync(`curl -s '${url}'`, { timeout: 15000 });
+    const data = JSON.parse(result.toString());
+    if (!data || data.length < 2) return null;
+
+    const v = {};
+    for (let i = 0; i < data[0].length; i++) {
+      v[data[0][i]] = data[0][i] === 'B01002_001E' ? parseFloat(data[1][i]) || 0 : parseInt(data[1][i]) || 0;
+    }
+
+    const totalWorkers = v['B08301_001E'] || 1;
+    const totalHU = v['B25002_001E'] || 1;
+    const occupied = v['B25002_002E'] || 1;
+    const pop25 = v['B15003_001E'] || 1;
+    const povUniverse = v['B17001_001E'] || 1;
+
+    const walkPct = (v['B08301_018E'] / totalWorkers) * 100;
+    const transitPct = (v['B08301_010E'] / totalWorkers) * 100;
+    const bikePct = (v['B08301_019E'] / totalWorkers) * 100;
+    const droveAlonePct = (v['B08301_003E'] / totalWorkers) * 100;
+    const zeroVehiclePct = (v['B25044_003E'] / totalHU) * 100;
+    const bachelorsPlusPct = ((v['B15003_022E'] + v['B15003_023E'] + v['B15003_025E']) / pop25) * 100;
+    const povertyRate = (v['B17001_002E'] / povUniverse) * 100;
+    const vacancyRate = (v['B25002_003E'] / totalHU) * 100;
+    const ownerOccupiedPct = (v['B25003_002E'] / occupied) * 100;
+    const renterPct = (v['B25003_003E'] / occupied) * 100;
+
+    const walkabilityScore = Math.min(100, Math.round(walkPct * 3 + transitPct * 3 + bikePct * 2 + zeroVehiclePct * 2));
+    const educationScore = Math.min(100, Math.round(bachelorsPlusPct * 2));
+    const safetyScore = Math.min(100, Math.max(0, Math.round(100 - (povertyRate * 3) - Math.max(0, 30 - ownerOccupiedPct) * 0.5)));
+
+    return {
+      totalPop: v['B01003_001E'], medianAge: v['B01002_001E'],
+      medianIncome: v['B19013_001E'], medianRent: v['B25064_001E'],
+      povertyRate: Math.round(povertyRate * 10) / 10,
+      vacancyRate: Math.round(vacancyRate * 10) / 10,
+      ownerOccupiedPct: Math.round(ownerOccupiedPct * 10) / 10,
+      renterPct: Math.round(renterPct * 10) / 10,
+      walkPct: Math.round(walkPct * 10) / 10,
+      transitPct: Math.round(transitPct * 10) / 10,
+      bikePct: Math.round(bikePct * 10) / 10,
+      droveAlonePct: Math.round(droveAlonePct * 10) / 10,
+      zeroVehiclePct: Math.round(zeroVehiclePct * 10) / 10,
+      bachelorsPlusPct: Math.round(bachelorsPlusPct * 10) / 10,
+      walkabilityScore, educationScore, safetyScore,
+      totalWorkers, totalHousingUnits: totalHU,
+    };
+  } catch (e) {
+    console.error(`  Census API error: ${e.message?.substring(0, 100)}`);
+    return null;
+  }
+}
+
+// =============================================================================
 // DATA FETCHERS
 // =============================================================================
 function fetchParcel(parcelId) {
@@ -307,7 +377,7 @@ function parseDimsJson(description) {
 // =============================================================================
 // 128 KPI COMPUTATION ENGINE
 // =============================================================================
-function compute128KPIs(parcel, zoning, standards, dims, uses, areaStats, fema) {
+function compute128KPIs(parcel, zoning, standards, dims, uses, areaStats, fema, census) {
   const p = parcel;
   const z = zoning?.zoning_districts || {};
   const s = standards || {};
@@ -459,18 +529,18 @@ function compute128KPIs(parcel, zoning, standards, dims, uses, areaStats, fema) 
       KPI_049: { name: 'Properties in ZIP', value: areaStats.length, source: 'fl_parcels count' },
       KPI_050: { name: 'Recent Sales (2023+)', value: recentSales.length, source: 'fl_parcels filter' },
       KPI_051: { name: 'Median Recent Sale Price', value: recentSales.length > 0 ? recentSales.map(r=>r.sale_prc1).sort((a,b)=>a-b)[Math.floor(recentSales.length/2)] : 'N/A', unit: '$', source: 'Calculated' },
-      KPI_052: { name: 'Area Residential Count', value: areaStats.length, source: 'fl_parcels' },
-      KPI_053: { name: 'ZIP Code', value: p.phy_zipcd, source: 'FDOR' },
-      KPI_054: { name: 'Neighborhood', value: p.phy_city, source: 'FDOR' },
-      KPI_055: { name: 'County', value: FL_COUNTY_MAP[p.co_no], source: 'FDOR' },
+      KPI_052: { name: 'Walkability Score', value: census?.walkabilityScore ?? 'N/A', unit: '/100', source: 'Census ACS' },
+      KPI_053: { name: 'Walk Commute %', value: census ? `${census.walkPct}%` : 'N/A', source: 'Census ACS' },
+      KPI_054: { name: 'Transit Commute %', value: census ? `${census.transitPct}%` : 'N/A', source: 'Census ACS' },
+      KPI_055: { name: 'Bike Commute %', value: census ? `${census.bikePct}%` : 'N/A', source: 'Census ACS' },
       KPI_056: { name: 'Latitude', value: p.centroid_lat, source: 'FDOR Cadastral' },
       KPI_057: { name: 'Longitude', value: p.centroid_lng, source: 'FDOR Cadastral' },
       KPI_058: { name: 'Price Percentile (ZIP)', value: areaValues.length > 0 ? Math.round(areaValues.filter(v => v < p.jv).length / areaValues.length * 100) : 'N/A', unit: '%ile', source: 'Calculated' },
-      KPI_059: { name: 'Value Tier', value: p.jv >= 500000 ? 'Premium' : p.jv >= 250000 ? 'Mid-Range' : p.jv >= 100000 ? 'Entry-Level' : 'Value', source: 'Calculated' },
-      KPI_060: { name: 'Building-to-Land Ratio', value: p.lnd_val > 0 ? (buildingValue / p.lnd_val).toFixed(2) : 'N/A', source: 'Calculated' },
-      KPI_061: { name: 'Effective Age Score', value: p.eff_yr_blt > 0 ? Math.max(0, 100 - (2026 - p.eff_yr_blt) * 2) : 'N/A', unit: '/100', source: 'Calculated' },
-      KPI_062: { name: 'Property Size Class', value: (p.tot_lvg_ar||0) >= 3000 ? 'Large' : (p.tot_lvg_ar||0) >= 1500 ? 'Medium' : (p.tot_lvg_ar||0) >= 800 ? 'Small' : 'Micro', source: 'Calculated' },
-      KPI_063: { name: 'Lot Size Class', value: (p.lnd_sqfoot||0) >= 43560 ? 'Acreage (1+ ac)' : (p.lnd_sqfoot||0) >= 10000 ? 'Large Lot' : (p.lnd_sqfoot||0) >= 5000 ? 'Standard' : 'Small', source: 'Calculated' },
+      KPI_059: { name: 'Median HH Income (ZIP)', value: census?.medianIncome || 'N/A', unit: '$', source: 'Census ACS' },
+      KPI_060: { name: 'Median Gross Rent (ZIP)', value: census?.medianRent || 'N/A', unit: '$/mo', source: 'Census ACS' },
+      KPI_061: { name: 'Education Score', value: census?.educationScore ?? 'N/A', unit: '/100', source: 'Census ACS' },
+      KPI_062: { name: 'Safety Score', value: census?.safetyScore ?? 'N/A', unit: '/100', source: 'Census ACS' },
+      KPI_063: { name: 'Poverty Rate (ZIP)', value: census ? `${census.povertyRate}%` : 'N/A', source: 'Census ACS' },
     },
 
     // ── SECTION 5: ZONING & REGULATORY (20 KPIs) ─────────────────────────
@@ -777,7 +847,7 @@ async function main() {
   console.log(`  Area comparables: ${areaStats.length} properties in ZIP ${parcel.phy_zipcd}`);
 
   // 5. Fetch FEMA flood zone data
-  console.log('[5/6] Querying FEMA NFHL flood zone...');
+  console.log('[5/7] Querying FEMA NFHL flood zone...');
   let fema = null;
   if (parcel.centroid_lat && parcel.centroid_lng) {
     fema = fetchFemaFloodZone(parcel.centroid_lat, parcel.centroid_lng);
@@ -793,9 +863,26 @@ async function main() {
     console.log('  No coordinates available — skipping FEMA lookup');
   }
 
-  // 6. Compute 128 KPIs
-  console.log('[6/6] Computing 128 KPIs...');
-  const kpis = compute128KPIs(parcel, zoning, standards, dims, uses, areaStats, fema);
+  // 6. Fetch Census ACS neighborhood data
+  console.log('[6/7] Querying Census ACS neighborhood data...');
+  let census = null;
+  if (parcel.phy_zipcd) {
+    census = fetchCensusData(parcel.phy_zipcd);
+    if (census) {
+      console.log(`  Walkability: ${census.walkabilityScore}/100 | Education: ${census.educationScore}/100 | Safety: ${census.safetyScore}/100`);
+      console.log(`  Income: $${census.medianIncome.toLocaleString()} | Rent: $${census.medianRent}/mo | Poverty: ${census.povertyRate}%`);
+      console.log(`  Walk: ${census.walkPct}% | Transit: ${census.transitPct}% | Bike: ${census.bikePct}% | Drove: ${census.droveAlonePct}%`);
+      console.log(`  Population: ${census.totalPop.toLocaleString()} | Median Age: ${census.medianAge} | Owner-Occupied: ${census.ownerOccupiedPct}%`);
+    } else {
+      console.log('  Census data not available for this ZIP');
+    }
+  } else {
+    console.log('  No ZIP code — skipping Census lookup');
+  }
+
+  // 7. Compute 128 KPIs
+  console.log('[7/7] Computing 128 KPIs...');
+  const kpis = compute128KPIs(parcel, zoning, standards, dims, uses, areaStats, fema, census);
 
   // Count populated KPIs
   let populated = 0, total = 0;
