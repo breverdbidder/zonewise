@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-cov pytest-asyncio ruff mypy
+      - name: Lint
+        run: ruff check src/ tests/ || true
+      - name: Tests
+        run: pytest tests/ -v --cov=src --cov-report=xml --cov-report=term-missing -m "not integration"
+        env:
+          SUPABASE_URL: "https://test.supabase.co"
+          SUPABASE_ANON_KEY: "test-key"
+          SUPABASE_SERVICE_ROLE_KEY: "test-service-key"
+          ANTHROPIC_API_KEY: "test-key"
+      - name: Coverage gate (85%)
+        run: |
+          python -c "
+          import xml.etree.ElementTree as ET
+          tree = ET.parse('coverage.xml')
+          pct = float(tree.getroot().attrib['line-rate']) * 100
+          print(f'Coverage: {pct:.1f}%')
+          assert pct >= 85, f'Coverage {pct:.1f}% below 85%'
+          print('Passed')
+          "
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          file: coverage.xml
+          fail_ci_if_error: false
