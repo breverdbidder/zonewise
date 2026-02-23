@@ -16,9 +16,11 @@ import json
 
 try:
     from supabase import create_client, Client
+    SUPABASE_AVAILABLE = True
 except ImportError:
-    print("⚠️ supabase-py not installed. Run: pip install supabase --break-system-packages")
-    sys.exit(1)
+    SUPABASE_AVAILABLE = False
+    create_client = None
+    Client = None
 
 
 @dataclass
@@ -59,6 +61,8 @@ class SupabasePrivilegeAuditor:
             supabase_url: Supabase project URL
             service_role_key: Service role key (admin access)
         """
+        if not SUPABASE_AVAILABLE:
+            raise ImportError("supabase-py not installed. Run: pip install supabase --break-system-packages")
         self.supabase: Client = create_client(supabase_url, service_role_key)
         self.url = supabase_url
         
@@ -408,6 +412,9 @@ def main():
     supabase_url = os.getenv('SUPABASE_URL', 'https://mocerqjnksmhcjzxrewo.supabase.co')
     service_role_key = os.getenv('SUPABASE_SERVICE_ROLE_KEY')
     
+    if not SUPABASE_AVAILABLE:
+        print("❌ supabase-py not installed. Run: pip install supabase --break-system-packages")
+        sys.exit(1)
     if not service_role_key:
         print("❌ SUPABASE_SERVICE_ROLE_KEY environment variable not set")
         print("   Set it with: export SUPABASE_SERVICE_ROLE_KEY=<your_key>")
