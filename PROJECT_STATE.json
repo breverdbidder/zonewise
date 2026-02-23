@@ -2,17 +2,18 @@
   "project": "ZoneWise.AI",
   "version": "0.1.0",
   "status": "ACTIVE",
-  "last_updated": "2026-02-18T00:00:00Z",
-  "updated_by": "Claude Sonnet 4.6 (AI Architect)",
-
+  "last_updated": "2026-02-23T19:37:41Z",
+  "updated_by": "Claude Sonnet 4.6 (AI Architect) \u2014 autonomous Phase 0 execution",
   "domain": {
     "primary": "zonewise.ai",
     "registrar": "Cloudflare",
     "created": "2026-01-21",
-    "nameservers": ["pablo.ns.cloudflare.com", "vita.ns.cloudflare.com"],
+    "nameservers": [
+      "pablo.ns.cloudflare.com",
+      "vita.ns.cloudflare.com"
+    ],
     "status": "active"
   },
-
   "repos": {
     "monorepo": "breverdbidder/zonewise",
     "web": "breverdbidder/zonewise-web",
@@ -20,7 +21,6 @@
     "desktop": "breverdbidder/zonewise-desktop",
     "agents": "breverdbidder/zonewise-agents"
   },
-
   "data": {
     "counties": 67,
     "jurisdictions": 1100,
@@ -33,16 +33,14 @@
     "last_run_cost_usd": 3.47,
     "last_run_duration_minutes": 29.9
   },
-
   "infrastructure": {
     "supabase": "mocerqjnksmhcjzxrewo.supabase.co",
-    "web_hosting": "Vercel → zonewise.ai",
-    "api_hosting": "Render.com → zonewise-agents.onrender.com",
+    "web_hosting": "Vercel \u2192 zonewise.ai",
+    "api_hosting": "Render.com \u2192 zonewise-agents.onrender.com",
     "scraper_hosting": "Modal.com",
-    "desktop_hosting": "Vercel → zonewise.app",
+    "desktop_hosting": "Vercel \u2192 zonewise.app",
     "ci_cd": "GitHub Actions"
   },
-
   "stack": {
     "frontend": "Next.js 14",
     "backend": "FastAPI (Python 3.11)",
@@ -53,21 +51,89 @@
     "payments": "Stripe",
     "maps": "Mapbox GL JS"
   },
-
   "current_sprint": {
-    "focus": "Phase 1 Deep Scraper",
-    "target": "237 jurisdictions from <75% → 75%+ completeness",
-    "file": "ZONEWISE_DEEP_SCRAPER_V4.py",
-    "blocked_by": null
+    "focus": "CrossBeam Skills Adoption \u2014 County Skill Files",
+    "phase": "P0 COMPLETE \u2192 P1 READY",
+    "target": "67 county SKILL.md files + nightly pipeline",
+    "blocked_by": "None \u2014 Traycer issues created for Claude Code execution"
   },
-
   "milestones": [
-    {"name": "Domain Acquisition", "status": "COMPLETED", "date": "2026-01-21"},
-    {"name": "Brevard County Pilot", "status": "COMPLETED", "date": "2026-02-06"},
-    {"name": "67-County Full Run (V3.1)", "status": "COMPLETED", "date": "2026-02-08"},
-    {"name": "Web App Launch", "status": "COMPLETED", "date": "2026-01-27"},
-    {"name": "Phase 1 Deep Scraper", "status": "IN_PROGRESS", "date": null},
-    {"name": "Multi-County Web Expansion", "status": "PENDING", "date": null},
-    {"name": "67-County GA Launch", "status": "PENDING", "date": "2026-Q2"}
-  ]
+    {
+      "name": "Domain Acquisition",
+      "status": "COMPLETED",
+      "date": "2026-01-21"
+    },
+    {
+      "name": "Brevard County Pilot",
+      "status": "COMPLETED",
+      "date": "2026-02-06"
+    },
+    {
+      "name": "67-County Full Run (V3.1)",
+      "status": "COMPLETED",
+      "date": "2026-02-08"
+    },
+    {
+      "name": "Web App Launch",
+      "status": "COMPLETED",
+      "date": "2026-01-27"
+    },
+    {
+      "name": "Phase 1 Deep Scraper",
+      "status": "IN_PROGRESS",
+      "date": null
+    },
+    {
+      "name": "Multi-County Web Expansion",
+      "status": "PENDING",
+      "date": null
+    },
+    {
+      "name": "67-County GA Launch",
+      "status": "PENDING",
+      "date": "2026-Q2"
+    },
+    {
+      "name": "County Skill Files \u2014 Phase 0",
+      "status": "COMPLETED",
+      "date": "2026-02-23",
+      "details": "67 county SKILL.md pushed to zonewise-desktop, skills-manifest.yaml v2.0.0 (79 skills), migration 007, nightly workflow, 8 Traycer issues"
+    }
+  ],
+  "county_skills": {
+    "total": 67,
+    "deployed_to": "breverdbidder/zonewise-desktop/zonewise/skills/",
+    "manifest_version": "2.0.0",
+    "total_skills_in_manifest": 79,
+    "pilots": [
+      "brevard",
+      "miami-dade",
+      "orange"
+    ],
+    "phase1": [
+      "hillsborough",
+      "palm-beach",
+      "pinellas"
+    ],
+    "anti_scrape_counties": [
+      "miami-dade",
+      "broward",
+      "duval",
+      "hillsborough",
+      "palm-beach",
+      "pinellas",
+      "orange"
+    ],
+    "nightly_workflow": ".github/workflows/nightly-county-scrape.yml",
+    "traycer_issues": [
+      "#4",
+      "#5",
+      "#6",
+      "#7",
+      "#8",
+      "#9",
+      "#10",
+      "#11"
+    ]
+  }
 }
