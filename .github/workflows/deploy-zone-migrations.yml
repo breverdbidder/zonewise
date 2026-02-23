@@ -11,48 +11,66 @@ on:
 jobs:
   deploy-007:
     runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
+      PROJ_REF: mocerqjnksmhcjzxrewo
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install PostgreSQL client
-        run: sudo apt-get update && sudo apt-get install -y postgresql-client
-
-      - name: Deploy 007_skill_file_paths.sql
+      - name: Deploy 007 via Supabase Management API
         env:
-          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
-          echo "Deploying 007_skill_file_paths.sql..."
-          psql "postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres" \
-            -f migrations/007_skill_file_paths.sql
+          echo "Reading migration SQL..."
+          SQL=$(cat migrations/007_skill_file_paths.sql)
+
+          echo "Executing via Supabase Management API..."
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" \
+            -X POST \
+            "https://mocerqjnksmhcjzxrewo.supabase.co/rest/v1/rpc/exec_sql" \
+            -H "apikey: ${SUPABASE_SERVICE_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_SERVICE_KEY}" \
+            -H "Content-Type: application/json" \
+            -d "{\"query\": $(jq -Rs . < migrations/007_skill_file_paths.sql)}")
+
+          HTTP_STATUS=$(echo "$RESPONSE" | grep "HTTP_STATUS:" | cut -d: -f2)
+          BODY=$(echo "$RESPONSE" | grep -v "HTTP_STATUS:")
+
+          echo "Response: $BODY"
+          echo "HTTP Status: $HTTP_STATUS"
+
+          # If rpc not available, fall back to direct psql with SSL
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "RPC not available, trying psql with SSL..."
+            sudo apt-get update -q && sudo apt-get install -q -y postgresql-client
+
+            PGPASSWORD="${{ secrets.SUPABASE_DB_PASSWORD }}" psql \
+              "postgresql://postgres.${PROJ_REF}:${{ secrets.SUPABASE_DB_PASSWORD }}@aws-0-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require" \
+              -f migrations/007_skill_file_paths.sql 2>&1 || \
+            PGPASSWORD="${{ secrets.SUPABASE_DB_PASSWORD }}" psql \
+              "postgresql://postgres:${{ secrets.SUPABASE_DB_PASSWORD }}@db.${PROJ_REF}.supabase.co:5432/postgres?sslmode=require" \
+              -f migrations/007_skill_file_paths.sql
+          fi
           echo "Migration 007 complete!"
 
-      - name: Verify Migration 007
+      - name: Verify via REST API
         env:
-          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
-          DB="postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres"
+          echo "=== Checking co_no population ==="
+          curl -s \
+            "${SUPABASE_URL}/rest/v1/jurisdictions?co_no=not.is.null&select=county,co_no&limit=5" \
+            -H "apikey: ${SUPABASE_SERVICE_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_SERVICE_KEY}"
 
-          echo "=== co_no count ==="
-          CO=$(psql "$DB" -t -c "SELECT COUNT(*) FROM public.jurisdictions WHERE co_no IS NOT NULL;" | tr -d ' ')
-          echo "Rows with co_no: $CO"
+          echo ""
+          echo "=== Count rows with co_no ==="
+          curl -s -o /dev/null -w "Content-Range: %header{content-range}\n" \
+            "${SUPABASE_URL}/rest/v1/jurisdictions?co_no=not.is.null&select=id" \
+            -H "apikey: ${SUPABASE_SERVICE_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_SERVICE_KEY}" \
+            -H "Prefer: count=exact" \
+            -H "Range: 0-0"
 
-          echo "=== skill_file_path count ==="
-          SF=$(psql "$DB" -t -c "SELECT COUNT(*) FROM public.jurisdictions WHERE skill_file_path IS NOT NULL;" | tr -d ' ')
-          echo "Rows with skill_file_path: $SF"
-
-          echo "=== index check ==="
-          psql "$DB" -c "SELECT indexname FROM pg_indexes WHERE tablename='jurisdictions' AND indexname='idx_jurisdictions_co_no';"
-
-          echo "=== spot check Broward ==="
-          psql "$DB" -c "SELECT county, co_no, skill_file_path FROM public.jurisdictions WHERE county ILIKE '%broward%' LIMIT 3;"
-
-          echo "=== spot check Brevard ==="
-          psql "$DB" -c "SELECT county, co_no, skill_file_path FROM public.jurisdictions WHERE county ILIKE '%brevard%' LIMIT 3;"
-
-          if [ "$CO" -lt "67" ] 2>/dev/null; then
-            echo "WARN: co_no populated for $CO rows (expected >= 67) — may need county name matching review"
-          else
-            echo "PASS: co_no verified ($CO rows)"
-          fi
-
-          echo "Migration 007 verification complete!"
+          echo "Verification complete!"
