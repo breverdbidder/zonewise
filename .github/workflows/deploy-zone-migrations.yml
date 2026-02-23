@@ -12,7 +12,6 @@ jobs:
   deploy-007:
     runs-on: ubuntu-latest
     env:
-      SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
       PROJ_REF: mocerqjnksmhcjzxrewo
 
     steps:
@@ -20,57 +19,50 @@ jobs:
 
       - name: Deploy 007 via Supabase Management API
         env:
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_MGMT_TOKEN: ${{ secrets.SUPABASE_MGMT_TOKEN }}
         run: |
           echo "Reading migration SQL..."
           SQL=$(cat migrations/007_skill_file_paths.sql)
 
           echo "Executing via Supabase Management API..."
-          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" \
+          RESPONSE=$(curl -s -w "\nHTTP:%{http_code}" \
             -X POST \
-            "https://mocerqjnksmhcjzxrewo.supabase.co/rest/v1/rpc/exec_sql" \
-            -H "apikey: ${SUPABASE_SERVICE_KEY}" \
-            -H "Authorization: Bearer ${SUPABASE_SERVICE_KEY}" \
+            "https://api.supabase.com/v1/projects/${PROJ_REF}/database/query" \
+            -H "Authorization: Bearer ${SUPABASE_MGMT_TOKEN}" \
             -H "Content-Type: application/json" \
-            -d "{\"query\": $(jq -Rs . < migrations/007_skill_file_paths.sql)}")
+            -d "{\"query\": $(echo "$SQL" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))')}")
 
-          HTTP_STATUS=$(echo "$RESPONSE" | grep "HTTP_STATUS:" | cut -d: -f2)
-          BODY=$(echo "$RESPONSE" | grep -v "HTTP_STATUS:")
+          HTTP_STATUS=$(echo "$RESPONSE" | grep "^HTTP:" | cut -d: -f2)
+          BODY=$(echo "$RESPONSE" | grep -v "^HTTP:")
 
-          echo "Response: $BODY"
           echo "HTTP Status: $HTTP_STATUS"
+          echo "Response: $BODY"
 
-          # If rpc not available, fall back to direct psql with SSL
-          if [ "$HTTP_STATUS" != "200" ]; then
-            echo "RPC not available, trying psql with SSL..."
-            sudo apt-get update -q && sudo apt-get install -q -y postgresql-client
-
-            PGPASSWORD="${{ secrets.SUPABASE_DB_PASSWORD }}" psql \
-              "postgresql://postgres.${PROJ_REF}:${{ secrets.SUPABASE_DB_PASSWORD }}@aws-0-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require" \
-              -f migrations/007_skill_file_paths.sql 2>&1 || \
-            PGPASSWORD="${{ secrets.SUPABASE_DB_PASSWORD }}" psql \
-              "postgresql://postgres:${{ secrets.SUPABASE_DB_PASSWORD }}@db.${PROJ_REF}.supabase.co:5432/postgres?sslmode=require" \
-              -f migrations/007_skill_file_paths.sql
+          if [ "$HTTP_STATUS" != "200" ] && [ "$HTTP_STATUS" != "201" ]; then
+            echo "FAIL: API returned $HTTP_STATUS"
+            exit 1
           fi
-          echo "Migration 007 complete!"
+          echo "Migration 007 deployed successfully!"
 
       - name: Verify via REST API
         env:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
         run: |
-          echo "=== Checking co_no population ==="
-          curl -s \
-            "${SUPABASE_URL}/rest/v1/jurisdictions?co_no=not.is.null&select=county,co_no&limit=5" \
-            -H "apikey: ${SUPABASE_SERVICE_KEY}" \
-            -H "Authorization: Bearer ${SUPABASE_SERVICE_KEY}"
-
-          echo ""
-          echo "=== Count rows with co_no ==="
-          curl -s -o /dev/null -w "Content-Range: %header{content-range}\n" \
+          echo "=== Rows with co_no ==="
+          COUNT=$(curl -s \
             "${SUPABASE_URL}/rest/v1/jurisdictions?co_no=not.is.null&select=id" \
             -H "apikey: ${SUPABASE_SERVICE_KEY}" \
             -H "Authorization: Bearer ${SUPABASE_SERVICE_KEY}" \
             -H "Prefer: count=exact" \
-            -H "Range: 0-0"
+            -H "Range: 0-0" \
+            -o /dev/null -w "%{header:content-range}")
+          echo "co_no count: $COUNT"
 
+          echo "=== Spot check Brevard ==="
+          curl -s \
+            "${SUPABASE_URL}/rest/v1/jurisdictions?county=ilike.*brevard*&select=county,co_no,skill_file_path&limit=3" \
+            -H "apikey: ${SUPABASE_SERVICE_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_SERVICE_KEY}"
+          echo ""
           echo "Verification complete!"
