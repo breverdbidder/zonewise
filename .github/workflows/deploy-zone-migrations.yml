@@ -1,4 +1,4 @@
-name: Deploy Zone Standards & Permitted Uses Migrations
+name: Deploy Zone Migrations
 
 on:
   workflow_dispatch:
@@ -8,6 +8,7 @@ on:
     paths:
       - 'migrations/005_zone_standards.sql'
       - 'migrations/006_permitted_uses.sql'
+      - 'migrations/007_skill_file_paths.sql'
 
 jobs:
   deploy-migrations:
@@ -37,29 +38,41 @@ jobs:
             -f migrations/006_permitted_uses.sql
           echo "permitted_uses migration complete!"
 
-      - name: Verify Tables Created
+      - name: Deploy 007_skill_file_paths.sql
         env:
           PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
         run: |
-          echo "Verifying tables..."
+          echo "Deploying 007_skill_file_paths.sql..."
+          psql "postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres" \
+            -f migrations/007_skill_file_paths.sql
+          echo "skill_file_paths migration complete!"
+
+      - name: Verify Migration 007
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+        run: |
           DB_URL="postgresql://postgres:${PGPASSWORD}@db.mocerqjnksmhcjzxrewo.supabase.co:5432/postgres"
 
-          echo "=== zone_standards ==="
-          psql "$DB_URL" -c "\d public.zone_standards" || echo "zone_standards not found"
-          psql "$DB_URL" -c "SELECT count(*) as zone_standards_rows FROM public.zone_standards;"
+          echo "=== co_no count ==="
+          CO_COUNT=$(psql "$DB_URL" -t -c "SELECT COUNT(*) FROM public.jurisdictions WHERE co_no IS NOT NULL;")
+          echo "Rows with co_no: $CO_COUNT"
 
-          echo "=== permitted_uses ==="
-          psql "$DB_URL" -c "\d public.permitted_uses" || echo "permitted_uses not found"
-          psql "$DB_URL" -c "SELECT count(*) as permitted_uses_rows FROM public.permitted_uses;"
+          echo "=== skill_file_path count ==="
+          SF_COUNT=$(psql "$DB_URL" -t -c "SELECT COUNT(*) FROM public.jurisdictions WHERE skill_file_path IS NOT NULL;")
+          echo "Rows with skill_file_path: $SF_COUNT"
 
-          echo "=== permission_types ==="
-          psql "$DB_URL" -c "SELECT * FROM public.permission_types;"
+          echo "=== index check ==="
+          psql "$DB_URL" -c "SELECT indexname FROM pg_indexes WHERE tablename='jurisdictions' AND indexname='idx_jurisdictions_co_no';"
 
-          echo "=== use_categories ==="
-          psql "$DB_URL" -c "SELECT count(*) as category_count FROM public.use_categories;"
+          echo "=== spot check Broward ==="
+          psql "$DB_URL" -c "SELECT county, co_no, skill_file_path FROM public.jurisdictions WHERE county ILIKE '%broward%' LIMIT 3;"
 
-          echo "=== Constraints ==="
-          psql "$DB_URL" -c "SELECT conname, contype FROM pg_constraint WHERE conrelid = 'public.zone_standards'::regclass;"
-          psql "$DB_URL" -c "SELECT conname, contype FROM pg_constraint WHERE conrelid = 'public.permitted_uses'::regclass;"
+          echo "=== spot check Brevard ==="
+          psql "$DB_URL" -c "SELECT county, co_no, skill_file_path FROM public.jurisdictions WHERE county ILIKE '%brevard%' LIMIT 3;"
 
-          echo "All verifications complete!"
+          # Fail if co_no count is under 67
+          if [ "$CO_COUNT" -lt 67 ]; then
+            echo "FAIL: co_no populated for only $CO_COUNT rows (expected >= 67)"
+            exit 1
+          fi
+          echo "PASS: Migration 007 verified successfully"
