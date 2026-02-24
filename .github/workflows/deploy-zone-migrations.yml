@@ -7,9 +7,10 @@ on:
       - main
     paths:
       - 'migrations/007_skill_file_paths.sql'
+      - 'migrations/008_backfill_confidence.sql'
 
 jobs:
-  deploy-007:
+  deploy-migrations:
     runs-on: ubuntu-latest
     env:
       PROJ_REF: mocerqjnksmhcjzxrewo
@@ -17,52 +18,58 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy 007 via Supabase Management API
+      - name: Deploy migration via Supabase Management API
         env:
           SUPABASE_MGMT_TOKEN: ${{ secrets.SUPABASE_MGMT_TOKEN }}
         run: |
-          echo "Reading migration SQL..."
-          SQL=$(cat migrations/007_skill_file_paths.sql)
+          deploy_migration() {
+            local file=$1
+            local name=$2
+            echo "Deploying $name..."
+            SQL=$(cat "$file")
+            RESPONSE=$(curl -s -w "\nHTTP:%{http_code}" \
+              -X POST \
+              "https://api.supabase.com/v1/projects/${PROJ_REF}/database/query" \
+              -H "Authorization: Bearer ${SUPABASE_MGMT_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "$(python3 -c "import json,sys; print(json.dumps({'query': open('$file').read()}))")")
+            HTTP_STATUS=$(echo "$RESPONSE" | grep "^HTTP:" | cut -d: -f2)
+            BODY=$(echo "$RESPONSE" | grep -v "^HTTP:")
+            echo "HTTP $HTTP_STATUS: $BODY"
+            if [ "$HTTP_STATUS" != "200" ] && [ "$HTTP_STATUS" != "201" ]; then
+              echo "FAIL: $name returned $HTTP_STATUS"
+              exit 1
+            fi
+            echo "$name deployed!"
+          }
 
-          echo "Executing via Supabase Management API..."
-          RESPONSE=$(curl -s -w "\nHTTP:%{http_code}" \
-            -X POST \
-            "https://api.supabase.com/v1/projects/${PROJ_REF}/database/query" \
-            -H "Authorization: Bearer ${SUPABASE_MGMT_TOKEN}" \
-            -H "Content-Type: application/json" \
-            -d "{\"query\": $(echo "$SQL" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))')}")
+          deploy_migration "migrations/007_skill_file_paths.sql" "007_skill_file_paths"
+          deploy_migration "migrations/008_backfill_confidence.sql" "008_backfill_confidence"
 
-          HTTP_STATUS=$(echo "$RESPONSE" | grep "^HTTP:" | cut -d: -f2)
-          BODY=$(echo "$RESPONSE" | grep -v "^HTTP:")
-
-          echo "HTTP Status: $HTTP_STATUS"
-          echo "Response: $BODY"
-
-          if [ "$HTTP_STATUS" != "200" ] && [ "$HTTP_STATUS" != "201" ]; then
-            echo "FAIL: API returned $HTTP_STATUS"
-            exit 1
-          fi
-          echo "Migration 007 deployed successfully!"
-
-      - name: Verify via REST API
+      - name: Verify migration 008
         env:
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-          SUPABASE_URL: https://mocerqjnksmhcjzxrewo.supabase.co
+          SUPABASE_MGMT_TOKEN: ${{ secrets.SUPABASE_MGMT_TOKEN }}
         run: |
-          echo "=== Rows with co_no ==="
-          COUNT=$(curl -s \
-            "${SUPABASE_URL}/rest/v1/jurisdictions?co_no=not.is.null&select=id" \
-            -H "apikey: ${SUPABASE_SERVICE_KEY}" \
-            -H "Authorization: Bearer ${SUPABASE_SERVICE_KEY}" \
-            -H "Prefer: count=exact" \
-            -H "Range: 0-0" \
-            -o /dev/null -w "%{header:content-range}")
-          echo "co_no count: $COUNT"
+          python3 - <<'PYEOF'
+import json, urllib.request
 
-          echo "=== Spot check Brevard ==="
-          curl -s \
-            "${SUPABASE_URL}/rest/v1/jurisdictions?county=ilike.*brevard*&select=county,co_no,skill_file_path&limit=3" \
-            -H "apikey: ${SUPABASE_SERVICE_KEY}" \
-            -H "Authorization: Bearer ${SUPABASE_SERVICE_KEY}"
-          echo ""
-          echo "Verification complete!"
+MGMT = "$SUPABASE_MGMT_TOKEN"
+PROJ = "mocerqjnksmhcjzxrewo"
+
+def sql(q):
+    data = json.dumps({"query": q}).encode()
+    req = urllib.request.Request(
+        f"https://api.supabase.com/v1/projects/{PROJ}/database/query",
+        data=data,
+        headers={"Authorization": f"Bearer {MGMT}", "Content-Type": "application/json"},
+        method="POST"
+    )
+    with urllib.request.urlopen(req, timeout=15) as r:
+        return json.load(r)
+
+r = sql("SELECT COUNT(*) as null_remaining FROM zone_standards WHERE confidence_score IS NULL AND front_setback_ft IS NOT NULL;")
+print("NULL confidence with setback data (should be 0):", r)
+
+r2 = sql("SELECT COUNT(*) as total, COUNT(*) FILTER (WHERE confidence_score IS NOT NULL) as scored FROM zone_standards;")
+print("Total / scored:", r2)
+PYEOF
