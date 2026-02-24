@@ -1,0 +1,61 @@
+name: PRD-8 Scrape NULL Zone Standards
+
+on:
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    name: Playwright Scrape — 61 NULL rows across 18 jurisdictions
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install playwright httpx beautifulsoup4
+          playwright install chromium --with-deps
+
+      - name: Run PRD-8 scraper
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SUPABASE_MGMT_TOKEN: ${{ secrets.SUPABASE_MGMT_TOKEN }}
+        run: python scripts/prd8_scrape_null_standards.py
+
+      - name: Verify Done-When
+        env:
+          SUPABASE_MGMT_TOKEN: ${{ secrets.SUPABASE_MGMT_TOKEN }}
+        run: |
+          python3 - <<'PYEOF'
+import json, urllib.request
+MGMT = "$SUPABASE_MGMT_TOKEN"
+PROJ = "mocerqjnksmhcjzxrewo"
+
+def sql(q):
+    data = json.dumps({"query": q}).encode()
+    req = urllib.request.Request(
+        f"https://api.supabase.com/v1/projects/{PROJ}/database/query",
+        data=data,
+        headers={"Authorization": f"Bearer {MGMT}", "Content-Type": "application/json",
+                 "User-Agent": "ZoneWise-PRD8-Verify"},
+        method="POST"
+    )
+    with urllib.request.urlopen(req, timeout=15) as r:
+        return json.load(r)
+
+r1 = sql("SELECT COUNT(*) as c FROM zone_standards WHERE confidence_score IS NULL")
+r2 = sql("SELECT ROUND(confidence_score::numeric,2) as s, COUNT(*) c FROM zone_standards WHERE confidence_score IS NOT NULL GROUP BY 1 ORDER BY 1")
+print(f"NULL rows remaining: {r1[0]['c']} (target: 0)")
+print(f"Score distribution: {r2}")
+if r1[0]['c'] > 0:
+    print("FAIL: still have NULL rows")
+    exit(1)
+else:
+    print("PASS: all rows scored")
+PYEOF
