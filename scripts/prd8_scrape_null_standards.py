@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 """
-PRD #8 — Playwright scraper for 61 NULL zone_standards rows
-Fetches Municode with full JS rendering → navigates to zoning chapter →
-extracts dimensional table → upserts to Supabase
+PRD #9 Path B — Playwright deep nav for 24 remaining 0.30 rows
+Targets specific Municode chapter/article nodeIds discovered via web search
 """
-import json, re, time, os, sys
+import json, re, time, os, sys, urllib.request
 from playwright.sync_api import sync_playwright
 
+MGMT_TOKEN = os.environ["SUPABASE_MGMT_TOKEN"]
+PROJ_REF   = "mocerqjnksmhcjzxrewo"
 SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_KEY = os.environ["SUPABASE_KEY"]
-MGMT_TOKEN   = os.environ.get("SUPABASE_MGMT_TOKEN", "")
-PROJ_REF     = "mocerqjnksmhcjzxrewo"
-
-import urllib.request
 
 def sb_sql(sql):
     data = json.dumps({"query": sql}).encode()
@@ -21,284 +18,245 @@ def sb_sql(sql):
         data=data,
         headers={"Authorization": f"Bearer {MGMT_TOKEN}",
                  "Content-Type": "application/json",
-                 "User-Agent": "ZoneWise-PRD8-Scraper"},
+                 "User-Agent": "ZoneWise-PRD9"},
         method="POST"
     )
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.load(r)
 
-def sb_rest(method, path, body=None):
-    url = f"{SUPABASE_URL}/rest/v1/{path}"
-    data = json.dumps(body).encode() if body else None
-    req = urllib.request.Request(url, data=data, headers={
-        "apikey": SUPABASE_KEY,
-        "Authorization": f"Bearer {SUPABASE_KEY}",
-        "Content-Type": "application/json",
-        "Prefer": "return=minimal"
-    }, method=method)
-    with urllib.request.urlopen(req, timeout=15) as r:
-        return r.status
-
-def clean_num(s):
-    try:
-        return float(str(s).replace(",","").strip())
-    except:
+def clean(s):
+    s = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', str(s))
+    s = re.sub(r'\(\d+\)', '', s).strip()
+    if s.lower() in ('none','','-','n/a'):
         return None
-
-ZONING_KEYWORDS = [
-    "zoning district", "zoning regulations", "dimensional requirements",
-    "schedule of regulations", "district regulations", "area regulations",
-    "development standards", "bulk regulations", "zoning schedule",
-    "table of dimensional", "land development", "zoning ordinance"
-]
-
-SETBACK_KEYWORDS = [
-    "front", "rear", "side", "setback", "yard", "height", "lot area",
-    "lot width", "coverage", "density", "floor area ratio"
-]
-
-def find_zoning_chapter_link(page):
-    """Find the best link to the zoning dimensional standards chapter."""
-    links = page.query_selector_all("a")
-    scored = []
-    for link in links:
+    m = re.search(r'[\d,]+(?:\.\d+)?', s)
+    if m:
         try:
-            text = (link.inner_text() or "").lower().strip()
-            href = link.get_attribute("href") or ""
-            if not href or href.startswith("#"):
-                continue
-            score = 0
-            for kw in ZONING_KEYWORDS:
-                if kw in text:
-                    score += 3
-            if "zoning" in href.lower():
-                score += 2
-            if score > 0:
-                scored.append((score, text[:60], href))
+            return float(m.group().replace(',',''))
         except:
-            pass
-    scored.sort(reverse=True)
-    return scored[:5]
+            return None
+    return None
 
-def extract_standards_from_text(text, code):
-    """Extract dimensional standards for a district code from page text."""
-    results = {}
+def extract(text, code):
+    """Extract dimensional standards from text for a given district code."""
     tl = text.lower()
-    code_l = code.lower()
-
-    # Find code location in text
-    idx = tl.find(code_l)
+    idx = tl.find(code.lower())
     if idx == -1:
-        # Try stripped version (R-1 → r1, C-2 → c2)
-        code_stripped = re.sub(r'[^a-z0-9]', '', code_l)
-        for m in re.finditer(re.escape(code_stripped), tl):
-            idx = m.start()
-            break
+        # Try without hyphens
+        idx = tl.find(code.replace('-','').lower())
     if idx == -1:
         return {}
 
     block = text[max(0, idx-300):idx+5000]
-    bl = block.lower()
+    bl    = block.lower()
 
-    # Regex patterns: (value)(unit)
-    def find_ft(patterns):
-        for pat in patterns:
+    def find_ft(pats):
+        for pat in pats:
             m = re.search(pat, bl)
             if m:
-                v = clean_num(m.group(1))
+                v = clean(m.group(1))
                 if v and 0 < v < 600:
                     return v
         return None
 
-    def find_pct(patterns):
-        for pat in patterns:
+    def find_pct(pats):
+        for pat in pats:
             m = re.search(pat, bl)
             if m:
-                v = clean_num(m.group(1))
+                v = clean(m.group(1))
                 if v and 0 < v <= 100:
                     return v
         return None
 
-    def find_sqft(patterns):
-        for pat in patterns:
+    def find_sqft(pats):
+        for pat in pats:
             m = re.search(pat, bl)
             if m:
-                v = clean_num(m.group(1))
+                v = clean(m.group(1))
                 if v and v > 100:
                     return v
         return None
 
-    results["front_setback_ft"] = find_ft([
-        r'front[^.]{0,40}?(\d+(?:\.\d+)?)\s*(?:feet|ft|\')',
-        r'front\s+yard[^.]{0,30}?(\d+(?:\.\d+)?)',
-    ])
-    results["rear_setback_ft"] = find_ft([
-        r'rear[^.]{0,40}?(\d+(?:\.\d+)?)\s*(?:feet|ft|\')',
-        r'rear\s+yard[^.]{0,30}?(\d+(?:\.\d+)?)',
-    ])
-    results["side_setback_ft"] = find_ft([
-        r'(?<!corner\s)side[^.]{0,40}?(\d+(?:\.\d+)?)\s*(?:feet|ft|\')',
-        r'side\s+yard[^.]{0,30}?(\d+(?:\.\d+)?)',
-    ])
-    results["max_height_ft"] = find_ft([
-        r'height[^.]{0,40}?(\d+(?:\.\d+)?)\s*(?:feet|ft|\')',
-        r'not\s+exceed[^.]{0,20}?(\d+(?:\.\d+)?)\s*(?:feet|ft)',
-    ])
-    results["min_lot_sqft"] = find_sqft([
-        r'lot\s+(?:area|size)[^.]{0,40}?([\d,]+)\s*(?:square\s+feet|sq\.?\s*ft)',
-        r'([\d,]+)\s*(?:square\s+feet|sq\.?\s*ft)[^.]{0,30}?(?:minimum|lot)',
-    ])
-    results["min_lot_width_ft"] = find_ft([
-        r'lot\s+width[^.]{0,40}?(\d+(?:\.\d+)?)\s*(?:feet|ft|\')',
-    ])
-    results["max_lot_coverage_pct"] = find_pct([
-        r'(?:lot\s+)?(?:building\s+)?coverage[^.]{0,40}?(\d+(?:\.\d+)?)\s*(?:%|percent)',
-        r'impervious[^.]{0,30}?(\d+(?:\.\d+)?)\s*(?:%|percent)',
-    ])
-    results["max_far"] = find_ft([
-        r'floor\s+area\s+ratio[^.]{0,30}?(\d+\.\d+)',
-        r'\bfar\b[^.]{0,20}?(\d+\.\d+)',
-    ])
-    results["max_density_du_acre"] = find_ft([
-        r'(\d+(?:\.\d+)?)\s*(?:du|dwelling\s+units?)\s*(?:per|/)\s*acre',
-        r'density[^.]{0,30}?(\d+(?:\.\d+)?)\s*(?:per|/)\s*acre',
-    ])
+    return {k: v for k, v in {
+        "front_setback_ft":       find_ft([r'front[^.]{0,50}?(\d+(?:\.\d+)?)\s*(?:feet|ft|\')', r'front\s+yard[^.]{0,30}?(\d+(?:\.\d+)?)']),
+        "rear_setback_ft":        find_ft([r'rear[^.]{0,50}?(\d+(?:\.\d+)?)\s*(?:feet|ft|\')',  r'rear\s+yard[^.]{0,30}?(\d+(?:\.\d+)?)']),
+        "side_setback_ft":        find_ft([r'(?<!corner\s)side[^.]{0,50}?(\d+(?:\.\d+)?)\s*(?:feet|ft|\')', r'side\s+yard[^.]{0,30}?(\d+(?:\.\d+)?)']),
+        "max_height_ft":          find_ft([r'height[^.]{0,50}?(\d+(?:\.\d+)?)\s*(?:feet|ft|\')', r'not\s+exceed[^.]{0,20}?(\d+(?:\.\d+)?)\s*(?:feet|ft)']),
+        "min_lot_sqft":           find_sqft([r'lot\s+(?:area|size)[^.]{0,40}?([\d,]+)\s*(?:square\s+feet|sq\.?\s*ft)', r'([\d,]+)\s*(?:sq\.?\s*ft|square\s+feet)[^.]{0,30}?(?:minimum|lot)']),
+        "min_lot_width_ft":       find_ft([r'lot\s+width[^.]{0,40}?(\d+(?:\.\d+)?)\s*(?:feet|ft|\')']),
+        "max_lot_coverage_pct":   find_pct([r'(?:lot\s+)?(?:building\s+)?coverage[^.]{0,40}?(\d+(?:\.\d+)?)\s*(?:%|percent)', r'impervious[^.]{0,30}?(\d+(?:\.\d+)?)\s*(?:%|percent)']),
+        "max_density_du_acre":    find_ft([r'(\d+(?:\.\d+)?)\s*(?:du|dwelling\s+units?)\s*(?:per|/)\s*acre']),
+    }.items() if v is not None}
 
-    # Remove None values
-    return {k: v for k, v in results.items() if v is not None}
+# Deep chapter URLs to try per jurisdiction (discovered via web search + Municode structure)
+JURISDICTION_URLS = {
+    "Fort Walton Beach": [
+        "https://library.municode.com/fl/fort_walton_beach/codes/code_of_ordinances?nodeId=PTIICOOR_CH159ZORE",
+        "https://library.municode.com/fl/fort_walton_beach/codes/code_of_ordinances?nodeId=PTIICOOR_CH159ZORE_ARTIVDI",
+        "https://library.municode.com/fl/fort_walton_beach/codes/code_of_ordinances?nodeId=PTIICOOR_CH159ZORE_ARTVDI",
+        "https://library.municode.com/fl/fort_walton_beach/codes/code_of_ordinances?nodeId=PTIICOOR_CH159ZORE_ARTIVDIST_DIVIRE",
+        "https://library.municode.com/fl/fort_walton_beach/codes/code_of_ordinances",
+        "https://library.municode.com/fl/fort_walton_beach/codes/land_development_code",
+    ],
+    "Baldwin": [
+        "https://library.municode.com/fl/baldwin/codes/code_of_ordinances?nodeId=PTIICOOR_CH86ZO",
+        "https://library.municode.com/fl/baldwin/codes/code_of_ordinances?nodeId=PTIICOOR_CH86ZO_ARTIVDIST",
+        "https://library.municode.com/fl/baldwin/codes/code_of_ordinances",
+    ],
+    "Callaway": [
+        "https://library.municode.com/fl/callaway/codes/code_of_ordinances?nodeId=PTIICOOR_CH158ZO",
+        "https://library.municode.com/fl/callaway/codes/code_of_ordinances?nodeId=PTIICOOR_CH158ZO_ARTIVDI",
+        "https://library.municode.com/fl/callaway/codes/code_of_ordinances",
+    ],
+    "Cedar Key": [
+        "https://library.municode.com/fl/cedar_key/codes/code_of_ordinances?nodeId=PTIICOOR_CH110ZO",
+        "https://library.municode.com/fl/cedar_key/codes/code_of_ordinances?nodeId=PTIICOOR_CH110ZO_ARTIVDIST",
+        "https://library.municode.com/fl/cedar_key/codes/code_of_ordinances",
+    ],
+    "Pensacola": [
+        "https://library.municode.com/fl/pensacola/codes/code_of_ordinances?nodeId=PTIICOOR_CH42ZODERE",
+        "https://library.municode.com/fl/pensacola/codes/code_of_ordinances?nodeId=PTIICOOR_CH42ZODERE_ARTVIOVDI",
+        "https://library.municode.com/fl/pensacola/codes/code_of_ordinances",
+    ],
+    "DeFuniak Springs": [
+        "https://library.municode.com/fl/defuniak_springs/codes/code_of_ordinances?nodeId=PTIICOOR_CH94ZO",
+        "https://library.municode.com/fl/defuniak_springs/codes/code_of_ordinances",
+    ],
+    "Delray Beach": [
+        "https://library.municode.com/fl/delray_beach/codes/code_of_ordinances?nodeId=PTIICOOR_CH4.4.2ZO_ARTIVDIST",
+        "https://library.municode.com/fl/delray_beach/codes/code_of_ordinances?nodeId=PTIICOOR_APXAZO",
+        "https://library.municode.com/fl/delray_beach/codes/code_of_ordinances",
+    ],
+    "Doral": [
+        "https://library.municode.com/fl/doral/codes/code_of_ordinances?nodeId=PTIICOOR_CH7ZODERE",
+        "https://library.municode.com/fl/doral/codes/code_of_ordinances?nodeId=PTIICOOR_CH7ZODERE_ARTIVDIST",
+        "https://library.municode.com/fl/doral/codes/code_of_ordinances",
+    ],
+    "Key Colony Beach": [
+        "https://library.municode.com/fl/key_colony_beach/codes/code_of_ordinances?nodeId=PTIICOOR_CH110ZO",
+        "https://library.municode.com/fl/key_colony_beach/codes/code_of_ordinances",
+    ],
+    "Macclenny": [
+        "https://library.municode.com/fl/macclenny/codes/code_of_ordinances?nodeId=PTIICOOR_CH94ZO",
+        "https://library.municode.com/fl/macclenny/codes/code_of_ordinances",
+    ],
+    "Mulberry": [
+        "https://library.municode.com/fl/mulberry/codes/code_of_ordinances?nodeId=PTIICOOR_CH112ZO",
+        "https://library.municode.com/fl/mulberry/codes/code_of_ordinances",
+    ],
+    "North Miami Beach": [
+        "https://library.municode.com/fl/north_miami_beach/codes/code_of_ordinances?nodeId=PTIICOOR_CH24ZO",
+        "https://library.municode.com/fl/north_miami_beach/codes/code_of_ordinances?nodeId=PTIICOOR_CH24ZO_ARTIVDIST",
+        "https://library.municode.com/fl/north_miami_beach/codes/code_of_ordinances",
+    ],
+    "Sanford": [  # PRO only
+        "https://library.municode.com/fl/sanford/codes/code_of_ordinances?nodeId=PTIIILADERE_SCHEDULE_CARDIRE",
+        "https://library.municode.com/fl/sanford/codes/code_of_ordinances?nodeId=PTIIILADERE_ARTIIZOUSREDI_S2.28PRDI",
+    ],
+    "Palatka": [
+        "https://library.municode.com/fl/palatka/codes/code_of_ordinances?nodeId=PTIICOOR_CH98ZO",
+        "https://library.municode.com/fl/palatka/codes/code_of_ordinances",
+    ],
+    "Oakland Park": [
+        "https://library.municode.com/fl/oakland_park/codes/code_of_ordinances?nodeId=PTIICOOR_CH155ZO",
+        "https://library.municode.com/fl/oakland_park/codes/code_of_ordinances",
+    ],
+    "New Smyrna Beach": [
+        "https://library.municode.com/fl/new_smyrna_beach/codes/code_of_ordinances?nodeId=PTIICOOR_CH94ZO",
+        "https://library.municode.com/fl/new_smyrna_beach/codes/code_of_ordinances",
+    ],
+}
 
-def scrape_jurisdiction(browser, juris_name, municode_url, target_rows):
-    """Full Playwright scrape for one jurisdiction."""
-    found_data = {}
-    page = browser.new_page()
-    codes = [r["district_code"] for r in target_rows]
-
-    try:
-        print(f"\n  Loading: {municode_url}")
-        page.goto(municode_url, wait_until="networkidle", timeout=45000)
-        page.wait_for_timeout(3000)
-
-        # Try to find and navigate to zoning chapter
-        zoning_links = find_zoning_chapter_link(page)
-        print(f"  Zoning links found: {[(s, t) for s,t,h in zoning_links[:3]]}")
-
-        best_text = page.inner_text("body")
-        best_url  = municode_url
-
-        # If we have a good zoning link, navigate to it
-        if zoning_links and zoning_links[0][0] >= 3:
-            target_href = zoning_links[0][2]
-            if not target_href.startswith("http"):
-                target_href = "https://library.municode.com" + target_href
-            print(f"  Navigating to zoning chapter: {target_href[:80]}")
+def best_text_for_jurisdiction(browser, juris_name, urls):
+    """Try each URL, return the longest text containing zoning keywords."""
+    ZONING_KW = ['setback','front yard','rear yard','height','lot area','lot width','coverage']
+    best = ""
+    best_url = urls[0]
+    for url in urls:
+        page = browser.new_page()
+        try:
+            page.goto(url, wait_until="networkidle", timeout=40000)
+            page.wait_for_timeout(3000)
+            text = page.inner_text("body")
+            has_data = sum(1 for kw in ZONING_KW if kw in text.lower())
+            print(f"    {url[-60:]}: {len(text):,} chars | {has_data} kw")
+            if has_data >= 2 and len(text) > len(best):
+                best = text
+                best_url = url
+            # If we have good data, stop trying more URLs
+            if has_data >= 4:
+                page.close()
+                break
+        except Exception as e:
+            print(f"    {url[-50:]}: ERROR {e}")
+        finally:
             try:
-                page.goto(target_href, wait_until="networkidle", timeout=45000)
-                page.wait_for_timeout(4000)
-                chapter_text = page.inner_text("body")
-                if len(chapter_text) > len(best_text):
-                    best_text = chapter_text
-                    best_url  = target_href
-            except Exception as e:
-                print(f"  Chapter nav failed: {e}")
-
-        print(f"  Got {len(best_text):,} chars from {best_url[:60]}")
-
-        # Check if we have any setback-related content
-        has_zoning_data = any(kw in best_text.lower() for kw in SETBACK_KEYWORDS)
-        print(f"  Has zoning data: {has_zoning_data}")
-
-        if has_zoning_data:
-            for row in target_rows:
-                code = row["district_code"]
-                extracted = extract_standards_from_text(best_text, code)
-                found_data[row["standards_id"]] = (code, extracted, best_url)
-        else:
-            # Text doesn't have dimensional data — mark all 0.30
-            for row in target_rows:
-                found_data[row["standards_id"]] = (row["district_code"], {}, best_url)
-
-    except Exception as e:
-        print(f"  ERROR: {e}")
-        for row in target_rows:
-            found_data[row["standards_id"]] = (row["district_code"], {}, municode_url)
-    finally:
-        page.close()
-
-    return found_data
+                page.close()
+            except:
+                pass
+        time.sleep(1)
+    return best, best_url
 
 def main():
-    # Load 61 target rows
+    # Load remaining 0.30 rows
     rows = sb_sql("""
-        SELECT
-          zs.id as standards_id,
-          zd.code as district_code,
-          j.name as jurisdiction_name,
-          j.municode_url
+        SELECT zs.id as sid, zd.code, j.name as jurisdiction, j.municode_url
         FROM zone_standards zs
-        JOIN zoning_districts zd ON zd.id = zs.zoning_district_id
-        JOIN jurisdictions j ON j.id = zd.jurisdiction_id
-        WHERE zs.confidence_score <= 0.30
+        JOIN zoning_districts zd ON zd.id=zs.zoning_district_id
+        JOIN jurisdictions j ON j.id=zd.jurisdiction_id
+        WHERE zs.confidence_score = 0.30
         ORDER BY j.name, zd.code
     """)
+    print(f"Target: {len(rows)} rows")
 
-    print(f"Target rows: {len(rows)}")
+    by_j = {}
+    for r in rows:
+        by_j.setdefault(r['jurisdiction'], []).append(r)
 
-    # Group by jurisdiction
-    by_juris = {}
-    for row in rows:
-        jname = row["jurisdiction_name"]
-        by_juris.setdefault(jname, {"url": row["municode_url"], "rows": []})
-        by_juris[jname]["rows"].append(row)
-
-    print(f"Jurisdictions: {len(by_juris)}")
-
-    total_updated = 0
-    total_found   = 0
-    total_not_found = 0
+    updated_total = 0
+    found_total   = 0
 
     with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=True, args=["--no-sandbox", "--disable-dev-shm-usage"])
+        browser = pw.chromium.launch(headless=True, args=["--no-sandbox","--disable-dev-shm-usage"])
 
-        for juris_name, data in by_juris.items():
+        for juris, juris_rows in by_j.items():
+            codes = [r['code'] for r in juris_rows]
             print(f"\n{'='*55}")
-            print(f"Scraping: {juris_name} ({len(data['rows'])} districts)")
-            codes = [r["district_code"] for r in data["rows"]]
-            print(f"  Districts: {', '.join(codes)}")
+            print(f"  {juris}: {codes}")
 
-            found = scrape_jurisdiction(browser, juris_name, data["url"], data["rows"])
+            urls = JURISDICTION_URLS.get(juris, [juris_rows[0]['municode_url']])
+            text, src_url = best_text_for_jurisdiction(browser, juris, urls)
+            print(f"  Best text: {len(text):,} chars from {src_url[-60:]}")
 
-            for sid, (code, extracted, src_url) in found.items():
-                key_fields = ["front_setback_ft","rear_setback_ft","side_setback_ft",
-                              "max_height_ft","min_lot_sqft","max_lot_coverage_pct"]
-                n_key = sum(1 for f in key_fields if f in extracted)
+            for row in juris_rows:
+                code = row['code']
+                sid  = row['sid']
 
-                if extracted:
-                    confidence = 0.70 if n_key >= 5 else (0.60 if n_key >= 3 else 0.45)
-                    set_parts = [f"{k} = {v}" for k,v in extracted.items()]
-                    set_parts += [f"confidence_score = {confidence}",
-                                  f"source_url = '{src_url}'",
-                                  "scraped_at = NOW()"]
-                    sb_sql(f"UPDATE zone_standards SET {', '.join(set_parts)} WHERE id = {sid} AND confidence_score <= 0.30")
-                    print(f"  ✅ {code:12} → {list(extracted.keys())} (conf={confidence})")
-                    total_found += 1
+                extracted = extract(text, code)
+                n_key = sum(1 for f in ['front_setback_ft','rear_setback_ft','side_setback_ft',
+                                        'max_height_ft','min_lot_sqft'] if f in extracted)
+
+                if extracted and n_key >= 1:
+                    conf = 0.70 if n_key >= 5 else (0.60 if n_key >= 3 else 0.45)
+                    set_parts = [f"{k}={v}" for k,v in extracted.items()]
+                    set_parts += [f"confidence_score={conf}", f"source_url='{src_url}'", "scraped_at=NOW()"]
+                    sb_sql(f"UPDATE zone_standards SET {','.join(set_parts)} WHERE id={sid} AND confidence_score<=0.30")
+                    print(f"  ✅ {code}: {list(extracted.keys())} conf={conf}")
+                    found_total   += 1
                 else:
-                    sb_sql(f"UPDATE zone_standards SET confidence_score = 0.30, source_url = '{src_url}', scraped_at = NOW() WHERE id = {sid} AND confidence_score IS NULL OR confidence_score <= 0.30")
-                    print(f"  ❌ {code:12} → not found (0.30)")
-                    total_not_found += 1
-                total_updated += 1
+                    # Mark 0.35 = attempted deep nav, still not found (honest)
+                    sb_sql(f"UPDATE zone_standards SET confidence_score=0.35, source_url='{src_url}', scraped_at=NOW() WHERE id={sid} AND confidence_score=0.30")
+                    print(f"  ⚠️  {code}: not found → 0.35")
+                updated_total += 1
 
             time.sleep(2)
 
         browser.close()
 
     print(f"\n{'='*55}")
-    print(f"COMPLETE: {total_found} extracted / {total_not_found} not found / {total_updated} total")
-
-    # Verify
-    remaining = sb_sql("SELECT COUNT(*) as c FROM zone_standards WHERE confidence_score IS NULL")
-    print(f"NULL confidence remaining: {remaining[0]['c']} (want 0)")
-    dist = sb_sql("SELECT ROUND(confidence_score::numeric,2) as s, COUNT(*) c FROM zone_standards WHERE confidence_score IS NOT NULL GROUP BY 1 ORDER BY 1")
-    print(f"Distribution: {dist}")
+    print(f"Done: {found_total} with data / {updated_total} total processed")
+    r = sb_sql("SELECT ROUND(confidence_score::numeric,2) as s, COUNT(*) c FROM zone_standards WHERE confidence_score IS NOT NULL GROUP BY 1 ORDER BY 1")
+    print(f"Distribution: {r}")
 
 if __name__ == "__main__":
     main()
