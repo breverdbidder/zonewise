@@ -278,3 +278,16 @@ npx skills add obra/superpowers/subagent-driven-development
 - `mastra-ai/skills/mastra` — LangGraph alternative to evaluate
 
 > Source: skills.sh leaderboard — check weekly via Trending tab for new Python/Supabase/scraping skills
+
+### Marketing Skills — ZoneWise.ai Launch
+```bash
+npx skills add coreyhaines31/marketingskills/launch-strategy
+npx skills add coreyhaines31/marketingskills/programmatic-seo
+npx skills add coreyhaines31/marketingskills/pricing-strategy
+```
+
+| Skill | Purpose |
+|---|---|
+| `launch-strategy` | ZoneWise public launch playbook — sequencing, channels, messaging |
+| `programmatic-seo` | Auto-generate county/zoning landing pages at 67-county scale |
+| `pricing-strategy` | Tier/pricing model for the agentic platform |
