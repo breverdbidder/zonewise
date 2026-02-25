@@ -218,3 +218,63 @@ SELECT complete_task('task-uuid-here', 'https://github.com/breverdbidder/zonewis
 -- Mark task as failed
 SELECT fail_task('task-uuid-here', 'Error description');
 ```
+
+---
+
+## 🧰 Agent Skills (skills.sh)
+
+Reusable procedural knowledge for Claude Code sessions. Install with `npx skills add <owner/repo>`.
+
+### Install All Core Skills
+```bash
+# Supabase & Database
+npx skills add supabase/agent-skills/supabase-postgres-best-practices
+npx skills add wshobson/agents/postgresql-table-design
+npx skills add wshobson/agents/sql-optimization-patterns
+
+# Python & Async
+npx skills add wshobson/agents/async-python-patterns
+npx skills add wshobson/agents/python-performance-optimization
+npx skills add wshobson/agents/python-testing-patterns
+
+# FastAPI & Backend
+npx skills add wshobson/agents/fastapi-templates
+npx skills add wshobson/agents/api-design-principles
+npx skills add wshobson/agents/error-handling-patterns
+
+# GitHub Actions & CI/CD
+npx skills add wshobson/agents/github-actions-templates
+
+# Agentic / Orchestration
+npx skills add obra/superpowers/systematic-debugging
+npx skills add obra/superpowers/verification-before-completion
+npx skills add obra/superpowers/dispatching-parallel-agents
+npx skills add obra/superpowers/subagent-driven-development
+```
+
+### Skill Index
+
+| Skill | Source | Purpose |
+|---|---|---|
+| `supabase-postgres-best-practices` | supabase/agent-skills | Supabase queries, RLS, indexes |
+| `postgresql-table-design` | wshobson/agents | Schema design for multi_county_auctions, master_index |
+| `sql-optimization-patterns` | wshobson/agents | Query performance at 67-county scale |
+| `async-python-patterns` | wshobson/agents | httpx/asyncio for AgentQL scrapers |
+| `python-performance-optimization` | wshobson/agents | Scraper throughput at scale |
+| `python-testing-patterns` | wshobson/agents | Test coverage for agents |
+| `fastapi-templates` | wshobson/agents | ZoneWise agents API (Render) |
+| `api-design-principles` | wshobson/agents | Agent-to-agent JSON contracts |
+| `error-handling-patterns` | wshobson/agents | Circuit breakers in LangGraph |
+| `github-actions-templates` | wshobson/agents | Workflow automation |
+| `systematic-debugging` | obra/superpowers | Reduce Claude Code retry loops |
+| `verification-before-completion` | obra/superpowers | Enforces verify-before-done rule |
+| `dispatching-parallel-agents` | obra/superpowers | LangGraph parallel agent patterns |
+| `subagent-driven-development` | obra/superpowers | Autonomous 7-hour session patterns |
+
+### Monitor (Not Yet Installed)
+- `browser-use/browser-use/browser-use` — AgentQL alternative (39K installs, growing fast)
+- `obra/episodic-memory/remembering-conversations` — Episodic memory for agents
+- `firecrawl/cli/firecrawl` — Scraping complement to AgentQL
+- `mastra-ai/skills/mastra` — LangGraph alternative to evaluate
+
+> Source: skills.sh leaderboard — check weekly via Trending tab for new Python/Supabase/scraping skills
