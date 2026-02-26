@@ -1,0 +1,33 @@
+name: Brevard Zone Standards Extraction
+
+on:
+  workflow_dispatch:
+    inputs:
+      jurisdiction:
+        description: 'Jurisdiction name (or "all")'
+        default: 'all'
+        required: false
+
+jobs:
+  extract:
+    name: Extract Brevard Zone Standards
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install httpx
+
+      - name: Run extractor
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TARGET_JURISDICTION: ${{ github.event.inputs.jurisdiction || 'all' }}
+        run: python scripts/brevard_extract.py
