@@ -3,6 +3,7 @@ name: Nightly 67-County Parallel Scrape
 # ZoneWise agentic pipeline — CrossBeam 3-mode research pattern
 # Reads county SKILL.md → Mode1 WebSearch → Mode2 WebFetch → Mode3 AgentQL/Modal
 # Runs nightly at 11 PM EST (04:00 UTC)
+# Modal auth is now conditional — safe to run without Modal secrets
 
 on:
   schedule:
