@@ -86,7 +86,8 @@ jobs:
           matrix = {"include": [
               {
                   "county_slug": s['name'].replace('county-',''),
-                  "county_name": s['description'].split('County FL')[0].strip().split('\n')[-1].strip(),
+                  "county_name": s['description'].split('County FL')[0].strip().split('
+')[-1].strip(),
                   "co_no": s.get('co_no', 0),
                   "skill_path": s['path'],
                   "priority": s.get('priority', 3),
@@ -95,8 +96,10 @@ jobs:
           ]}
 
           with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
-              f.write(f"matrix={json.dumps(matrix)}\n")
-              f.write(f"total={len(selected)}\n")
+              f.write(f"matrix={json.dumps(matrix)}
+")
+              f.write(f"total={len(selected)}
+")
 
           print(f"✅ Matrix built: {len(selected)} counties")
           PYEOF
@@ -134,6 +137,7 @@ jobs:
           playwright install chromium
 
       - name: Authenticate Modal
+        if: ${{ env.MODAL_TOKEN_ID != "" && env.MODAL_TOKEN_SECRET != "" }}
         run: |
           pip install modal
           modal token set \
@@ -328,20 +332,34 @@ jobs:
           failed = sum(1 for row in rows if row.get("status") == "FAILED")
 
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
-              f.write(f"# 🏔️ ZoneWise Nightly Scrape — {today}\n\n")
-              f.write(f"| Metric | Value |\n|--------|-------|\n")
-              f.write(f"| Total counties | {len(rows)} |\n")
-              f.write(f"| ✅ SUCCESS | {success} |\n")
-              f.write(f"| ⚠️ PARTIAL | {partial} |\n")
-              f.write(f"| ❌ FAILED | {failed} |\n")
-              f.write(f"| Success rate | {success/max(len(rows),1)*100:.1f}% |\n\n")
+              f.write(f"# 🏔️ ZoneWise Nightly Scrape — {today}
+
+")
+              f.write(f"| Metric | Value |
+|--------|-------|
+")
+              f.write(f"| Total counties | {len(rows)} |
+")
+              f.write(f"| ✅ SUCCESS | {success} |
+")
+              f.write(f"| ⚠️ PARTIAL | {partial} |
+")
+              f.write(f"| ❌ FAILED | {failed} |
+")
+              f.write(f"| Success rate | {success/max(len(rows),1)*100:.1f}% |
+
+")
 
               if failed > 0:
                   failed_list = [row["county_slug"] for row in rows if row.get("status") == "FAILED"]
-                  f.write(f"### ❌ Failed Counties\n")
+                  f.write(f"### ❌ Failed Counties
+")
                   for c in failed_list:
-                      f.write(f"- {c}\n")
-                  f.write("\nCheck `insights` table for ESCALATE records → Traycer issues.\n")
+                      f.write(f"- {c}
+")
+                  f.write("
+Check `insights` table for ESCALATE records → Traycer issues.
+")
 
           print(f"✅ Summary: {success} success, {partial} partial, {failed} failed / {len(rows)} total")
           PYEOF
