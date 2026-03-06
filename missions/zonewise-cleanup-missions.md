@@ -502,3 +502,31 @@ After all 3 missions:
 - Skill copy diverged from canonical → MERGE first, don't overwrite
 - Git push fails → `git pull --rebase` first, retry
 - >3 failures on any mission → Log and move to next mission
+
+---
+
+# ══════════════════════════════════════════════════════════════
+# LAUNCH — Remote Control (approve from phone)
+# ══════════════════════════════════════════════════════════════
+
+## On your Mac/PC terminal:
+```bash
+cd ~/zonewise
+tmux new -s cleanup
+claude remote-control --name "ZoneWise Cleanup Missions"
+```
+
+## Then on your phone (Claude app → Code tab):
+Find "ZoneWise Cleanup Missions" session → tap to connect → send:
+
+```
+Read missions/zonewise-cleanup-missions.md and execute all 3 missions in order.
+Start with Mission 1. After each mission, run the verify step before proceeding.
+```
+
+## What to expect:
+- Claude Code will request approval for each file operation (git rm, git push, etc.)
+- Tap ✅ to approve, ❌ to reject
+- Session survives phone lock / network drops — auto-reconnects
+- ~45-60 min total, ~30-40 approvals across all 3 missions
+- When done, Claude Code will print the POST-SESSION CHECKLIST results
