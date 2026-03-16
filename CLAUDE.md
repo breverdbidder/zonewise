@@ -1,330 +1,45 @@
-# CLAUDE.md - AI Architect Instructions for ZoneWise.ai
-
-## 🎯 Project Overview
-
-ZoneWise.ai is an AI-powered zoning intelligence platform. This document provides context for Claude (AI Architect) and Claude Code (Agentic Engineer) when working on this repository.
-
-## 🏗️ Architecture Principles
-
-### Agentic Development
-- **Autonomous execution:** Make decisions and execute without asking permission
-- **Minimal human-in-the-loop:** Ariel reviews weekly summaries, not daily tasks
-- **Self-documenting:** Update PROJECT_STATE.json after significant changes
-
-### Stack Decisions (LOCKED)
-| Component | Choice | Rationale |
-|-----------|--------|-----------|
-| Framework | Next.js 14 (App Router) | SSR, API routes, Vercel-compatible |
-| Database | Supabase | PostgreSQL + Auth + Realtime |
-| Styling | Tailwind CSS | Utility-first, shadcn/ui compatible |
-| Auth/Billing | Makerkit Pro | Pre-built SaaS boilerplate |
-| AI | Claude Sonnet 4.5 | Best reasoning for zoning interpretation |
-| Hosting | Cloudflare Pages | Edge performance, free tier |
-| Domain | zonewise.ai | Cloudflare Registrar |
-
-## 📋 Development Rules
-
-### DO ✅
-- Commit frequently with descriptive messages
-- Run tests before pushing
-- Update PROJECT_STATE.json with decisions
-- Use TypeScript strict mode
-- Follow existing code patterns
-- Deploy to Cloudflare Pages automatically
-
-### DON'T ❌
-- Ask permission for routine tasks
-- Create ZIP files or use Google Drive
-- Install packages without checking alternatives
-- Skip error handling
-- Hardcode API keys (use environment variables)
-
-## 🔑 Environment Variables
-
-```bash
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-
-# Anthropic
-ANTHROPIC_API_KEY=
-
-# Stripe
-STRIPE_SECRET_KEY=
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
-STRIPE_WEBHOOK_SECRET=
-```
-
-## 📊 Data Model
-
-### Core Tables
-
-```sql
--- Jurisdictions (cities/counties)
-CREATE TABLE jurisdictions (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name TEXT NOT NULL,
-  state TEXT DEFAULT 'FL',
-  municode_url TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Zoning Districts
-CREATE TABLE zoning_districts (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  jurisdiction_id UUID REFERENCES jurisdictions(id),
-  code TEXT NOT NULL,           -- e.g., "R-1", "C-2"
-  name TEXT NOT NULL,           -- e.g., "Single Family Residential"
-  description TEXT,
-  allowed_uses JSONB,
-  setbacks JSONB,
-  height_limits JSONB,
-  lot_requirements JSONB,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- User Queries (for analytics)
-CREATE TABLE queries (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES auth.users(id),
-  question TEXT NOT NULL,
-  jurisdiction_id UUID REFERENCES jurisdictions(id),
-  district_code TEXT,
-  response TEXT,
-  tokens_used INTEGER,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-## 🚀 Deployment
-
-### Cloudflare Pages
-- **Production:** Automatic deploy on `main` branch push
-- **Preview:** Automatic deploy on PR creation
-- **Build command:** `npm run build`
-- **Output directory:** `.next`
-
-### GitHub Actions
-- CI runs on every push
-- Tests must pass before merge
-- Auto-deploy to Cloudflare Pages
-
-## 📁 Key Files
-
-| File | Purpose |
-|------|---------|
-| `PROJECT_STATE.json` | Current state, recent decisions, blockers |
-| `CLAUDE.md` | This file - AI context |
-| `docs/PRD.md` | Product requirements document |
-| `src/lib/zoning-ai.ts` | Core AI interpretation logic |
-| `src/lib/supabase.ts` | Database client |
-
-## 🔄 Workflow
-
-### Claude Code Session Flow
-1. Read `PROJECT_STATE.json` for current context
-2. Check `docs/` for requirements
-3. Implement features/fixes
-4. Update `PROJECT_STATE.json`
-5. Commit and push
-6. Cloudflare auto-deploys
-
-### Escalation Protocol
-1. Try to solve autonomously (3 attempts)
-2. Log blocker to `PROJECT_STATE.json`
-3. Only then surface to Ariel with:
-   - Problem description
-   - Attempts made
-   - Recommended solution
-
-## 📈 Success Metrics
-
-- **Query accuracy:** >95% correct zoning interpretations
-- **Response time:** <3 seconds for standard queries
-- **Uptime:** 99.9%
-- **User satisfaction:** >4.5/5 rating
-
----
-
-*Last updated: 2026-01-21*
----
-
-# ZoneWise Autonomous Improvement Protocol
-
-## Greptile-Powered Development Loop
-
-When working on ZoneWise, use Greptile MCP to understand the codebase before making changes.
-
-### Before ANY Code Change:
-```
-1. Query Greptile: "What does [file/component] do and how is it connected to other parts?"
-2. Query Greptile: "What are the dependencies and side effects of changing [file]?"
-3. Query Greptile: "Are there existing tests for [component]? What's the testing pattern?"
-```
-
-### Sprint Task Workflow:
-```
-1. Call get_next_task('breverdbidder/zonewise') from Supabase
-2. Call start_task(task_id)
-3. Query Greptile for context on the task area
-4. Implement the fix/feature
-5. Write tests (pytest)
-6. Run tests locally
-7. Create PR with descriptive title
-8. Call complete_task(task_id, pr_url)
-9. Repeat
-```
-
-### Greptile Query Templates:
-
-**For Bug Fixes:**
-- "Find all places where [error/bug pattern] might occur in this codebase"
-- "What error handling exists for [component] and what's missing?"
-
-**For New Features:**
-- "What's the existing pattern for [feature type] in this codebase?"
-- "Where should [new component] be integrated based on current architecture?"
-
-**For Refactoring:**
-- "What files depend on [module] that would be affected by changes?"
-- "What's the test coverage for [area] before I refactor?"
-
-**For Testing:**
-- "Show me the testing patterns used in this project"
-- "What edge cases should I test for [function/endpoint]?"
-
-### Code Quality Standards:
-- All new code must have tests (pytest)
-- Use type hints (Python 3.11+)
-- Follow existing code patterns (query Greptile if unsure)
-- Error handling with circuit breakers (tenacity)
-- Structured logging to Supabase
-
-### PR Naming Convention:
-`[ZW-XXX] Brief description of change`
-
-### Supabase Functions:
-```sql
--- Get next ZoneWise task
-SELECT * FROM get_next_task('breverdbidder/zonewise');
-
--- Start working on task
-SELECT start_task('task-uuid-here');
-
--- Complete task with PR
-SELECT complete_task('task-uuid-here', 'https://github.com/breverdbidder/zonewise/pull/XX');
-
--- Mark task as failed
-SELECT fail_task('task-uuid-here', 'Error description');
-```
-
----
-
-## 🧰 Agent Skills (skills.sh)
-
-Reusable procedural knowledge for Claude Code sessions. Install with `npx skills add <owner/repo>`.
-
-### Install All Core Skills
-```bash
-# Supabase & Database
-npx skills add supabase/agent-skills/supabase-postgres-best-practices
-npx skills add wshobson/agents/postgresql-table-design
-npx skills add wshobson/agents/sql-optimization-patterns
-
-# Python & Async
-npx skills add wshobson/agents/async-python-patterns
-npx skills add wshobson/agents/python-performance-optimization
-npx skills add wshobson/agents/python-testing-patterns
-
-# FastAPI & Backend
-npx skills add wshobson/agents/fastapi-templates
-npx skills add wshobson/agents/api-design-principles
-npx skills add wshobson/agents/error-handling-patterns
-
-# GitHub Actions & CI/CD
-npx skills add wshobson/agents/github-actions-templates
-
-# Agentic / Orchestration
-npx skills add obra/superpowers/systematic-debugging
-npx skills add obra/superpowers/verification-before-completion
-npx skills add obra/superpowers/dispatching-parallel-agents
-npx skills add obra/superpowers/subagent-driven-development
-```
-
-### Skill Index
-
-| Skill | Source | Purpose |
-|---|---|---|
-| `supabase-postgres-best-practices` | supabase/agent-skills | Supabase queries, RLS, indexes |
-| `postgresql-table-design` | wshobson/agents | Schema design for multi_county_auctions, master_index |
-| `sql-optimization-patterns` | wshobson/agents | Query performance at 67-county scale |
-| `async-python-patterns` | wshobson/agents | httpx/asyncio for AgentQL scrapers |
-| `python-performance-optimization` | wshobson/agents | Scraper throughput at scale |
-| `python-testing-patterns` | wshobson/agents | Test coverage for agents |
-| `fastapi-templates` | wshobson/agents | ZoneWise agents API (Render) |
-| `api-design-principles` | wshobson/agents | Agent-to-agent JSON contracts |
-| `error-handling-patterns` | wshobson/agents | Circuit breakers in LangGraph |
-| `github-actions-templates` | wshobson/agents | Workflow automation |
-| `systematic-debugging` | obra/superpowers | Reduce Claude Code retry loops |
-| `verification-before-completion` | obra/superpowers | Enforces verify-before-done rule |
-| `dispatching-parallel-agents` | obra/superpowers | LangGraph parallel agent patterns |
-| `subagent-driven-development` | obra/superpowers | Autonomous 7-hour session patterns |
-
-### Monitor (Not Yet Installed)
-- `browser-use/browser-use/browser-use` — AgentQL alternative (39K installs, growing fast)
-- `obra/episodic-memory/remembering-conversations` — Episodic memory for agents
-- `firecrawl/cli/firecrawl` — Scraping complement to AgentQL
-- `mastra-ai/skills/mastra` — LangGraph alternative to evaluate
-
-> Source: skills.sh leaderboard — check weekly via Trending tab for new Python/Supabase/scraping skills
-
-### Marketing Skills — ZoneWise.ai Launch
-```bash
-npx skills add coreyhaines31/marketingskills/launch-strategy
-npx skills add coreyhaines31/marketingskills/programmatic-seo
-npx skills add coreyhaines31/marketingskills/pricing-strategy
-```
-
-| Skill | Purpose |
-|---|---|
-| `launch-strategy` | ZoneWise public launch playbook — sequencing, channels, messaging |
-| `programmatic-seo` | Auto-generate county/zoning landing pages at 67-county scale |
-| `pricing-strategy` | Tier/pricing model for the agentic platform |
-
-
-## Debugging with DAP
-
-**ALWAYS use `dap` instead of print-statement debugging.** The `dap` CLI wraps the Debug Adapter Protocol for surgical debugging.
-
-### Setup (auto-install if missing)
-```bash
-which dap || curl -fsSL https://raw.githubusercontent.com/AlmogBaku/debug-skill/master/install.sh | bash
-```
-
-### When to use
-- Program crashes or raises unexpected exceptions
-- Wrong output and root cause isn't obvious from stack trace
-- Data flows through multiple functions/files (pipeline bugs)
-- Print-debugging would require 3+ iterations
-
-### Quick reference
-```bash
-dap debug script.py --break script.py:42     # breakpoint at line 42
-dap debug script.py --break-on-exception raised  # catch all exceptions
-dap eval "len(items)"                         # inspect live state
-dap step                                      # step over
-dap step in                                   # step into function
-dap step out                                  # return to caller
-dap continue                                  # next breakpoint
-dap stop                                      # end session
-```
-
-### Debugging mindset
-1. Form hypothesis: "I believe the bug is in X because Y"
-2. Set breakpoint upstream of where error manifests
-3. Inspect locals and call stack at each stop
-4. Confirm or refute hypothesis, adjust breakpoint
-5. Fix only after understanding root cause
-
-Full skill docs: `skills/debugging-code/SKILL.md`
+# CLAUDE.md — BidDeed.AI / Everest Capital USA
+
+## Who I Am
+Ariel Shapira. Solo founder of BidDeed.AI and Everest Capital USA. 10+ years foreclosure investing in Brevard County, Florida. Licensed FL broker and general contractor. Building an AI-powered foreclosure auction intelligence platform. ADHD — I need systems that run themselves.
+
+## My Stack
+- **Repos:** github.com/breverdbidder/* (cli-anything-biddeed, zonewise-scraper-v4, biddeed-ai, biddeed-ai-ui, zonewise-web, cliproxy-gateway, tax-insurance-optimizer)
+- **Database:** Supabase (mocerqjnksmhcjzxrewo.supabase.co) — multi_county_auctions (245K rows), activities, insights, daily_metrics
+- **Compute:** Hetzner everest-dispatch (87.99.129.125) with CLIProxyAPI on 127.0.0.1:8317
+- **AI:** Gemini Flash (FREE via CLIProxyAPI), DeepSeek V3.2 ($0.28/1M), Claude (Max plan, never API)
+- **Deploy:** GitHub Actions + Cloudflare Pages + Render
+- **Brand:** Navy #1E3A5F, Orange #F59E0B, Inter font, bg #020617
+
+## Context Rules
+
+When I mention an auction or property → query Supabase `multi_county_auctions` first
+When I mention a case number → search `multi_county_auctions` by case_number field
+When analyzing a deal → apply max bid formula: (ARV×70%)-Repairs-$10K-MIN($25K,15%×ARV)
+When I ask about pipeline health → check `daily_metrics` and recent GitHub Action runs
+When I mention a county → check if config exists in `counties/` before assuming anything
+When something needs building → follow cli-anything HARNESS.md 7-phase pattern
+When deploying code → push to GitHub, never local installs or Google Drive
+When spending money → stop and confirm if >$10/session
+When I context-switch mid-task → flag it: "📌 [previous task] is still open"
+When I say "Summit" → execute immediately, no questions, no clarification
+
+## How I Work
+- Direct, no softening language. Facts and actions.
+- Cost discipline: $10/session max. Batch operations. One attempt per approach.
+- Zero HITL: try 3 alternatives before surfacing a blocker.
+- Execute first, report results. Don't ask what to do.
+- Push back with strong opinions when you disagree.
+- Wrong = "I was wrong." Never invent numbers.
+
+## Slash Commands
+- `/auction-brief` — morning auction briefing from Supabase
+- `/county-setup` — onboard a new Florida county
+- `/deal-intel` — process foreclosure documents into structured data
+- `/tldr` — end-of-session summary, updates memory.md
+- `/transcript` — YouTube video analysis via Hetzner pipeline
+
+## Family Context (when relevant)
+- Wife Mariam: runs Property360 real estate, Protection Partners insurance, contracting
+- Son Michael (16): D1 competitive swimmer, Satellite Beach HS, keto diet, Shabbat observance
+- Orthodox practices: Shabbat (no work Fri sunset–Sat havdalah), kosher, holidays
