@@ -40,7 +40,7 @@ DOR fl_parcels table (Supabase):
 ```
 
 ```
-Brevard Clerk Foreclosure Page: http://vweb2.brevardclerk.us/Foreclosures/foreclosure_sales.html
+Brevard Clerk Foreclosure Page: http://www.brevardclerk.us/Foreclosures/foreclosure_sales.html
   Format: HTML table with columns: case_number, case_title, comment, foreclosure_sale_date
   case_title: "PLAINTIFF VS DEFENDANT" — parse both sides
   Defendant → BCPAO OWNER_NAME1 lookup → parcel_id, address, building details
